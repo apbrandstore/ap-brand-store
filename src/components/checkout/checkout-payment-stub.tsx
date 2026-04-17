@@ -87,7 +87,7 @@ export function CheckoutPaymentStub() {
             <p className="mt-3 text-sm leading-relaxed text-neutral-600">Order number: {orderNumber}</p>
             <Link
               href="/"
-              className="mt-8 inline-flex rounded-lg bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
+              className="mt-8 inline-flex rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
             >
               Continue shopping
             </Link>
@@ -100,7 +100,7 @@ export function CheckoutPaymentStub() {
             <div className="mt-8 flex gap-3">
               <Link
                 href="/checkout"
-                className="inline-flex rounded-lg border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-neutral-700 hover:bg-neutral-100"
+                className="inline-flex rounded-md border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-neutral-700 hover:bg-neutral-100"
               >
                 {t("backToShipping")}
               </Link>
@@ -108,7 +108,7 @@ export function CheckoutPaymentStub() {
                 type="button"
                 onClick={handlePlaceOrder}
                 disabled={loading}
-                className="inline-flex rounded-lg bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900 disabled:opacity-50"
+                className="inline-flex rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900 disabled:opacity-50"
               >
                 {loading ? "Placing order..." : "Place order"}
               </button>

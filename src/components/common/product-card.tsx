@@ -21,8 +21,8 @@ export async function ProductCard({ product, locale: localeProp, priority }: Pro
   const brand = product.brand?.trim() ?? "";
 
   return (
-    <article className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden rounded-[14px] border border-neutral-200/90 bg-surface text-left antialiased shadow-sm ring-1 ring-neutral-950/5">
-      <div className="shrink-0 overflow-hidden rounded-t-[14px]">
+    <article className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden rounded-lg border border-neutral-200/90 bg-surface text-left antialiased shadow-sm ring-1 ring-neutral-950/5">
+      <div className="shrink-0 overflow-hidden rounded-t-lg">
         <ProductCardGallery urls={imageUrls} alt={product.name} href={href} priority={priority} />
       </div>
 

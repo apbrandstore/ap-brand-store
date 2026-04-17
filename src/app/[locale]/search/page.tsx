@@ -86,7 +86,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     href={`/categories/${cat.slug}`}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "sm" }),
-                      "rounded-full border border-neutral-200 bg-white px-4 text-text shadow-sm hover:bg-neutral-50",
+                      "rounded-sm border border-neutral-200 bg-white px-4 text-text shadow-sm hover:bg-neutral-50",
                     )}
                   >
                     {cat.name}
@@ -109,7 +109,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     href={buildSearchHref(label, 1)}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "sm" }),
-                      "rounded-full border border-violet-200/80 bg-violet-50/80 px-4 text-text hover:bg-violet-100/80",
+                      "rounded-sm border border-violet-200/80 bg-violet-50/80 px-4 text-text hover:bg-violet-100/80",
                     )}
                   >
                     {label}

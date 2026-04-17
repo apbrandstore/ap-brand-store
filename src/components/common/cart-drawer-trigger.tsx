@@ -44,7 +44,7 @@ export function CartTrigger({ variant }: CartTriggerProps) {
     >
       <span className="relative inline-flex">
         <ShoppingCart className="size-[26px] shrink-0" strokeWidth={1.75} aria-hidden />
-        <span className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] translate-x-px -translate-y-px items-center justify-center rounded-md bg-danger px-1 text-[10px] font-semibold leading-none text-white tabular-nums">
+        <span className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] translate-x-px -translate-y-px items-center justify-center rounded-sm bg-danger px-1 text-[10px] font-semibold leading-none text-white tabular-nums">
           {itemCount > 99 ? "99+" : itemCount}
         </span>
       </span>
@@ -106,7 +106,7 @@ export function MobileFloatingCartButton() {
     >
       <span className="relative inline-flex">
         <ShoppingCart className="size-7 shrink-0" strokeWidth={2} aria-hidden />
-        <span className="absolute -top-1 -right-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-md bg-danger px-1 text-[10px] font-semibold leading-none text-white tabular-nums">
+        <span className="absolute -top-1 -right-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-sm bg-danger px-1 text-[10px] font-semibold leading-none text-white tabular-nums">
           {itemCount > 99 ? "99+" : itemCount}
         </span>
       </span>

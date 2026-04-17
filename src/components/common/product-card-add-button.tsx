@@ -36,8 +36,8 @@ export function ProductCardAddButton({ product, productName, variant = "default"
       className={cn(
         "flex w-full cursor-pointer items-center justify-center text-white transition-colors duration-200 ease-out",
         isCard
-          ? "gap-2 rounded-full py-2.5 text-sm font-medium bg-primary hover:bg-primary/90 active:bg-primary/95"
-          : "h-8 gap-1 rounded-lg text-[11px] font-semibold sm:h-9 sm:gap-1.5 sm:text-[13px] bg-primary hover:bg-primary/90",
+          ? "gap-2 rounded-md py-2.5 text-sm font-medium bg-primary hover:bg-primary/90 active:bg-primary/95"
+          : "h-8 gap-1 rounded-md text-[11px] font-semibold sm:h-9 sm:gap-1.5 sm:text-[13px] bg-primary hover:bg-primary/90",
         "disabled:cursor-not-allowed disabled:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-300",
       )}
     >

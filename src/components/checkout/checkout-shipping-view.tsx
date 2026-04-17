@@ -203,7 +203,7 @@ export function CheckoutShippingView() {
         <p className="mb-6 text-text/80">{t("empty")}</p>
         <Link
           href="/#products"
-          className="inline-flex rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white hover:bg-primary/90"
+          className="inline-flex rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white hover:bg-primary/90"
         >
           {t("continueShopping")}
         </Link>
@@ -215,7 +215,7 @@ export function CheckoutShippingView() {
   const displayShipping = selectedMethodObject ? selectedMethodObject.price : shippingCost;
 
   const inputClass =
-    "w-full rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm text-text outline-none placeholder:text-neutral-400 focus:border-neutral-400 focus:ring-2 focus:ring-primary/20";
+    "w-full rounded-md border border-neutral-200 bg-white px-3 py-2.5 text-sm text-text outline-none placeholder:text-neutral-400 focus:border-neutral-400 focus:ring-2 focus:ring-primary/20";
 
   return (
     <div className="min-w-0 max-w-full bg-white pb-12 pt-6 md:pb-16 md:pt-8">
@@ -321,7 +321,7 @@ export function CheckoutShippingView() {
                   <label
                     key={opt.method_public_id}
                     className={cn(
-                      "flex min-w-0 cursor-pointer items-start gap-2 rounded-lg border p-3 transition-colors sm:gap-3 sm:p-4",
+                      "flex min-w-0 cursor-pointer items-start gap-2 rounded-md border p-3 transition-colors sm:gap-3 sm:p-4",
                       selected ? "border-text bg-white ring-1 ring-text" : "border-neutral-200 hover:border-neutral-300",
                     )}
                   >
@@ -356,7 +356,7 @@ export function CheckoutShippingView() {
                 key={`${item.product_public_id}-${item.variant_public_id ?? "default"}`}
                 className="flex min-w-0 gap-2 sm:gap-3"
               >
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-white">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-white">
                   <Image
                     src={item.image_url ?? "/placeholders/hero.svg"}
                     alt={item.name}
@@ -364,7 +364,7 @@ export function CheckoutShippingView() {
                     sizes="64px"
                     className="object-contain p-1"
                   />
-                  <span className="absolute left-1 top-1 flex size-5 items-center justify-center rounded-md bg-text text-[10px] font-bold text-white">
+                  <span className="absolute left-1 top-1 flex size-5 items-center justify-center rounded-sm bg-text text-[10px] font-bold text-white">
                     {item.quantity}
                   </span>
                 </div>
@@ -402,7 +402,7 @@ export function CheckoutShippingView() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 flex h-12 w-full items-center justify-center rounded-lg bg-neutral-950 text-sm font-semibold text-white transition-colors hover:bg-neutral-900"
+            className="mt-6 flex h-12 w-full items-center justify-center rounded-md bg-neutral-950 text-sm font-semibold text-white transition-colors hover:bg-neutral-900"
           >
             {t("continueToPayment")}
           </button>

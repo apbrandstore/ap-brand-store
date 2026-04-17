@@ -248,7 +248,7 @@ export function MobileNavDrawer({
     <>
       <button
         type="button"
-        className="flex size-10 shrink-0 items-center justify-center rounded-lg text-white md:hidden hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
+        className="flex size-10 shrink-0 items-center justify-center rounded-md text-white md:hidden hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
         aria-label={menuTitle}
         aria-expanded={open}
         aria-controls={panelId}
@@ -300,7 +300,7 @@ export function MobileNavDrawer({
                   </h2>
                   <button
                     type="button"
-                    className="flex size-10 items-center justify-center rounded-lg text-white transition hover:bg-white/10"
+                    className="flex size-10 items-center justify-center rounded-md text-white transition hover:bg-white/10"
                     aria-label="Close menu"
                     onClick={close}
                   >

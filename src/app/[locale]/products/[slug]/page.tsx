@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Star, Truck, RotateCcw, ShieldCheck } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { ProductDetailAccordions } from "@/components/product/product-detail-accordions";
 import { ProductDetailBuySection } from "@/components/product/product-detail-buy-section";
+import { ProductDetailSkuRow } from "@/components/product/product-detail-sku-row";
 import { ProductGallery } from "@/components/product/product-gallery";
+import { VariantSelectionProvider } from "@/components/product/product-variant-selection";
 import { ProductCard } from "@/components/common/product-card";
 import { PageContainer } from "@/components/layout/page-container";
 import { Link, routing, type Locale } from "@/i18n/routing";
@@ -72,7 +74,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
       : null;
   const detailBullets = [product.description];
 
-  const accordionItems = [{ id: "product-details", title: tDetail("sectionProductDetails"), body: "" }];
+  const accordionItems = [
+    { id: "product-details", title: tDetail("sectionProductDetails"), body: "" },
+  ];
 
   const categoryLabel = categoryDisplayName(product.category_name);
   const galleryImages = product.images.length
@@ -80,37 +84,37 @@ export default async function ProductDetailPage({ params }: PageProps) {
     : [product.image_url || "/placeholders/hero.svg"];
 
   return (
-    <div className="bg-surface">
-      <section className="bg-white pb-16 lg:pb-24">
+    <div className="bg-background">
+      <section className="bg-white pb-12 lg:pb-20">
         <PageContainer>
-          <nav className="py-4 text-sm text-neutral-500" aria-label="Breadcrumb">
-            <ol className="flex flex-wrap items-center gap-1.5">
+          {/* Breadcrumb */}
+          <nav className="py-4 text-sm text-neutral-400" aria-label="Breadcrumb">
+            <ol className="flex flex-wrap items-center gap-1">
               <li>
-                <Link href="/" className="transition-colors hover:text-emerald-700">
+                <Link href="/" className="transition-colors hover:text-primary">
                   {tDetail("breadcrumbHome")}
                 </Link>
               </li>
-              <li aria-hidden className="text-neutral-400">
-                <ChevronRight className="size-3.5" strokeWidth={2} />
+              <li aria-hidden>
+                <ChevronRight className="size-3.5 text-neutral-300" strokeWidth={2.5} />
               </li>
               <li>
-                <Link href="/#products" className="transition-colors hover:text-emerald-700">
+                <Link href="/#products" className="transition-colors hover:text-primary">
                   {tDetail("breadcrumbProducts")}
                 </Link>
               </li>
-              <li aria-hidden className="text-neutral-400">
-                <ChevronRight className="size-3.5" strokeWidth={2} />
+              <li aria-hidden>
+                <ChevronRight className="size-3.5 text-neutral-300" strokeWidth={2.5} />
               </li>
-              <li className="text-neutral-500">{categoryLabel}</li>
-              <li aria-hidden className="text-neutral-400">
-                <ChevronRight className="size-3.5" strokeWidth={2} />
+              <li className="max-w-[min(100%,28rem)] truncate font-thin text-neutral-600">
+                {productName}
               </li>
-              <li className="max-w-[min(100%,28rem)] truncate font-medium text-text">{productName}</li>
             </ol>
           </nav>
 
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-            <div className="min-w-0 lg:max-w-none">
+          <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:gap-12 xl:grid-cols-[1fr_460px] xl:gap-16">
+            {/* Gallery — full height, no sticky */}
+            <div className="min-w-0">
               <ProductGallery
                 images={galleryImages}
                 productName={productName}
@@ -118,68 +122,114 @@ export default async function ProductDetailPage({ params }: PageProps) {
               />
             </div>
 
-            <div className="flex min-w-0 flex-col gap-5 lg:ps-2 xl:ps-6">
-              <h1 className="text-2xl font-bold tracking-tight text-text sm:text-3xl lg:text-[1.75rem] lg:leading-snug">
+            {/* Product info — sticky on desktop */}
+            <div className="flex min-w-0 flex-col gap-0 lg:sticky lg:top-24 lg:self-start">
+              {/* Category chip */}
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
+                {categoryLabel}
+              </p>
+
+              <h1 className="text-2xl font-thin leading-snug tracking-tight text-text sm:text-3xl">
                 {productName}
               </h1>
 
-              <div className="flex flex-col gap-1 text-xs text-neutral-500 sm:flex-row sm:flex-wrap sm:gap-x-6">
-                <span>
-                  {tDetail("skuLabel")} {product.public_id}
-                </span>
+              {/* Rating placeholder */}
+              <div className="mt-2 flex items-center gap-2">
+                <div className="flex items-center gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`size-3.5 ${i < 4 ? "fill-accent text-accent" : "fill-neutral-200 text-neutral-200"}`}
+                      strokeWidth={0}
+                    />
+                  ))}
+                </div>
+                <span className="text-xs text-neutral-400">4.0</span>
               </div>
 
-              <div className="space-y-4 border-b border-neutral-100 pb-8">
-                {product.original_price != null ? (
-                  <div>
-                    <p className="price-display-eyebrow">{tDetail("nowLabel")}</p>
-                    <p className="price-display-hero mt-1.5">{formatMoney(unitPrice, activeLocale)}</p>
-                    <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-                      <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
-                        <span className="price-display-eyebrow-neutral">{tDetail("wasLabel")}</span>
-                        <span className="price-display-compare">
-                          {formatMoney(product.original_price, activeLocale)}
-                        </span>
+              <VariantSelectionProvider variants={product.variants}>
+                <ProductDetailSkuRow />
+
+                {/* Price block */}
+                <div className="mt-5 rounded-lg bg-neutral-50 px-4 py-4 sm:px-5">
+                  {product.original_price != null ? (
+                    <>
+                      <p className="price-display-eyebrow">{tDetail("nowLabel")}</p>
+                      <p className="price-display-hero mt-1">{formatMoney(unitPrice, activeLocale)}</p>
+                      <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+                        <div className="flex items-baseline gap-2">
+                          <span className="price-display-eyebrow-neutral">{tDetail("wasLabel")}</span>
+                          <span className="price-display-compare">
+                            {formatMoney(product.original_price, activeLocale)}
+                          </span>
+                        </div>
+                        {discountPercent != null ? (
+                          <span className="price-display-discount-pill">
+                            {tDetail("priceDiscount", { percent: discountPercent })}
+                          </span>
+                        ) : null}
                       </div>
-                      {discountPercent != null ? (
-                        <span className="price-display-discount-pill">
-                          {tDetail("priceDiscount", { percent: discountPercent })}
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
-                ) : (
-                  <p className="price-display-hero">{formatMoney(unitPrice, activeLocale)}</p>
-                )}
-              </div>
+                    </>
+                  ) : (
+                    <p className="price-display-hero">{formatMoney(unitPrice, activeLocale)}</p>
+                  )}
+                </div>
 
-              <ProductDetailBuySection
-                productPublicId={product.public_id}
-                productName={productName}
-                unitPrice={unitPrice}
-                imageUrl={product.image_url}
-                stockStatus={product.stock_status}
-                variants={product.variants}
-              />
+                {/* Divider */}
+                <div className="my-5 h-px bg-neutral-100" />
 
-              <div className="pt-2">
-                <ProductDetailAccordions
-                  items={accordionItems}
-                  bulletParagraphs={detailBullets}
-                  bulletItemId="product-details"
-                  defaultOpenId="product-details"
+                {/* Variant picker + buy section */}
+                <ProductDetailBuySection
+                  productPublicId={product.public_id}
+                  productName={productName}
+                  unitPrice={unitPrice}
+                  imageUrl={product.image_url}
+                  stockStatus={product.stock_status}
                 />
+              </VariantSelectionProvider>
+
+              {/* Trust badges */}
+              <div className="mt-5 grid grid-cols-3 gap-2 rounded-lg border border-neutral-100 bg-neutral-50 p-3">
+                <div className="flex flex-col items-center gap-1 text-center">
+                  <Truck className="size-5 text-primary" strokeWidth={1.8} />
+                  <span className="text-[10px] font-semibold leading-tight text-neutral-500">
+                    Fast Delivery
+                  </span>
+                </div>
+                <div className="flex flex-col items-center gap-1 text-center">
+                  <RotateCcw className="size-5 text-primary" strokeWidth={1.8} />
+                  <span className="text-[10px] font-semibold leading-tight text-neutral-500">
+                    Easy Returns
+                  </span>
+                </div>
+                <div className="flex flex-col items-center gap-1 text-center">
+                  <ShieldCheck className="size-5 text-primary" strokeWidth={1.8} />
+                  <span className="text-[10px] font-semibold leading-tight text-neutral-500">
+                    Secure Payment
+                  </span>
+                </div>
               </div>
+
+              {/* Divider */}
+              <div className="mt-5" />
+
+              {/* Accordions */}
+              <ProductDetailAccordions
+                items={accordionItems}
+                bulletParagraphs={detailBullets}
+                bulletItemId="product-details"
+                defaultOpenId="product-details"
+              />
             </div>
           </div>
         </PageContainer>
       </section>
 
       {relatedProducts.length > 0 ? (
-        <section className="border-t border-neutral-100 bg-surface py-10">
+        <section className="border-t border-neutral-100 bg-background py-10">
           <PageContainer>
-            <h2 className="mb-5 text-xl font-semibold text-text">{tDetail("breadcrumbProducts")}</h2>
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <h2 className="mb-6 text-xl font-bold text-text">{tDetail("breadcrumbProducts")}</h2>
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {relatedProducts.map((related) => (
                 <ProductCard key={related.public_id} product={related} />
               ))}

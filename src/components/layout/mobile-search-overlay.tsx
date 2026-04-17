@@ -56,11 +56,11 @@ export function MobileSearchOverlay({
         aria-label={openSearchAriaLabel}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="flex w-full min-w-0 items-center rounded-full border border-black/5 bg-white py-1 pl-4 pr-1 text-start shadow-sm transition hover:bg-neutral-50"
+        className="flex w-full min-w-0 items-center rounded-md border border-black/5 bg-white py-1 pl-4 pr-1 text-start shadow-sm transition hover:bg-neutral-50"
       >
         <span className="min-h-9 min-w-0 flex-1 truncate py-2 text-sm text-text/45">{placeholder}</span>
         <span
-          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-white"
+          className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-white"
           aria-hidden
         >
           <Search className="size-[18px]" strokeWidth={2} />
@@ -80,7 +80,7 @@ export function MobileSearchOverlay({
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label={closeLabel}
-                  className="flex size-11 items-center justify-center rounded-lg text-text transition hover:bg-black/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="flex size-11 items-center justify-center rounded-md text-text transition hover:bg-black/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   <X className="size-6" strokeWidth={2} aria-hidden />
                 </button>

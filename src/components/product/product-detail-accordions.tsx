@@ -1,7 +1,9 @@
 "use client";
 
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+
+import { cn } from "@/lib/utils";
 
 export type AccordionItem = {
   id: string;
@@ -27,37 +29,45 @@ export function ProductDetailAccordions({
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className="border-t border-neutral-200">
+    <div className="divide-y divide-neutral-100 rounded-lg border border-neutral-100">
       {items.map((item) => {
         const open = openId === item.id;
         const bullets =
-          bulletParagraphs && item.id === bulletItemId ? bulletParagraphs.filter((p) => p.trim().length > 0) : null;
+          bulletParagraphs && item.id === bulletItemId
+            ? bulletParagraphs.filter((p) => p.trim().length > 0)
+            : null;
 
         return (
-          <div key={item.id} className="border-b border-neutral-200">
+          <div key={item.id}>
             <button
               type="button"
               onClick={() => setOpenId(open ? null : item.id)}
               aria-expanded={open}
-              className="flex w-full items-center justify-between gap-4 py-4 text-start transition-colors hover:bg-primary/[0.04]"
+              className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-start transition-colors hover:bg-neutral-50"
             >
-              <span className="text-sm font-bold tracking-wide text-text uppercase">{item.title}</span>
-              {open ? (
-                <ChevronUp className="size-5 shrink-0 text-text" strokeWidth={2} aria-hidden />
-              ) : (
-                <ChevronDown className="size-5 shrink-0 text-neutral-400" strokeWidth={2} aria-hidden />
-              )}
+              <span className="text-sm font-bold uppercase tracking-widest text-text">
+                {item.title}
+              </span>
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 text-neutral-400 transition-transform duration-200",
+                  open && "rotate-180 text-primary",
+                )}
+                strokeWidth={2.5}
+                aria-hidden
+              />
             </button>
+
             {open ? (
-              <div className="pb-5">
+              <div className="px-4 pb-4 pt-0.5">
                 {bullets?.length ? (
-                  <ul className="list-disc space-y-2.5 ps-5 text-sm leading-relaxed text-text/85 marker:text-emerald-600">
+                  <ul className="list-disc space-y-2 ps-4 text-sm leading-relaxed text-neutral-600 marker:text-primary">
                     {bullets.map((paragraph, index) => (
                       <li key={index}>{paragraph}</li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm leading-relaxed text-text/85">{item.body}</p>
+                  <p className="text-sm leading-relaxed text-neutral-600">{item.body}</p>
                 )}
               </div>
             ) : null}

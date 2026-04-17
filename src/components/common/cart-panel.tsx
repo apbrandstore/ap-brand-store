@@ -45,7 +45,7 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
         {!hydrated ? (
           <p className="text-sm text-text/70">{states("loading")}</p>
         ) : items.length === 0 ? (
-          <p className="rounded-lg border border-dashed border-primary/30 p-4 text-sm text-text/80">
+          <p className="rounded-md border border-dashed border-primary/30 p-4 text-sm text-text/80">
             {t("empty")}
           </p>
         ) : (
@@ -55,7 +55,7 @@ export function CartPanel({ open, onClose }: CartPanelProps) {
                 key={`${item.product_public_id}-${item.variant_public_id ?? "default"}`}
                 className="card flex items-center gap-3"
               >
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-surface">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-surface">
                   <Image
                     src={item.image_url ?? "/placeholders/hero.svg"}
                     alt={item.name}

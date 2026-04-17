@@ -180,7 +180,7 @@ export function StorefrontLiveSearch({
   }, [trimmed, router, onAfterNavigate]);
 
   const panelClass = cn(
-    "live-search-panel-scroll overflow-y-auto rounded-xl border border-black/10 bg-white py-2",
+    "live-search-panel-scroll overflow-y-auto rounded-lg border border-black/10 bg-white py-2",
     mode === "desktop"
       ? "absolute start-0 end-0 top-[calc(100%+0.35rem)] z-[60] max-h-[min(70vh,520px)] shadow-xl ring-1 ring-black/5"
       : "mt-3 min-h-0 flex-1 shadow-md",
@@ -194,7 +194,7 @@ export function StorefrontLiveSearch({
       <form
         role="search"
         className={cn(
-          "flex w-full items-center rounded-full border border-black/5 bg-white py-1 ps-4 pe-1 shadow-sm",
+          "flex w-full items-center rounded-md border border-black/5 bg-white py-1 ps-4 pe-1 shadow-sm",
           mode === "mobile" && "relative border-violet-200 py-1 pe-2",
         )}
         onSubmit={(e) => {
@@ -226,7 +226,7 @@ export function StorefrontLiveSearch({
           type="submit"
           aria-label={submitAriaLabel}
           className={cn(
-            "inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary text-white transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+            "inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-white transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
             mode === "mobile" &&
               "absolute end-2 top-1/2 z-[1] -translate-y-1/2 bg-transparent text-text hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
           )}
@@ -294,7 +294,7 @@ export function StorefrontLiveSearch({
                     href={`/categories/${cat.slug}`}
                     role="option"
                     aria-selected={false}
-                    className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-text hover:bg-neutral-100"
+                    className="rounded-sm border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-text hover:bg-neutral-100"
                     onClick={() => {
                       setPanelOpen(false);
                       onAfterNavigate?.();
@@ -319,7 +319,7 @@ export function StorefrontLiveSearch({
                     type="button"
                     role="option"
                     aria-selected={false}
-                    className="rounded-full border border-violet-200/80 bg-violet-50/90 px-3 py-1 text-xs font-medium text-text hover:bg-violet-100"
+                    className="rounded-sm border border-violet-200/80 bg-violet-50/90 px-3 py-1 text-xs font-medium text-text hover:bg-violet-100"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => {
                       setQuery(label);
@@ -346,7 +346,7 @@ export function StorefrontLiveSearch({
                 onAfterNavigate?.();
               }}
             >
-              <div className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-neutral-100">
+              <div className="relative size-12 shrink-0 overflow-hidden rounded-sm bg-neutral-100">
                 {p.image_url ? (
                   <Image
                     src={p.image_url}
@@ -376,7 +376,7 @@ export function StorefrontLiveSearch({
             <div className="border-t border-neutral-100 px-2 pt-1 pb-2">
               <button
                 type="button"
-                className="w-full rounded-lg px-3 py-2.5 text-start text-sm font-semibold text-primary hover:bg-primary/5"
+                className="w-full rounded-md px-3 py-2.5 text-start text-sm font-semibold text-primary hover:bg-primary/5"
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => goSearchPage()}
               >
