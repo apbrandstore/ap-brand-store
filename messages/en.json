@@ -86,11 +86,9 @@
     "brandMark": "Sarar",
     "brandMarkAria": "Brand",
     "producerCodeLabel": "Manufacturer code",
-    "skuLabel": "SKU",
     "skuSelectOptions": "Select options to view SKU",
     "selectOptionsToOrder": "Select options",
     "nowLabel": "Now",
-    "effectivePriceLabel": "Your price",
     "wasLabel": "Was",
     "priceDiscount": "(-{percent}%)",
     "colorLabel": "Color",
@@ -101,7 +99,9 @@
     "shareProduct": "Share this product",
     "swatchCream": "Cream finish",
     "swatchGraphite": "Graphite finish",
-    "sectionProductDetails": "Product details"
+    "sectionProductDetails": "Product details",
+    "sectionExtraDetails": "Extra details",
+    "relatedProductsTitle": "You may also like"
   },
   "productCopy": {
     "royalSapphireKettle": {

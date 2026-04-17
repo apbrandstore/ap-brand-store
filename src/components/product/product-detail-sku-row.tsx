@@ -27,17 +27,15 @@ export function ProductDetailSkuRow() {
 
   if (skuDisplay.mode === "prompt") {
     return (
-      <p className="mt-2 text-xs text-neutral-400">
-        {tDetail("skuLabel")}{" "}
-        <span className="font-normal text-neutral-500">{tDetail("skuSelectOptions")}</span>
+      <p className="mt-2 text-xs font-normal text-neutral-500">
+        {tDetail("skuSelectOptions")}
       </p>
     );
   }
 
   return (
-    <p className="mt-2 text-xs text-neutral-400">
-      {tDetail("skuLabel")}{" "}
-      <span className="tabular-nums text-neutral-600">{skuDisplay.sku}</span>
+    <p className="mt-2 text-xs tabular-nums text-neutral-600">
+      {skuDisplay.sku}
     </p>
   );
 }

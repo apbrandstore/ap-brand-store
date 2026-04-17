@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ChevronRight, Star, Truck, RotateCcw, ShieldCheck } from "lucide-react";
+import { BadgeCheck, ChevronRight, Truck, RotateCcw, ShieldCheck } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -13,11 +13,14 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Link, routing, type Locale } from "@/i18n/routing";
 import { categoryDisplayName } from "@/lib/category-display";
 import { formatMoney, parseDecimal } from "@/lib/format";
+import { buildProductGalleryImageUrls } from "@/lib/product-gallery";
+import { buildProductExtraDetailLines, splitProductDescriptionBullets } from "@/lib/product-extra-fields";
 import {
   getStorefrontProductDetail,
   getStorefrontProductSlugs,
   getStorefrontRelatedProducts,
 } from "@/lib/products";
+import { getStorefrontStorePublic } from "@/lib/storefront";
 
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -54,9 +57,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
   setRequestLocale(locale);
   const activeLocale = locale as Locale;
 
-  const [product, relatedProducts] = await Promise.all([
+  const [product, relatedProducts, store] = await Promise.all([
     getStorefrontProductDetail(slug),
     getStorefrontRelatedProducts(slug),
+    getStorefrontStorePublic(),
   ]);
   if (!product) {
     notFound();
@@ -72,16 +76,33 @@ export default async function ProductDetailPage({ params }: PageProps) {
           Math.round((1 - parseDecimal(product.price) / parseDecimal(product.original_price)) * 100),
         )
       : null;
-  const detailBullets = [product.description];
+  const descriptionBullets = splitProductDescriptionBullets(product.description ?? "");
+  const extraDetailLines = buildProductExtraDetailLines(
+    store.extra_field_schema,
+    product.extra_data,
+  );
+  const hasDescription = descriptionBullets.length > 0;
+  const hasExtras = extraDetailLines.length > 0;
 
   const accordionItems = [
-    { id: "product-details", title: tDetail("sectionProductDetails"), body: "" },
+    ...(hasDescription || !hasExtras
+      ? [{ id: "product-details" as const, title: tDetail("sectionProductDetails"), body: "" }]
+      : []),
+    ...(hasExtras
+      ? [{ id: "extra-details" as const, title: tDetail("sectionExtraDetails"), body: "" }]
+      : []),
   ];
 
+  const bulletParagraphsByItemId: Record<string, string[]> = {};
+  if (hasDescription || !hasExtras) {
+    bulletParagraphsByItemId["product-details"] = descriptionBullets;
+  }
+  if (hasExtras) {
+    bulletParagraphsByItemId["extra-details"] = extraDetailLines;
+  }
+
   const categoryLabel = categoryDisplayName(product.category_name);
-  const galleryImages = product.images.length
-    ? product.images.map((item) => item.image_url || "/placeholders/hero.svg")
-    : [product.image_url || "/placeholders/hero.svg"];
+  const galleryImages = buildProductGalleryImageUrls(product);
 
   return (
     <div className="bg-background">
@@ -115,17 +136,13 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:gap-12 xl:grid-cols-[1fr_460px] xl:gap-16">
             {/* Gallery — full height, no sticky */}
             <div className="min-w-0">
-              <ProductGallery
-                images={galleryImages}
-                productName={productName}
-                discountPercent={discountPercent}
-              />
+              <ProductGallery images={galleryImages} productName={productName} />
             </div>
 
             {/* Product info — sticky on desktop */}
             <div className="flex min-w-0 flex-col gap-0 lg:sticky lg:top-24 lg:self-start">
               {/* Category chip */}
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-normal text-primary">
                 {categoryLabel}
               </p>
 
@@ -133,19 +150,16 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 {productName}
               </h1>
 
-              {/* Rating placeholder */}
-              <div className="mt-2 flex items-center gap-2">
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`size-3.5 ${i < 4 ? "fill-accent text-accent" : "fill-neutral-200 text-neutral-200"}`}
-                      strokeWidth={0}
-                    />
-                  ))}
+              {product.brand?.trim() ? (
+                <div className="mt-2 flex items-center gap-1.5">
+                  <BadgeCheck
+                    className="size-4 shrink-0 text-primary"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                  <span className="text-sm font-medium text-text">{product.brand.trim()}</span>
                 </div>
-                <span className="text-xs text-neutral-400">4.0</span>
-              </div>
+              ) : null}
 
               <VariantSelectionProvider variants={product.variants}>
                 <ProductDetailSkuRow />
@@ -219,9 +233,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
               {/* Accordions */}
               <ProductDetailAccordions
                 items={accordionItems}
-                bulletParagraphs={detailBullets}
-                bulletItemId="product-details"
-                defaultOpenId="product-details"
+                bulletParagraphsByItemId={bulletParagraphsByItemId}
+                defaultOpenId={accordionItems[0]?.id ?? null}
               />
             </div>
           </div>
@@ -229,9 +242,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </section>
 
       {relatedProducts.length > 0 ? (
-        <section className="border-t border-neutral-100 bg-background py-10">
+        <section className="border-t border-neutral-100 bg-white py-10 md:py-12">
           <PageContainer>
-            <h2 className="mb-6 text-xl font-bold text-text">{tDetail("breadcrumbProducts")}</h2>
+            <h2 className="mb-8 text-center text-2xl font-thin tracking-tight text-text/90 md:mb-10 md:text-3xl">
+              {tDetail("relatedProductsTitle")}
+            </h2>
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {relatedProducts.map((related) => (
                 <ProductCard key={related.public_id} product={related} />

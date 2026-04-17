@@ -123,9 +123,9 @@ function VariantPicker({ detail, onAdded }: PickerProps) {
                     onClick={() => setSelectedValue(slug, value.value_public_id)}
                     aria-pressed={selected}
                     className={cn(
-                      "inline-flex min-h-9 items-center rounded-md px-4 py-2 text-sm font-semibold transition-all duration-150",
+                      "inline-flex min-h-9 cursor-pointer items-center rounded-md px-4 py-2 text-sm font-semibold",
                       selected
-                        ? "bg-primary text-white shadow-sm ring-2 ring-primary ring-offset-1"
+                        ? "bg-primary text-white shadow-sm"
                         : "border border-neutral-200 bg-white text-neutral-800 hover:border-primary/40 hover:bg-primary/[0.04]",
                     )}
                   >
@@ -174,7 +174,7 @@ function VariantPicker({ detail, onAdded }: PickerProps) {
         disabled={!canAdd}
         onClick={handleAdd}
         className={cn(
-          "flex h-12 w-full items-center justify-center gap-2 rounded-md px-4 text-sm font-bold tracking-wide text-white transition-all",
+          "flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md px-4 text-sm font-bold tracking-wide text-white transition-all",
           "bg-primary hover:bg-primary/90 active:scale-[0.98]",
           "disabled:cursor-not-allowed disabled:opacity-50",
         )}
@@ -280,7 +280,7 @@ export function ProductCardVariantModal({ product, productName, variant = "defau
               <button
                 type="button"
                 onClick={fetchDetail}
-                className="text-sm font-semibold text-primary underline underline-offset-2"
+                className="cursor-pointer text-sm font-semibold text-primary underline underline-offset-2"
               >
                 {t("retry")}
               </button>

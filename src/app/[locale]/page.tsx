@@ -45,11 +45,11 @@ export default async function HomePage() {
             categorySections.map((section) => (
               <div key={section.slug} className="space-y-5 md:space-y-6">
                 <header className="mx-auto max-w-4xl px-1 text-center">
-                  <h2 className="text-pretty text-2xl font-extrabold tracking-tight text-text md:text-3xl lg:text-4xl">
+                  <h2 className="text-pretty text-2xl font-light tracking-tight text-text md:text-3xl lg:text-4xl">
                     {section.name}
                   </h2>
                   {section.description ? (
-                    <p className="mx-auto mt-3 max-w-3xl text-pretty text-base font-medium leading-relaxed text-text/85 md:mt-4 md:text-lg md:leading-relaxed">
+                    <p className="mx-auto mt-3 max-w-3xl text-pretty text-base font-normal leading-snug text-text/85 md:mt-4 md:text-lg md:leading-relaxed">
                       {section.description}
                     </p>
                   ) : null}

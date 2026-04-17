@@ -83,8 +83,6 @@ export function StorefrontLiveSearch({
   const [error, setError] = useState(false);
   const [data, setData] = useState<LiveSearchPayload | null>(null);
 
-  const currency = locale === "bn" ? "BDT" : "USD";
-
   const fetchPayload = useCallback(async (signal: AbortSignal) => {
     const res = await fetch(`/api/storefront/search?q=${encodeURIComponent(debounced)}`, { signal });
     if (!res.ok) {
@@ -362,7 +360,7 @@ export function StorefrontLiveSearch({
                 <p className="truncate text-sm font-medium text-text">{p.name}</p>
                 <p className="mt-0.5 text-xs text-neutral-500">
                   {p.brand ? `${p.brand} · ` : null}
-                  {formatMoney(p.price, locale, currency)}
+                  {formatMoney(p.price, locale)}
                 </p>
               </div>
             </Link>

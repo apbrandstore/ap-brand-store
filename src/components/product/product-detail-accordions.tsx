@@ -14,17 +14,15 @@ export type AccordionItem = {
 
 type ProductDetailAccordionsProps = {
   items: AccordionItem[];
-  /** When set, the matching item id renders as a bullet list instead of `body` */
-  bulletParagraphs?: string[];
-  bulletItemId?: string;
+  /** Bullet list per accordion `id` (description vs specs, etc.). */
+  bulletParagraphsByItemId?: Record<string, string[]>;
   defaultOpenId?: string | null;
 };
 
 export function ProductDetailAccordions({
   items,
-  bulletParagraphs,
-  bulletItemId = "product-details",
-  defaultOpenId = bulletItemId,
+  bulletParagraphsByItemId,
+  defaultOpenId = items[0]?.id ?? null,
 }: ProductDetailAccordionsProps) {
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
@@ -32,10 +30,7 @@ export function ProductDetailAccordions({
     <div className="divide-y divide-neutral-100 rounded-lg border border-neutral-100">
       {items.map((item) => {
         const open = openId === item.id;
-        const bullets =
-          bulletParagraphs && item.id === bulletItemId
-            ? bulletParagraphs.filter((p) => p.trim().length > 0)
-            : null;
+        const bullets = bulletParagraphsByItemId?.[item.id]?.filter((p) => p.trim().length > 0) ?? null;
 
         return (
           <div key={item.id}>
@@ -43,9 +38,9 @@ export function ProductDetailAccordions({
               type="button"
               onClick={() => setOpenId(open ? null : item.id)}
               aria-expanded={open}
-              className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-start transition-colors hover:bg-neutral-50"
+              className="flex w-full cursor-pointer items-center justify-between gap-4 px-4 py-3.5 text-start transition-colors hover:bg-neutral-50"
             >
-              <span className="text-sm font-bold uppercase tracking-widest text-text">
+              <span className="text-sm font-bold uppercase tracking-normal text-text">
                 {item.title}
               </span>
               <ChevronDown
@@ -59,11 +54,13 @@ export function ProductDetailAccordions({
             </button>
 
             {open ? (
-              <div className="px-4 pb-4 pt-0.5">
+              <div className="product-detail-accordion-scroll max-h-[min(22rem,42dvh)] overflow-y-auto overscroll-y-contain px-4 pb-4 pt-0.5 [-webkit-overflow-scrolling:touch] md:max-h-[min(26rem,38dvh)]">
                 {bullets?.length ? (
-                  <ul className="list-disc space-y-2 ps-4 text-sm leading-relaxed text-neutral-600 marker:text-primary">
+                  <ul className="list-disc space-y-2.5 ps-4 text-sm leading-relaxed text-neutral-600 marker:text-primary">
                     {bullets.map((paragraph, index) => (
-                      <li key={index}>{paragraph}</li>
+                      <li key={index} className="min-w-0 break-words ps-0.5">
+                        {paragraph}
+                      </li>
                     ))}
                   </ul>
                 ) : (

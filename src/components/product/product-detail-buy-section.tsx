@@ -1,12 +1,11 @@
 "use client";
 
-import { Share2, ShoppingCart, Zap } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { Share2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useVariantSelection } from "@/components/product/product-variant-selection";
 import { useCart } from "@/hooks/useCart";
 import { useRouter } from "@/i18n/routing";
-import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 type ProductDetailBuySectionProps = {
@@ -32,7 +31,6 @@ export function ProductDetailBuySection({
 }: ProductDetailBuySectionProps) {
   const t = useTranslations("product");
   const tDetail = useTranslations("productDetail");
-  const locale = useLocale() as "en" | "bn";
   const { addItem, openCartPanel, startBuyNow } = useCart();
   const router = useRouter();
   const { variants, selectedValues, setSelectedValue, selectedVariant, optionsByAttribute } =
@@ -100,7 +98,7 @@ export function ProductDetailBuySection({
       {/* Variant selectors */}
       {[...optionsByAttribute.entries()].map(([slug, data]) => (
         <div key={slug}>
-          <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-neutral-500">
+          <p className="mb-2 text-[11px] font-bold uppercase tracking-normal text-neutral-500">
             {data.attribute_name}
             {selectedValues[slug] ? (
               <span className="ml-1.5 font-semibold normal-case tracking-normal text-text">
@@ -119,9 +117,9 @@ export function ProductDetailBuySection({
                   onClick={() => setSelectedValue(slug, value.value_public_id)}
                   aria-pressed={selected}
                   className={cn(
-                    "inline-flex min-h-9 items-center rounded-md px-4 py-2 text-sm font-semibold transition-all duration-150",
+                    "inline-flex min-h-9 cursor-pointer items-center rounded-md px-4 py-2 text-sm font-semibold",
                     selected
-                      ? "bg-primary text-white shadow-sm ring-2 ring-primary ring-offset-1"
+                      ? "bg-primary text-white shadow-sm"
                       : "border border-neutral-200 bg-white text-text hover:border-primary/40 hover:bg-primary/[0.04]",
                   )}
                 >
@@ -132,14 +130,6 @@ export function ProductDetailBuySection({
           </div>
         </div>
       ))}
-
-      {/* Effective variant price */}
-      {variants.length > 0 && selectedVariant ? (
-        <div className="rounded-lg border border-primary/20 bg-primary/[0.05] px-4 py-3">
-          <p className="price-display-eyebrow-neutral">{tDetail("effectivePriceLabel")}</p>
-          <p className="price-display-variant mt-1">{formatMoney(effectivePrice, locale)}</p>
-        </div>
-      ) : null}
 
       {/* Stock status hint */}
       {isLowStock ? (
@@ -166,12 +156,11 @@ export function ProductDetailBuySection({
           disabled={!canPurchase}
           onClick={handleOrderNow}
           className={cn(
-            "flex h-12 w-full items-center justify-center gap-2 rounded-md px-4 text-sm font-bold tracking-wide text-white transition-all",
+            "flex h-12 w-full cursor-pointer items-center justify-center rounded-md px-4 text-sm font-bold tracking-normal text-white transition-all",
             "bg-primary hover:bg-primary/90 active:scale-[0.98]",
             "disabled:cursor-not-allowed disabled:opacity-50",
           )}
         >
-          <Zap className="size-4" strokeWidth={2.5} aria-hidden />
           {canPurchase ? t("orderNow") : !inStock ? t("outOfStock") : tDetail("selectOptionsToOrder")}
         </button>
 
@@ -181,18 +170,17 @@ export function ProductDetailBuySection({
             disabled={!canPurchase}
             onClick={handleAdd}
             className={cn(
-              "flex h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-md border border-neutral-200 bg-white px-3 text-sm font-semibold text-text transition-all",
+              "flex h-11 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-white px-3 text-sm font-semibold text-text transition-all",
               "hover:border-primary/30 hover:bg-primary/[0.04] active:scale-[0.98]",
               "disabled:cursor-not-allowed disabled:opacity-50",
             )}
           >
-            <ShoppingCart className="size-4 shrink-0" strokeWidth={2} aria-hidden />
             {t("addToCart")}
           </button>
           <button
             type="button"
             onClick={handleShare}
-            className="flex size-11 shrink-0 items-center justify-center rounded-md border border-neutral-200 bg-white text-neutral-500 transition-all hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary active:scale-[0.98]"
+            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-white text-neutral-500 transition-all hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary active:scale-[0.98]"
             aria-label={tDetail("shareProduct")}
           >
             <Share2 className="size-4" strokeWidth={2} aria-hidden />
