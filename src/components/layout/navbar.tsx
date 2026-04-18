@@ -108,7 +108,6 @@ export async function Navbar() {
         <DesktopCategoryMegaNav
           ariaLabel={nav("products")}
           browseEyebrow={nav("products")}
-          shopAllInPrefix={nav("products")}
           newBadgeLabel={product("newBadge")}
           categories={categories}
         />

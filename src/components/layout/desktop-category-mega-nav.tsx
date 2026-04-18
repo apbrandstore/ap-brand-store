@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +14,7 @@ const CLOSE_DELAY_MS = 160;
 
 /** Same typography for button vs link (UA button styles can otherwise differ from anchors). */
 const categoryBarItemClass =
-  "inline-flex min-h-9 max-w-none items-center rounded-md px-2 py-1.5 text-sm font-bold leading-tight tracking-wide whitespace-nowrap uppercase md:px-2.5";
+  "inline-flex min-h-9 max-w-none items-center rounded-md px-2 py-1.5 text-sm font-medium leading-tight whitespace-nowrap md:px-2.5";
 
 type NavHrefProps = {
   href: string;
@@ -40,7 +42,6 @@ type DesktopCategoryMegaNavProps = {
   categories: HeaderCategoryNav[];
   ariaLabel: string;
   browseEyebrow: string;
-  shopAllInPrefix: string;
   newBadgeLabel: string;
 };
 
@@ -79,9 +80,9 @@ export function DesktopCategoryMegaNav({
   categories,
   ariaLabel,
   browseEyebrow,
-  shopAllInPrefix,
   newBadgeLabel,
 }: DesktopCategoryMegaNavProps) {
+  const tNav = useTranslations("nav");
   const [openId, setOpenId] = useState<string | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -165,7 +166,7 @@ export function DesktopCategoryMegaNav({
                       type="button"
                       className={cn(
                         categoryBarItemClass,
-                        "cursor-pointer border-0 bg-transparent text-white/90 transition-colors",
+                        "cursor-pointer gap-1 border-0 bg-transparent text-white/90 transition-colors",
                         "hover:bg-white/10 hover:text-white",
                         "focus-visible:bg-white/10 focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
                         isOpen && "bg-white/15 text-white",
@@ -174,7 +175,15 @@ export function DesktopCategoryMegaNav({
                       aria-controls={showPanel && active?.id === category.id ? panelId : undefined}
                       id={`desktop-cat-trigger-${category.id}`}
                     >
-                      {category.label}
+                      <span>{category.label}</span>
+                      <ChevronDown
+                        className={cn(
+                          "pointer-events-none size-3 shrink-0 opacity-90 transition-transform duration-200 ease-out",
+                          isOpen && "-rotate-180",
+                        )}
+                        strokeWidth={1.75}
+                        aria-hidden
+                      />
                     </button>
                   ) : (
                     <NavHref
@@ -220,7 +229,7 @@ export function DesktopCategoryMegaNav({
                     href={active.href}
                     className="shrink-0 text-sm font-semibold text-primary underline-offset-4 hover:underline"
                   >
-                    {shopAllInPrefix} {active.label}
+                    {tNav("megaMenuSeeAllFromCategory")}
                   </NavHref>
                 </div>
 

@@ -14,6 +14,7 @@
   "nav": {
     "home": "Home",
     "products": "Products",
+    "megaMenuSeeAllFromCategory": "See all products from this category",
     "account": "Account",
     "cart": "Cart",
     "flashSale": "Flash Sale",
@@ -248,7 +249,10 @@
     "yourPrice": "Select options to see price"
   },
   "errors": {
-    "title": "Something went wrong",
-    "description": "We could not load this page. Please try again."
+    "title": "This page didn’t load",
+    "description": "That’s on us, not you. Please try again in a moment—most of the time a quick refresh fixes it.",
+    "detailsSummary": "Technical details",
+    "detailsHint": "If this keeps happening, sharing this text with support can help.",
+    "digestLabel": "Reference"
   }
 }
