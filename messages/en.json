@@ -111,6 +111,10 @@
     "brandMarkAria": "Brand",
     "producerCodeLabel": "Manufacturer code",
     "skuSelectOptions": "Select options to view SKU",
+    "copySku": "Copy SKU",
+    "stockMessageLow": "Low stock",
+    "stockMessageSellingOut": "Selling out quickly",
+    "stockMessageAvailable": "Available",
     "selectOptionsToOrder": "Select options",
     "nowLabel": "Now",
     "wasLabel": "Was",
@@ -167,6 +171,8 @@
     "metaDescription": "Enter your shipping details and review your order.",
     "paymentMetaTitle": "Payment",
     "paymentMetaDescription": "Choose cash on delivery or pay via bKash or Nagad.",
+    "orderSuccessMetaTitle": "Order confirmed",
+    "orderSuccessMetaDescription": "Thank you — your order was placed successfully.",
     "back": "Back",
     "shippingAddress": "Shipping Address",
     "orderSummary": "Order Summary",
@@ -381,9 +387,13 @@
   "states": {
     "loading": "Loading storefront...",
     "retry": "Try again",
-    "notFoundTitle": "Page not found",
-    "notFoundDescription": "The page you requested does not exist.",
-    "goHome": "Back to home"
+    "notFoundMetaTitle": "Page not found",
+    "notFoundMetaDescription": "This page does not exist or has been moved.",
+    "notFoundBadge": "404 error",
+    "notFoundTitle": "We can’t find that page",
+    "notFoundDescription": "The link may be broken or the page may have been removed. Try the home page or search the store.",
+    "goHome": "Back to home",
+    "notFoundBrowseSearch": "Search products"
   },
   "variantModal": {
     "title": "Select options",

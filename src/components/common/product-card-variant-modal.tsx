@@ -36,6 +36,7 @@ type PickerProps = {
 
 function VariantPicker({ detail, onAdded }: PickerProps) {
   const t = useTranslations("variantModal");
+  const tDetail = useTranslations("productDetail");
   const productT = useTranslations("product");
   const locale = useLocale() as Locale;
   const { addItem, openCartPanel } = useCart();
@@ -44,7 +45,6 @@ function VariantPicker({ detail, onAdded }: PickerProps) {
 
   const allGroupsSelected = Object.keys(selectedValues).length === optionsByAttribute.size;
   const outOfStock = selectedVariant?.stock_status === "out_of_stock";
-  const isLowStock = selectedVariant?.stock_status === "low_stock";
   const canAdd = allGroupsSelected && selectedVariant != null && !outOfStock;
 
   function handleAdd() {
@@ -156,16 +156,32 @@ function VariantPicker({ detail, onAdded }: PickerProps) {
             <span className="inline-block size-1.5 rounded-full bg-neutral-300" />
             {productT("outOfStock")}
           </p>
-        ) : isLowStock && selectedVariant ? (
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-amber-600">
-            <span className="inline-block size-1.5 rounded-full bg-amber-400" />
-            {t("onlyLeft", { count: selectedVariant.available_quantity })}
-          </p>
-        ) : canAdd ? (
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-success">
-            <span className="inline-block size-1.5 rounded-full bg-success" />
-            {t("inStock")}
-          </p>
+        ) : canAdd && selectedVariant ? (
+          detail.stock_tracking &&
+          selectedVariant.available_quantity != null &&
+          selectedVariant.available_quantity > 0 ? (
+            selectedVariant.available_quantity < 10 ? (
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-red-600">
+                <span className="inline-block size-1.5 rounded-full bg-red-500" />
+                {tDetail("stockMessageLow")}
+              </p>
+            ) : selectedVariant.available_quantity <= 50 ? (
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-yellow-700">
+                <span className="inline-block size-1.5 rounded-full bg-yellow-500" />
+                {tDetail("stockMessageSellingOut")}
+              </p>
+            ) : (
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-success">
+                <span className="inline-block size-1.5 rounded-full bg-success" />
+                {tDetail("stockMessageAvailable")}
+              </p>
+            )
+          ) : (
+            <p className="flex items-center gap-1.5 text-xs font-semibold text-success">
+              <span className="inline-block size-1.5 rounded-full bg-success" />
+              {tDetail("stockMessageAvailable")}
+            </p>
+          )
         ) : null}
       </div>
 

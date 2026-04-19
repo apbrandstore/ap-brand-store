@@ -1,5 +1,3 @@
-import type { PaperbaseOrderCreateResponse } from "@/types/paperbase";
-
 /**
  * sessionStorage key for the shipping-step checkout draft consumed by the payment step.
  */
@@ -48,44 +46,7 @@ export function clearMfsPendingOrderPublicId(): void {
  */
 export const CHECKOUT_PREPAYMENT_STORAGE_KEY = "paperbase-checkout-prepayment";
 
-/**
- * One-shot handoff from `/checkout/payment/mfs` to `/checkout/payment` when an order
- * completes without `requires_payment` so the payment page can show the success state.
- */
-export const CHECKOUT_SUCCESS_HANDOFF_KEY = "paperbase-checkout-success-handoff";
-
 export type CheckoutMfsSuccessProvider = "bkash" | "nagad";
 
-export type CheckoutSuccessHandoffPayload = {
-  order: PaperbaseOrderCreateResponse;
-  payment_method: "cod" | "mfs";
-  /** Present when `payment_method` is MFS so the success screen can show bKash vs Nagad. */
-  mfs_provider?: CheckoutMfsSuccessProvider;
-};
-
-/**
- * In-memory copy survives React Strict Mode remounts: the first effect pass reads
- * sessionStorage and clears it; the second pass must still see the same payload.
- * Cleared after the payment page applies it to React state (see `clearCheckoutSuccessHandoffMemory`).
- */
-let checkoutSuccessHandoffMemory: CheckoutSuccessHandoffPayload | null = null;
-
-/** Read and consume sessionStorage handoff, or replay from memory after Strict remount. */
-export function peekCheckoutSuccessHandoff(): CheckoutSuccessHandoffPayload | null {
-  if (typeof window === "undefined") return checkoutSuccessHandoffMemory;
-  const raw = window.sessionStorage.getItem(CHECKOUT_SUCCESS_HANDOFF_KEY);
-  if (raw) {
-    try {
-      checkoutSuccessHandoffMemory = JSON.parse(raw) as CheckoutSuccessHandoffPayload;
-      window.sessionStorage.removeItem(CHECKOUT_SUCCESS_HANDOFF_KEY);
-    } catch {
-      window.sessionStorage.removeItem(CHECKOUT_SUCCESS_HANDOFF_KEY);
-      checkoutSuccessHandoffMemory = null;
-    }
-  }
-  return checkoutSuccessHandoffMemory;
-}
-
-export function clearCheckoutSuccessHandoffMemory(): void {
-  checkoutSuccessHandoffMemory = null;
-}
+/** @deprecated One-shot handoff to `/checkout/payment` — migrated on payment page load to `/success/[orderId]`. */
+export const LEGACY_CHECKOUT_SUCCESS_HANDOFF_KEY = "paperbase-checkout-success-handoff";

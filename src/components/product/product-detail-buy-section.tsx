@@ -2,6 +2,7 @@
 
 import { Share2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
 import { useVariantSelection } from "@/components/product/product-variant-selection";
 import { useCart } from "@/hooks/useCart";
@@ -39,12 +40,36 @@ export function ProductDetailBuySection({
   const { variants, selectedValues, setSelectedValue, selectedVariant, optionsByAttribute } =
     useVariantSelection();
 
-  const effectiveStockStatus = selectedVariant?.stock_status ?? stockStatus;
+  const resolvedStockStatus = useMemo(() => {
+    if (variants.length === 0) return stockStatus;
+    if (variants.length === 1) {
+      return selectedVariant?.stock_status ?? variants[0].stock_status ?? stockStatus;
+    }
+    return selectedVariant?.stock_status;
+  }, [variants, selectedVariant, stockStatus]);
+
+  const resolvedAvailableQuantity = useMemo(() => {
+    if (!stockTracking) return undefined;
+    if (variants.length === 0) return availableQuantity;
+    if (variants.length === 1) {
+      return selectedVariant?.available_quantity ?? variants[0].available_quantity;
+    }
+    return selectedVariant?.available_quantity;
+  }, [stockTracking, variants, selectedVariant, availableQuantity]);
+
+  const showStockHint = resolvedStockStatus !== undefined;
   const effectivePrice = selectedVariant?.price ?? unitPrice;
-  const inStock = effectiveStockStatus !== "out_of_stock";
-  const isLowStock = effectiveStockStatus === "low_stock";
+  const inStock = resolvedStockStatus !== undefined && resolvedStockStatus !== "out_of_stock";
   const variantResolved = variants.length === 0 || selectedVariant != null;
   const canPurchase = inStock && variantResolved;
+
+  const orderButtonLabel = canPurchase
+    ? t("orderNow")
+    : variants.length > 1 && selectedVariant == null
+      ? tDetail("selectOptionsToOrder")
+      : !inStock
+        ? t("outOfStock")
+        : tDetail("selectOptionsToOrder");
 
   const payload = () => {
     const maxQuantity = !stockTracking
@@ -141,23 +166,39 @@ export function ProductDetailBuySection({
         </div>
       ) : null}
 
-      {/* Stock status hint */}
-      {isLowStock ? (
-        <p className="flex items-center gap-1.5 text-xs font-semibold text-amber-600">
-          <span className="inline-block size-1.5 rounded-full bg-amber-400" />
-          Only a few left in stock
-        </p>
-      ) : !inStock ? (
-        <p className="flex items-center gap-1.5 text-xs font-semibold text-neutral-400">
-          <span className="inline-block size-1.5 rounded-full bg-neutral-300" />
-          Out of stock
-        </p>
-      ) : (
-        <p className="flex items-center gap-1.5 text-xs font-semibold text-success">
-          <span className="inline-block size-1.5 rounded-full bg-success" />
-          In stock
-        </p>
-      )}
+      {/* Stock status — quantity bands when tracking; only after variant pick when multiple variants */}
+      {showStockHint ? (
+        !inStock ? (
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-neutral-400">
+            <span className="inline-block size-1.5 rounded-full bg-neutral-300" />
+            {t("outOfStock")}
+          </p>
+        ) : stockTracking &&
+          resolvedAvailableQuantity != null &&
+          resolvedAvailableQuantity > 0 ? (
+          resolvedAvailableQuantity < 10 ? (
+            <p className="flex items-center gap-1.5 text-xs font-semibold text-red-600">
+              <span className="inline-block size-1.5 rounded-full bg-red-500" />
+              {tDetail("stockMessageLow")}
+            </p>
+          ) : resolvedAvailableQuantity <= 50 ? (
+            <p className="flex items-center gap-1.5 text-xs font-semibold text-yellow-700">
+              <span className="inline-block size-1.5 rounded-full bg-yellow-500" />
+              {tDetail("stockMessageSellingOut")}
+            </p>
+          ) : (
+            <p className="flex items-center gap-1.5 text-xs font-semibold text-success">
+              <span className="inline-block size-1.5 rounded-full bg-success" />
+              {tDetail("stockMessageAvailable")}
+            </p>
+          )
+        ) : (
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-success">
+            <span className="inline-block size-1.5 rounded-full bg-success" />
+            {tDetail("stockMessageAvailable")}
+          </p>
+        )
+      ) : null}
 
       {/* Action buttons */}
       <div className="space-y-2.5">
@@ -171,7 +212,7 @@ export function ProductDetailBuySection({
             "disabled:cursor-not-allowed disabled:opacity-50",
           )}
         >
-          {canPurchase ? t("orderNow") : !inStock ? t("outOfStock") : tDetail("selectOptionsToOrder")}
+          {orderButtonLabel}
         </button>
 
         <div className="flex gap-2">

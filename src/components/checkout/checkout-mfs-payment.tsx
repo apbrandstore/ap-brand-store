@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { formatPaperbaseError } from "@/lib/api/paperbase-errors";
 import { submitMfsPayment } from "@/lib/client/checkout-mfs-api";
+import { writeCheckoutSuccessMeta } from "@/lib/checkout/order-success-meta";
 import { useRouter } from "@/i18n/routing";
 import { parseDecimal } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -17,12 +18,7 @@ import type { Locale } from "@/i18n/routing";
 import { readStoredOrder, writeStoredOrder } from "@/components/orders/order-storage-keys";
 
 import { CheckoutBreadcrumbs } from "./checkout-breadcrumbs";
-import {
-  CHECKOUT_SUCCESS_HANDOFF_KEY,
-  clearMfsPendingOrderPublicId,
-  readMfsPendingOrderPublicId,
-  writeMfsPendingOrderPublicId,
-} from "./checkout-storage-keys";
+import { clearMfsPendingOrderPublicId, readMfsPendingOrderPublicId, writeMfsPendingOrderPublicId } from "./checkout-storage-keys";
 
 import { apiFetchJson } from "@/lib/client/api";
 
@@ -89,18 +85,17 @@ export function CheckoutMfsPayment() {
       return;
     }
     if (!r.requires_payment) {
-      router.replace("/checkout/payment");
+      writeCheckoutSuccessMeta(orderId, { payment_method: "mfs" });
+      clearMfsPendingOrderPublicId();
+      router.replace(`/success/${orderId}`);
       return;
     }
 
     const ps = r.payment_status ?? "none";
     if (ps === "submitted" || ps === "verified") {
-      window.sessionStorage.setItem(
-        CHECKOUT_SUCCESS_HANDOFF_KEY,
-        JSON.stringify({ order: r, payment_method: "mfs" as const }),
-      );
+      writeCheckoutSuccessMeta(orderId, { payment_method: "mfs" });
       clearMfsPendingOrderPublicId();
-      router.replace("/checkout/payment");
+      router.replace(`/success/${orderId}`);
       return;
     }
 
@@ -195,15 +190,11 @@ export function CheckoutMfsPayment() {
         items: next.items,
         payment_method: "mfs",
       });
-      window.sessionStorage.setItem(
-        CHECKOUT_SUCCESS_HANDOFF_KEY,
-        JSON.stringify({
-          order: next,
-          payment_method: "mfs" as const,
-          mfs_provider: provider,
-        }),
-      );
-      router.replace("/checkout/payment");
+      writeCheckoutSuccessMeta(orderPublicId, {
+        payment_method: "mfs",
+        mfs_provider: provider,
+      });
+      router.replace(`/success/${orderPublicId}`);
     } catch (error) {
       const msg = formatPaperbaseError(error);
       if (msg.includes("already been submitted")) {

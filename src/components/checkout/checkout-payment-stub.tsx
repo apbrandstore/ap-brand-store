@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { apiFetchJson } from "@/lib/client/api";
 import { formatPaperbaseError, stockValidationErrors } from "@/lib/api/paperbase-errors";
 import { createMfsOrder } from "@/lib/client/checkout-mfs-api";
+import { writeCheckoutSuccessMeta } from "@/lib/checkout/order-success-meta";
 import { Link, useRouter } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { triggerPurchase } from "@/lib/tracker";
@@ -16,12 +17,10 @@ import type { ProductPrepaymentType } from "@/types/product";
 import { readStoredOrder, writeStoredOrder } from "@/components/orders/order-storage-keys";
 
 import { CheckoutBreadcrumbs } from "./checkout-breadcrumbs";
-import { CheckoutOrderSuccess } from "./checkout-order-success";
 import {
   CHECKOUT_DRAFT_STORAGE_KEY,
   CHECKOUT_PREPAYMENT_STORAGE_KEY,
-  clearCheckoutSuccessHandoffMemory,
-  peekCheckoutSuccessHandoff,
+  LEGACY_CHECKOUT_SUCCESS_HANDOFF_KEY,
   readMfsPendingOrderPublicId,
   writeMfsPendingOrderPublicId,
 } from "./checkout-storage-keys";
@@ -31,6 +30,34 @@ function readStoredPrepayment(): ProductPrepaymentType {
   const raw = window.sessionStorage.getItem(CHECKOUT_PREPAYMENT_STORAGE_KEY);
   if (raw === "full" || raw === "delivery_only") return raw;
   return "none";
+}
+
+type LegacySuccessHandoff = {
+  order: PaperbaseOrderCreateResponse;
+  payment_method: "cod" | "mfs";
+  mfs_provider?: "bkash" | "nagad";
+};
+
+let legacySuccessHandoffMemory: LegacySuccessHandoff | null = null;
+
+/** Read one-shot legacy handoff from sessionStorage (Strict Mode–safe). */
+function peekLegacySuccessHandoff(): LegacySuccessHandoff | null {
+  if (typeof window === "undefined") return legacySuccessHandoffMemory;
+  const raw = window.sessionStorage.getItem(LEGACY_CHECKOUT_SUCCESS_HANDOFF_KEY);
+  if (raw) {
+    try {
+      legacySuccessHandoffMemory = JSON.parse(raw) as LegacySuccessHandoff;
+      window.sessionStorage.removeItem(LEGACY_CHECKOUT_SUCCESS_HANDOFF_KEY);
+    } catch {
+      window.sessionStorage.removeItem(LEGACY_CHECKOUT_SUCCESS_HANDOFF_KEY);
+      legacySuccessHandoffMemory = null;
+    }
+  }
+  return legacySuccessHandoffMemory;
+}
+
+function clearLegacySuccessHandoffMemory(): void {
+  legacySuccessHandoffMemory = null;
 }
 
 type CheckoutDraft = {
@@ -60,9 +87,7 @@ export function CheckoutPaymentStub() {
   const [draft, setDraft] = useState<CheckoutDraft | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
-  const [placedOrder, setPlacedOrder] = useState<PaperbaseOrderCreateResponse | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
-  const [mfsSuccessProvider, setMfsSuccessProvider] = useState<"bkash" | "nagad" | null>(null);
 
   useEffect(() => {
     const stored = readStoredPrepayment();
@@ -71,12 +96,17 @@ export function CheckoutPaymentStub() {
   }, []);
 
   useEffect(() => {
-    const handoff = peekCheckoutSuccessHandoff();
-    if (handoff) {
-      setPlacedOrder(handoff.order);
-      setPaymentMethod(handoff.payment_method);
-      const p = handoff.mfs_provider;
-      setMfsSuccessProvider(p === "bkash" || p === "nagad" ? p : null);
+    const handoff = peekLegacySuccessHandoff();
+    if (handoff?.order?.public_id?.startsWith("ord_")) {
+      writeStoredOrder(handoff.order);
+      writeCheckoutSuccessMeta(handoff.order.public_id, {
+        payment_method: handoff.payment_method,
+        ...(handoff.mfs_provider === "bkash" || handoff.mfs_provider === "nagad"
+          ? { mfs_provider: handoff.mfs_provider }
+          : {}),
+      });
+      router.replace(`/success/${handoff.order.public_id}`);
+      clearLegacySuccessHandoffMemory();
       return;
     }
 
@@ -89,13 +119,7 @@ export function CheckoutPaymentStub() {
     } catch {
       setDraft(null);
     }
-  }, []);
-
-  useEffect(() => {
-    if (placedOrder) {
-      clearCheckoutSuccessHandoffMemory();
-    }
-  }, [placedOrder]);
+  }, [router]);
 
   async function handlePlaceOrder() {
     if (!draft) {
@@ -116,14 +140,15 @@ export function CheckoutPaymentStub() {
         router.push(`/orders/${order.public_id}/payment`);
         return;
       }
-      setPlacedOrder(order);
-      setMfsSuccessProvider(null);
+      writeStoredOrder(order);
+      writeCheckoutSuccessMeta(order.public_id, { payment_method: paymentMethod });
       triggerPurchase({
         order_number: order.order_number,
         total: order.total,
         items: order.items,
         payment_method: paymentMethod,
       });
+      router.replace(`/success/${order.public_id}`);
     } catch (error) {
       const stockErrors = stockValidationErrors(error);
       setErrorText(stockErrors.length ? stockErrors.join(" | ") : formatPaperbaseError(error));
@@ -153,9 +178,7 @@ export function CheckoutPaymentStub() {
           ps === "none" &&
           existing.status === "payment_pending"
         ) {
-          router.push(
-            `/checkout/payment/mfs?orderId=${encodeURIComponent(pendingId)}`,
-          );
+          router.push(`/checkout/payment/mfs?orderId=${encodeURIComponent(pendingId)}`);
           return;
         }
       }
@@ -166,14 +189,14 @@ export function CheckoutPaymentStub() {
 
       if (order.requires_payment !== true) {
         writeStoredOrder(order);
-        setPlacedOrder(order);
-        setMfsSuccessProvider(null);
+        writeCheckoutSuccessMeta(order.public_id, { payment_method: "mfs" });
         triggerPurchase({
           order_number: order.order_number,
           total: order.total,
           items: order.items,
           payment_method: "mfs",
         });
+        router.replace(`/success/${order.public_id}`);
         return;
       }
 
@@ -200,158 +223,136 @@ export function CheckoutPaymentStub() {
     <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
       <CheckoutBreadcrumbs step="payment" />
 
-      <div
-        className={cn(
-          "mx-auto max-w-xl bg-white",
-          placedOrder
-            ? "px-4 pb-10 pt-2 md:px-6"
-            : "rounded-lg border border-neutral-200/60 p-8 shadow-sm md:p-10",
-        )}
-      >
-        {placedOrder ? (
-          <CheckoutOrderSuccess
-            order={placedOrder}
-            paymentMethod={paymentMethod}
-            mfsProvider={mfsSuccessProvider}
-          />
-        ) : (
-          <>
-            <h1 className="text-xl font-semibold text-text">{t("paymentStubHeading")}</h1>
-            <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("paymentStubBody")}</p>
+      <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
+        <h1 className="text-xl font-semibold text-text">{t("paymentStubHeading")}</h1>
+        <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("paymentStubBody")}</p>
 
-            {requiresPrepayment ? (
-              <div className="mt-5 rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-                <p className="font-semibold">{t("prepaymentRequiredTitle")}</p>
-                <p className="mt-1 text-amber-800">
-                  {resolvedPrepayment === "full"
-                    ? t("prepaymentRequiredFullBody")
-                    : t("prepaymentRequiredDeliveryBody")}
-                </p>
-              </div>
-            ) : null}
+        {requiresPrepayment ? (
+          <div className="mt-5 rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <p className="font-semibold">{t("prepaymentRequiredTitle")}</p>
+            <p className="mt-1 text-amber-800">
+              {resolvedPrepayment === "full"
+                ? t("prepaymentRequiredFullBody")
+                : t("prepaymentRequiredDeliveryBody")}
+            </p>
+          </div>
+        ) : null}
 
-            <fieldset className="mt-8">
-              <legend className="text-base font-semibold text-neutral-950">{t("paymentMethodSection")}</legend>
-              <div className="mt-4 grid gap-3">
-                {(() => {
-                  const options = [
-                    {
-                      id: "cod" as const,
-                      title: t("paymentCodTitle"),
-                      description: requiresPrepayment
-                        ? t("paymentCodDisabledPrepayment")
-                        : t("paymentCodDescription"),
-                      disabled: requiresPrepayment,
-                      showComingSoon: false,
-                    },
-                    {
-                      id: "mfs" as const,
-                      title: t("paymentMfsTitle"),
-                      description: requiresPrepayment
-                        ? resolvedPrepayment === "full"
-                          ? t("paymentMfsPrepayFullDescription")
-                          : t("paymentMfsPrepayDeliveryDescription")
-                        : t("paymentMfsComingSoonHint"),
-                      disabled: !requiresPrepayment,
-                      showComingSoon: !requiresPrepayment,
-                    },
-                  ];
-                  return options.map((option) => {
-                    const disabled = option.disabled;
-                    const selected = !disabled && paymentMethod === option.id;
-                    return (
-                      <label
-                        key={option.id}
+        <fieldset className="mt-8">
+          <legend className="text-base font-semibold text-neutral-950">{t("paymentMethodSection")}</legend>
+          <div className="mt-4 grid gap-3">
+            {(() => {
+              const options = [
+                {
+                  id: "cod" as const,
+                  title: t("paymentCodTitle"),
+                  description: requiresPrepayment ? t("paymentCodDisabledPrepayment") : t("paymentCodDescription"),
+                  disabled: requiresPrepayment,
+                  showComingSoon: false,
+                },
+                {
+                  id: "mfs" as const,
+                  title: t("paymentMfsTitle"),
+                  description: requiresPrepayment
+                    ? resolvedPrepayment === "full"
+                      ? t("paymentMfsPrepayFullDescription")
+                      : t("paymentMfsPrepayDeliveryDescription")
+                    : t("paymentMfsComingSoonHint"),
+                  disabled: !requiresPrepayment,
+                  showComingSoon: !requiresPrepayment,
+                },
+              ];
+              return options.map((option) => {
+                const disabled = option.disabled;
+                const selected = !disabled && paymentMethod === option.id;
+                return (
+                  <label
+                    key={option.id}
+                    className={cn(
+                      "flex items-start gap-3 rounded-lg border p-4 transition-colors",
+                      disabled
+                        ? "cursor-not-allowed border-neutral-200 bg-neutral-50/90 opacity-90"
+                        : cn(
+                            "cursor-pointer",
+                            selected
+                              ? "border-neutral-200 bg-primary/10"
+                              : "border-neutral-200 bg-white hover:border-neutral-300",
+                          ),
+                    )}
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value={option.id}
+                      disabled={disabled}
+                      checked={selected}
+                      onChange={() => {
+                        if (!disabled) {
+                          setPaymentMethod(option.id);
+                        }
+                      }}
+                      className={cn(
+                        "mt-0.5 size-4 shrink-0 accent-primary",
+                        disabled && "cursor-not-allowed opacity-60",
+                      )}
+                    />
+                    <span className="min-w-0 text-start">
+                      <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span className="text-sm font-medium text-neutral-950">{option.title}</span>
+                        {option.showComingSoon ? (
+                          <span className="inline-flex shrink-0 rounded-md bg-neutral-200/90 px-2 py-0.5 text-xs font-medium text-neutral-600">
+                            {t("paymentMfsComingSoon")}
+                          </span>
+                        ) : null}
+                        {requiresPrepayment && option.id === "mfs" ? (
+                          <span className="inline-flex shrink-0 rounded-md bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                            {t("paymentMfsPrepayBadge")}
+                          </span>
+                        ) : null}
+                      </span>
+                      <span
                         className={cn(
-                          "flex items-start gap-3 rounded-lg border p-4 transition-colors",
-                          disabled
-                            ? "cursor-not-allowed border-neutral-200 bg-neutral-50/90 opacity-90"
-                            : cn(
-                                "cursor-pointer",
-                                selected
-                                  ? "border-neutral-200 bg-primary/10"
-                                  : "border-neutral-200 bg-white hover:border-neutral-300",
-                              ),
+                          "mt-0.5 block text-sm",
+                          disabled ? "text-neutral-500" : "text-neutral-600",
                         )}
                       >
-                        <input
-                          type="radio"
-                          name="paymentMethod"
-                          value={option.id}
-                          disabled={disabled}
-                          checked={selected}
-                          onChange={() => {
-                            if (!disabled) {
-                              setPaymentMethod(option.id);
-                            }
-                          }}
-                          className={cn(
-                            "mt-0.5 size-4 shrink-0 accent-primary",
-                            disabled && "cursor-not-allowed opacity-60",
-                          )}
-                        />
-                        <span className="min-w-0 text-start">
-                          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <span className="text-sm font-medium text-neutral-950">{option.title}</span>
-                            {option.showComingSoon ? (
-                              <span className="inline-flex shrink-0 rounded-md bg-neutral-200/90 px-2 py-0.5 text-xs font-medium text-neutral-600">
-                                {t("paymentMfsComingSoon")}
-                              </span>
-                            ) : null}
-                            {requiresPrepayment && option.id === "mfs" ? (
-                              <span className="inline-flex shrink-0 rounded-md bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
-                                {t("paymentMfsPrepayBadge")}
-                              </span>
-                            ) : null}
-                          </span>
-                          <span
-                            className={cn(
-                              "mt-0.5 block text-sm",
-                              disabled ? "text-neutral-500" : "text-neutral-600",
-                            )}
-                          >
-                            {option.description}
-                          </span>
-                        </span>
-                      </label>
-                    );
-                  });
-                })()}
-              </div>
-            </fieldset>
-
-            {errorText ? <p className="mt-4 text-sm text-red-600">{errorText}</p> : null}
-
-            <div className="mt-8 flex w-full flex-nowrap items-stretch gap-2 sm:gap-3">
-              <Link
-                href="/checkout"
-                className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-md border border-neutral-300 px-3 py-2.5 text-center text-sm font-semibold text-neutral-700 sm:flex-none sm:px-5 md:min-h-0 hover:bg-neutral-100"
-              >
-                {t("backToShipping")}
-              </Link>
-              <button
-                type="button"
-                onClick={handlePrimaryClick}
-                disabled={loading}
-                className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary/90 disabled:opacity-50 sm:flex-none sm:px-5 md:min-h-0"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="size-5 shrink-0 animate-spin" strokeWidth={2.25} aria-hidden />
-                    <span>
-                      {prepayWithMfs ? t("continuingToPayment") : t("placingOrder")}
+                        {option.description}
+                      </span>
                     </span>
-                  </>
-                ) : prepayWithMfs ? (
-                  t("continueToPaymentPrepay")
-                ) : (
-                  t("placeOrder")
-                )}
-              </button>
-            </div>
+                  </label>
+                );
+              });
+            })()}
+          </div>
+        </fieldset>
 
-          </>
-        )}
+        {errorText ? <p className="mt-4 text-sm text-red-600">{errorText}</p> : null}
+
+        <div className="mt-8 flex w-full flex-nowrap items-stretch gap-2 sm:gap-3">
+          <Link
+            href="/checkout"
+            className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-md border border-neutral-300 px-3 py-2.5 text-center text-sm font-semibold text-neutral-700 sm:flex-none sm:px-5 md:min-h-0 hover:bg-neutral-100"
+          >
+            {t("backToShipping")}
+          </Link>
+          <button
+            type="button"
+            onClick={handlePrimaryClick}
+            disabled={loading}
+            className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary/90 disabled:opacity-50 sm:flex-none sm:px-5 md:min-h-0"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="size-5 shrink-0 animate-spin" strokeWidth={2.25} aria-hidden />
+                <span>{prepayWithMfs ? t("continuingToPayment") : t("placingOrder")}</span>
+              </>
+            ) : prepayWithMfs ? (
+              t("continueToPaymentPrepay")
+            ) : (
+              t("placeOrder")
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
