@@ -380,7 +380,13 @@
     "infoReturns": "Return & refund",
     "infoCancellation": "Cancellation policy",
     "socialFacebook": "Facebook",
+    "socialInstagram": "Instagram",
+    "socialTwitter": "X",
+    "socialYoutube": "YouTube",
+    "socialLinkedin": "LinkedIn",
     "socialTiktok": "TikTok",
+    "socialPinterest": "Pinterest",
+    "socialWebsite": "Website",
     "developedBy": "Developed by",
     "developerName": "Mushfikur Rahman"
   },
