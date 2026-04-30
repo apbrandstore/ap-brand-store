@@ -16,6 +16,7 @@ export type Product = {
   category_name: string;
   extra_data: Record<string, unknown>;
   prepayment_type?: ProductPrepaymentType;
+  variants?: ProductVariant[];
 };
 
 export type ProductVariantOption = {
@@ -42,9 +43,24 @@ export type ProductImage = {
   order: number;
 };
 
-export type ProductDetail = Omit<Product, "variant_count"> & {
+export type ProductDetail = {
+  public_id: string;
+  name: string;
+  slug: string;
+  image_url: string | null;
+  price: string;
+  original_price: string | null;
+  stock_status: "in_stock" | "low_stock" | "out_of_stock";
+  available_quantity: number;
+  brand: string | null;
+  category_public_id: string;
+  category_slug: string;
+  category_name: string;
+  extra_data: Record<string, unknown>;
+  prepayment_type?: ProductPrepaymentType;
   stock_tracking: boolean;
   description: string;
   images: ProductImage[];
   variants: ProductVariant[];
+  related_products: Product[];
 };

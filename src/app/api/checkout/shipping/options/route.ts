@@ -19,7 +19,12 @@ export async function GET(request: NextRequest) {
 
   try {
     const options = await getShippingOptions(zone_public_id, order_total);
-    return Response.json(options);
+    return new Response(JSON.stringify(options), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+      },
+    });
   } catch (error) {
     return paperbaseErrorResponse(error);
   }

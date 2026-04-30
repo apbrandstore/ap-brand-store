@@ -4,7 +4,6 @@ import {
   getCatalogFilters,
   getCategoryBySlug,
   getProductDetail,
-  getRelatedProducts,
   getStorefrontHomeSections,
   listCategories,
   listProducts,
@@ -55,6 +54,7 @@ function mapProductDetail(item: PaperbaseProductDetail): ProductDetail {
     description: item.description,
     images: item.images ?? [],
     variants: item.variants ?? [],
+    related_products: (item.related_products ?? []).map(mapProduct),
     prepayment_type: item.prepayment_type ?? "none",
   };
 }
@@ -115,11 +115,6 @@ export async function getStorefrontProductDetail(identifier: string): Promise<Pr
 export async function getStorefrontProductSlugs(): Promise<string[]> {
   const firstPage = await listProducts({ page: 1 });
   return firstPage.results.map((product) => product.slug);
-}
-
-export async function getStorefrontRelatedProducts(identifier: string): Promise<Product[]> {
-  const response = await getRelatedProducts(identifier);
-  return response.map(mapProduct);
 }
 
 export async function getStorefrontSearchProducts(q: string, page = 1): Promise<Product[]> {

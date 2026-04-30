@@ -17,9 +17,12 @@ const DialogOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof Dialog.Overlay>
 >(({ className, ...props }, ref) => (
   <Dialog.Overlay
+    forceMount
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm",
+      "transition-opacity duration-150 ease-out will-change-[opacity]",
+      "data-[state=open]:opacity-100 data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none",
       className,
     )}
     {...props}
@@ -55,19 +58,19 @@ const DialogContentInner = React.forwardRef<
     <DialogPortal>
       <DialogOverlay />
       <Dialog.Content
+      forceMount
       ref={ref}
       className={cn(
-        "fixed z-50 grid w-full gap-4 bg-white shadow-lg duration-200",
-        "data-[state=open]:animate-in data-[state=closed]:animate-out",
+        "fixed z-50 grid w-full gap-4 bg-white shadow-lg",
+        "transition-[opacity,transform] duration-150 ease-out will-change-[transform,opacity]",
+        "data-[state=open]:opacity-100 data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none",
         // Mobile: slides up from bottom as a bottom sheet
         "bottom-0 left-0 right-0 rounded-t-2xl px-5 pb-8 pt-5 max-h-[92dvh] overflow-y-auto",
-        "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        "translate-y-0 data-[state=closed]:translate-y-1",
         // Desktop: centred dialog
         "sm:bottom-auto sm:left-1/2 sm:right-auto sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2",
         "sm:rounded-xl sm:max-w-md sm:max-h-[90dvh]",
-        "sm:data-[state=closed]:slide-out-to-bottom-[0%] sm:data-[state=open]:slide-in-from-bottom-[0%]",
-        "sm:data-[state=closed]:zoom-out-95 sm:data-[state=open]:zoom-in-95",
-        "sm:data-[state=closed]:fade-out-0 sm:data-[state=open]:fade-in-0",
+        "sm:data-[state=closed]:-translate-y-[calc(50%-4px)] sm:data-[state=open]:-translate-y-1/2",
         className,
       )}
       {...props}

@@ -7,6 +7,7 @@ type DesktopCategoryScrollVisibilityProps = {
 };
 
 export function DesktopCategoryScrollVisibility({ children }: DesktopCategoryScrollVisibilityProps) {
+  const MIN_SCROLL_DELTA_PX = 8;
   const lastScrollYRef = useRef(0);
   const latestScrollYRef = useRef(0);
   const isHiddenRef = useRef(false);
@@ -26,8 +27,7 @@ export function DesktopCategoryScrollVisibility({ children }: DesktopCategoryScr
       const lastY = lastScrollYRef.current;
       const delta = currentY - lastY;
 
-      if (Math.abs(delta) < 2) {
-        lastScrollYRef.current = currentY;
+      if (Math.abs(delta) < MIN_SCROLL_DELTA_PX) {
         return;
       }
 
@@ -83,13 +83,19 @@ export function DesktopCategoryScrollVisibility({ children }: DesktopCategoryScr
   return (
     <div
       className={[
-        "hidden overflow-visible bg-header will-change-transform transition-[transform,opacity,max-height] duration-300 ease-out md:block",
-        isHidden
-          ? "pointer-events-none max-h-0 -translate-y-2 border-t border-transparent opacity-0"
-          : "pointer-events-auto max-h-24 translate-y-0 border-t border-white/15 opacity-100",
+        "absolute inset-x-0 top-full z-30 hidden md:block",
+        isHidden ? "overflow-hidden" : "overflow-visible",
       ].join(" ")}
     >
-      {children}
+      <div
+        className={[
+          "pointer-events-auto bg-header transition-transform duration-200 ease-out will-change-transform",
+          "border-t border-white/15",
+          isHidden ? "pointer-events-none -translate-y-full" : "pointer-events-auto translate-y-0",
+        ].join(" ")}
+      >
+        {children}
+      </div>
     </div>
   );
 }

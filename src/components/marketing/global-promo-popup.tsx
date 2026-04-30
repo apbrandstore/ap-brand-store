@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { X } from "lucide-react";
 import { usePathname } from "@/i18n/routing";
 
 import {
@@ -70,38 +71,51 @@ export function GlobalPromoPopup({ popup }: { popup: PaperbaseStorePopup | null 
 
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
-      <DialogContent showCloseButton={false} className="rounded-none sm:max-w-lg sm:rounded-none">
-        <div className="overflow-hidden border border-neutral-200 bg-neutral-50">
+      <DialogContent
+        showCloseButton={false}
+        className="rounded-none !px-0 !pt-0 sm:max-w-lg sm:rounded-none"
+      >
+        <div className="relative overflow-hidden border border-neutral-200 bg-neutral-50">
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close popup"
+            className="absolute right-3 top-3 z-10 inline-flex size-8 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+          >
+            <X className="size-4" strokeWidth={2.5} aria-hidden />
+          </button>
           {heroImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={heroImage}
               alt=""
               draggable={false}
-              className="h-48 w-full object-cover sm:h-56"
+              className="h-60 w-full object-cover sm:h-72"
             />
           ) : (
-            <div className="h-48 w-full bg-neutral-100 sm:h-56" />
+            <div className="h-60 w-full bg-neutral-100 sm:h-72" />
           )}
         </div>
-        <DialogHeader className="text-center">
-          <DialogTitle className="text-xl">{popup.title}</DialogTitle>
-          <DialogDescription className="mt-1 text-sm text-neutral-600">
-            {descriptionPreview}
-          </DialogDescription>
-        </DialogHeader>
+        <div className="px-5 pb-4 pt-5">
+          <DialogHeader className="text-center">
+            <DialogTitle className="text-xl">{popup.title}</DialogTitle>
+            <DialogDescription className="mt-1 text-sm text-neutral-600">
+              {descriptionPreview}
+            </DialogDescription>
+          </DialogHeader>
 
-        <div className="mt-3 flex items-center justify-center gap-2">
-          {buttonText && buttonLink ? (
-            <a
-              href={buttonLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-10 cursor-pointer items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
-            >
-              {buttonText}
-            </a>
-          ) : null}
+          <div className="mt-3 flex items-center justify-center gap-2">
+            {buttonText && buttonLink ? (
+              <a
+                href={buttonLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 cursor-pointer items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+              >
+                {buttonText}
+              </a>
+            ) : null}
+          </div>
         </div>
       </DialogContent>
     </DialogRoot>

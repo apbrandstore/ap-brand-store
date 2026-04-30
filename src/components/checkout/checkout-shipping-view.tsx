@@ -290,6 +290,11 @@ export function CheckoutShippingView() {
         const { setLineQuantity } = useCartStore.getState();
         const scope = useCartStore.getState().buyNowMap != null ? "checkout" : "cart";
         const snapshot = getCheckoutCartItems();
+        const snapshotItems = snapshot.map((item) => ({
+          product_public_id: item.product_public_id,
+          variant_public_id: item.variant_public_id,
+          quantity: item.quantity,
+        }));
         if (!snapshot.length) {
           if (mounted) {
             setShippingCost("0.00");
@@ -299,36 +304,31 @@ export function CheckoutShippingView() {
         }
 
         try {
-          const changed = await reconcileCheckoutStock(snapshot, { setLineQuantity, scope });
+          const [changed, response] = await Promise.all([
+            reconcileCheckoutStock(snapshot, { setLineQuantity, scope }),
+            apiFetchJson<{
+              shipping_cost: string;
+              final_total: string;
+            }>("/checkout/initiate", {
+              method: "POST",
+              body: JSON.stringify({
+                items: snapshotItems,
+                shipping_zone_public_id: zone,
+                shipping_method_public_id: selectedMethodRef.current || undefined,
+              }),
+            }),
+          ]);
           if (!mounted) return;
           if (changed) {
             setStockAdjustedHint(t("stockAdjustedForCheckout"));
           }
 
-          const items = getCheckoutCartItems().map((item) => ({
-            product_public_id: item.product_public_id,
-            variant_public_id: item.variant_public_id,
-            quantity: item.quantity,
-          }));
-          if (!items.length) {
+          if (!snapshotItems.length) {
             setShippingCost("0.00");
             setFinalTotal("0.00");
             setErrorText(null);
             return;
           }
-
-          const response = await apiFetchJson<{
-            shipping_cost: string;
-            final_total: string;
-          }>("/checkout/initiate", {
-            method: "POST",
-            body: JSON.stringify({
-              items,
-              shipping_zone_public_id: zone,
-              shipping_method_public_id: selectedMethodRef.current || undefined,
-            }),
-          });
-          if (!mounted) return;
           setShippingCost(response.shipping_cost);
           setFinalTotal(response.final_total);
           setErrorText(null);

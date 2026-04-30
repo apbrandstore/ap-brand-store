@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type BannerImageSlide = {
   public_id: string;
@@ -36,20 +36,76 @@ export function BannerImageSlider({
     [images],
   );
   const [index, setIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
+  const [crossfadeActive, setCrossfadeActive] = useState(false);
+  const transitionTimerRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  const CROSSFADE_MS = 400;
 
   useEffect(() => {
     setIndex(0);
+    setPreviousIndex(null);
+    setCrossfadeActive(false);
   }, [slides.length]);
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current != null) {
+        window.clearTimeout(transitionTimerRef.current);
+      }
+      if (rafRef.current != null) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const nextIdx = (index + 1) % slides.length;
+    const nextSrc = slides[nextIdx]?.image_url;
+    if (!nextSrc) return;
+    const preload = new window.Image();
+    preload.src = nextSrc;
+  }, [index, slides]);
+
+  const goTo = (nextIndex: number) => {
+    if (slides.length <= 1) {
+      setIndex(nextIndex);
+      return;
+    }
+    if (nextIndex === index) return;
+    if (transitionTimerRef.current != null) {
+      window.clearTimeout(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
+    if (rafRef.current != null) {
+      window.cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+
+    setPreviousIndex(index);
+    setIndex(nextIndex);
+    setCrossfadeActive(false);
+    rafRef.current = window.requestAnimationFrame(() => {
+      setCrossfadeActive(true);
+      transitionTimerRef.current = window.setTimeout(() => {
+        setCrossfadeActive(false);
+        setPreviousIndex(null);
+      }, CROSSFADE_MS);
+    });
+  };
 
   useEffect(() => {
     if (slides.length <= 1) {
       return;
     }
     const timer = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
+      const nextIdx = (index + 1) % slides.length;
+      goTo(nextIdx);
     }, AUTO_SLIDE_MS);
     return () => window.clearInterval(timer);
-  }, [slides.length]);
+  }, [index, slides.length]);
 
   if (!slides.length) {
     return null;
@@ -57,22 +113,37 @@ export function BannerImageSlider({
 
   return (
     <div className={`relative w-full overflow-hidden ${viewportClassName}`}>
-      <div
-        className="absolute inset-0 flex transition-transform duration-500 ease-out"
-        style={{ transform: `translateX(-${index * 100}%)` }}
-      >
-        {slides.map((slide, idx) => (
-          <div key={slide.public_id || `${slide.order}-${idx}`} className="relative h-full w-full shrink-0">
+      <div className="absolute inset-0">
+        {previousIndex != null && slides[previousIndex]?.image_url ? (
+          <div
+            className={`absolute inset-0 transition-opacity duration-[400ms] ease-out ${
+              crossfadeActive ? "opacity-0" : "opacity-100"
+            }`}
+          >
             <Image
-              src={slide.image_url!}
+              src={slides[previousIndex].image_url!}
               alt={title?.trim() ? title : headlineFallback}
               fill
-              priority={priority && idx === 0}
+              priority={priority && previousIndex === 0}
               sizes="100vw"
               className="object-cover"
             />
           </div>
-        ))}
+        ) : null}
+        <div
+          className={`absolute inset-0 transition-opacity duration-[400ms] ease-out ${
+            previousIndex != null ? (crossfadeActive ? "opacity-100" : "opacity-0") : "opacity-100"
+          }`}
+        >
+          <Image
+            src={slides[index].image_url!}
+            alt={title?.trim() ? title : headlineFallback}
+            fill
+            priority={priority && index === 0}
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
 
       {showTitleOverlay && title?.trim() ? (
@@ -86,7 +157,7 @@ export function BannerImageSlider({
           <button
             type="button"
             aria-label="Previous banner image"
-            onClick={() => setIndex((prev) => (prev - 1 + slides.length) % slides.length)}
+            onClick={() => goTo((index - 1 + slides.length) % slides.length)}
             className="absolute left-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white transition hover:bg-black/50"
           >
             <ChevronLeft className="size-5" aria-hidden />
@@ -94,7 +165,7 @@ export function BannerImageSlider({
           <button
             type="button"
             aria-label="Next banner image"
-            onClick={() => setIndex((prev) => (prev + 1) % slides.length)}
+            onClick={() => goTo((index + 1) % slides.length)}
             className="absolute right-3 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white transition hover:bg-black/50"
           >
             <ChevronRight className="size-5" aria-hidden />
@@ -105,7 +176,7 @@ export function BannerImageSlider({
                 key={`${slide.public_id}-dot`}
                 type="button"
                 aria-label={`Go to banner image ${dotIdx + 1}`}
-                onClick={() => setIndex(dotIdx)}
+                onClick={() => goTo(dotIdx)}
                 className={`h-1.5 rounded-full transition ${
                   dotIdx === index ? "w-5 bg-white" : "w-2.5 bg-white/55"
                 }`}

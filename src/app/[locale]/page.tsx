@@ -121,7 +121,7 @@ export default async function HomePage() {
                         key={product.public_id}
                         product={product}
                         locale={locale as Locale}
-                        priority={sectionIdx === 0 && productIdx < 4}
+                        priority={sectionIdx === 0 && productIdx === 0}
                         aosDelay={(productIdx + 1) * 100}
                       />
                     ))}

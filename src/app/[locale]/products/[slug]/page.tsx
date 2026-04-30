@@ -18,7 +18,6 @@ import { buildProductExtraDetailLines, splitProductDescriptionBullets } from "@/
 import {
   getStorefrontProductDetail,
   getStorefrontProductSlugs,
-  getStorefrontRelatedProducts,
 } from "@/lib/products";
 import { getStorefrontStorePublic } from "@/lib/storefront";
 
@@ -62,9 +61,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
   setRequestLocale(locale);
   const activeLocale = locale as Locale;
 
-  const [product, relatedProducts, store] = await Promise.all([
+  const [product, store] = await Promise.all([
     getStorefrontProductDetail(slug),
-    getStorefrontRelatedProducts(slug),
     getStorefrontStorePublic(),
   ]);
   if (!product) {
@@ -247,14 +245,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </PageContainer>
       </section>
 
-      {relatedProducts.length > 0 ? (
+      {product.related_products.length > 0 ? (
         <section className="border-t border-neutral-100 bg-white py-10 md:py-12">
           <PageContainer>
             <h2 className="mb-8 text-center text-2xl font-thin tracking-tight text-text/90 md:mb-10 md:text-3xl">
               {tDetail("relatedProductsTitle")}
             </h2>
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {relatedProducts.map((related, productIdx) => (
+              {product.related_products.map((related, productIdx) => (
                 <ProductCard key={related.public_id} product={related} aosDelay={(productIdx + 1) * 100} />
               ))}
             </div>

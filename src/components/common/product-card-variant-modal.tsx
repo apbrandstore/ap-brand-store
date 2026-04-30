@@ -3,7 +3,7 @@
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 import { VariantSelectionProvider, useVariantSelection } from "@/components/product/product-variant-selection";
 import {
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { getProductDetailCached } from "@/lib/client/product-detail-cache";
+import { getProductDetailCached, peekProductDetailCache } from "@/lib/client/product-detail-cache";
 import { formatMoney } from "@/lib/format";
 import { resolveStorefrontImageUrl, storefrontImageUnoptimized } from "@/lib/storefront-image";
 import { triggerAddToCart } from "@/lib/tracker";
@@ -34,7 +34,7 @@ type PickerProps = {
   onAdded: () => void;
 };
 
-function VariantPicker({ detail, onAdded }: PickerProps) {
+const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerProps) {
   const t = useTranslations("variantModal");
   const tDetail = useTranslations("productDetail");
   const productT = useTranslations("product");
@@ -205,7 +205,7 @@ function VariantPicker({ detail, onAdded }: PickerProps) {
       </button>
     </div>
   );
-}
+});
 
 // ─── Skeleton while loading ────────────────────────────────────────────────
 
@@ -247,23 +247,84 @@ export function ProductCardVariantModal({ product, variant = "default" }: Props)
   const isIcon = variant === "icon";
   const triggerLabel = isCard ? tCard("addToCart") : productT("addToCart");
   const disabled = product.stock_status === "out_of_stock";
+  const prefetchDetail = useCallback(() => {
+    if (Array.isArray(product.variants) && product.variants.length > 0) {
+      return;
+    }
+    void getProductDetailCached(product.slug);
+  }, [product]);
 
   const fetchDetail = useCallback(async () => {
-    setDetail(null);
     setLoadError(false);
     try {
+      if (Array.isArray(product.variants) && product.variants.length > 0) {
+        setDetail({
+          public_id: product.public_id,
+          name: product.name,
+          slug: product.slug,
+          image_url: product.image_url,
+          price: product.price,
+          original_price: product.original_price,
+          stock_status: product.stock_status,
+          available_quantity: product.available_quantity,
+          brand: product.brand,
+          category_public_id: product.category_public_id,
+          category_slug: product.category_slug,
+          category_name: product.category_name,
+          extra_data: product.extra_data,
+          prepayment_type: product.prepayment_type,
+          stock_tracking: true,
+          description: "",
+          images: [],
+          variants: product.variants,
+          related_products: [],
+        });
+        return;
+      }
+      const seeded = peekProductDetailCache(product.slug);
+      if (seeded) {
+        setDetail(seeded);
+      }
       const data = await getProductDetailCached(product.slug);
       setDetail(data);
     } catch {
       setLoadError(true);
     }
-  }, [product.slug]);
+  }, [product]);
 
   useEffect(() => {
     if (open) {
+      if (Array.isArray(product.variants) && product.variants.length > 0) {
+        setDetail({
+          public_id: product.public_id,
+          name: product.name,
+          slug: product.slug,
+          image_url: product.image_url,
+          price: product.price,
+          original_price: product.original_price,
+          stock_status: product.stock_status,
+          available_quantity: product.available_quantity,
+          brand: product.brand,
+          category_public_id: product.category_public_id,
+          category_slug: product.category_slug,
+          category_name: product.category_name,
+          extra_data: product.extra_data,
+          prepayment_type: product.prepayment_type,
+          stock_tracking: true,
+          description: "",
+          images: [],
+          variants: product.variants,
+          related_products: [],
+        });
+        return;
+      }
+      const seeded = peekProductDetailCache(product.slug);
+      if (seeded) {
+        setDetail(seeded);
+      }
       fetchDetail();
     }
-  }, [open, fetchDetail]);
+  }, [open, fetchDetail, product]);
 
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
@@ -271,6 +332,8 @@ export function ProductCardVariantModal({ product, variant = "default" }: Props)
         <button
           type="button"
           disabled={disabled}
+          onMouseEnter={prefetchDetail}
+          onTouchStart={prefetchDetail}
           aria-label={disabled ? productT("outOfStock") : triggerLabel}
           className={cn(
             "flex cursor-pointer items-center justify-center text-white transition-colors duration-200 ease-out",

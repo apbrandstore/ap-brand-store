@@ -1,10 +1,14 @@
-import { apiFetchJson } from "@/lib/client/api";
+import {
+  readProductDetailCacheEntry,
+  upsertProductDetailCache,
+} from "@/lib/client/product-detail-cache";
 import type { CartLineMutationScope } from "@/lib/store/cart-store";
 import type { CartItem } from "@/types/cart";
 import type { ProductDetail } from "@/types/product";
 
 /** Matches `POST /api/v1/orders/` line quantity cap (STOREFRONT_INTEGRATION §7.16). */
 const API_MAX_QTY = 1000;
+const RECONCILE_CACHE_TTL_MS = 60_000;
 
 function productRequestId(item: CartItem): string {
   return item.product_slug ?? item.product_public_id;
@@ -13,7 +17,11 @@ function productRequestId(item: CartItem): string {
 async function fetchProductDetail(item: CartItem): Promise<ProductDetail | null> {
   const id = productRequestId(item);
   try {
-    return await apiFetchJson<ProductDetail>(`/products/${encodeURIComponent(id)}`);
+    const response = await fetch(`/api/products/${encodeURIComponent(id)}`);
+    if (!response.ok) {
+      return null;
+    }
+    return (await response.json()) as ProductDetail;
   } catch {
     return null;
   }
@@ -62,13 +70,27 @@ export async function reconcileCheckoutStock(
 
   const productIds = [...new Set(items.map((i) => i.product_public_id))];
   const detailByPid = new Map<string, ProductDetail>();
+  const staleOrMissingLines: CartItem[] = [];
+
+  for (const pid of productIds) {
+    const line = items.find((i) => i.product_public_id === pid);
+    if (!line) continue;
+    const id = productRequestId(line);
+    const cached = readProductDetailCacheEntry(id);
+    if (cached && cached.expiresAt > Date.now()) {
+      detailByPid.set(pid, cached.data);
+      continue;
+    }
+    staleOrMissingLines.push(line);
+  }
 
   await Promise.all(
-    productIds.map(async (pid) => {
-      const line = items.find((i) => i.product_public_id === pid);
-      if (!line) return;
+    staleOrMissingLines.map(async (line) => {
       const detail = await fetchProductDetail(line);
-      if (detail) detailByPid.set(pid, detail);
+      if (!detail) return;
+      const id = productRequestId(line);
+      upsertProductDetailCache(id, detail, RECONCILE_CACHE_TTL_MS);
+      detailByPid.set(line.product_public_id, detail);
     }),
   );
 

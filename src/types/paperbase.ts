@@ -116,6 +116,7 @@ export type PaperbaseProductDetail = {
   stock_status: PaperbaseStockStatus;
   available_quantity: number;
   variants: PaperbaseProductVariant[];
+  related_products?: PaperbaseProductListItem[];
   extra_data: Record<string, unknown>;
   prepayment_type?: PaperbasePrepaymentType;
 };
