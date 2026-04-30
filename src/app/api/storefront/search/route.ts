@@ -22,21 +22,39 @@ export async function GET(request: NextRequest) {
   try {
     if (trending) {
       const data = await combinedSearch({ trending: "1" });
-      return Response.json(data);
+      return new Response(JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "public, s-maxage=120, stale-while-revalidate=600",
+        },
+      });
     }
 
     const q = url.searchParams.get("q")?.trim() ?? "";
     if (q.length < 2) {
-      return Response.json({
-        products: [],
-        categories: [],
-        suggestions: [],
-        trending: false,
-      });
+      return new Response(
+        JSON.stringify({
+          products: [],
+          categories: [],
+          suggestions: [],
+          trending: false,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+          },
+        },
+      );
     }
 
     const data = await combinedSearch({ q });
-    return Response.json(data);
+    return new Response(JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+      },
+    });
   } catch (error) {
     return paperbaseErrorResponse(error);
   }

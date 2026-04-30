@@ -8,5 +8,10 @@ export async function GET(_req: Request, { params }: RouteParams) {
   if (!product) {
     return Response.json({ error: "Not found" }, { status: 404 });
   }
-  return Response.json(product);
+  return new Response(JSON.stringify(product), {
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+    },
+  });
 }

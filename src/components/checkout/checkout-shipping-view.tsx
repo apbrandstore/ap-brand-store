@@ -277,15 +277,21 @@ export function CheckoutShippingView() {
   selectedMethodRef.current = selectedMethod;
   const selectedZoneRef = useRef(selectedZone);
   selectedZoneRef.current = selectedZone;
+  const initiateAbortRef = useRef<AbortController | null>(null);
+  const initiateRequestIdRef = useRef(0);
 
   useEffect(() => {
     let mounted = true;
+    const requestId = ++initiateRequestIdRef.current;
     const tid = window.setTimeout(() => {
       void (async () => {
         const zone = selectedZoneRef.current;
         if (!zone) {
           return;
         }
+        const controller = new AbortController();
+        initiateAbortRef.current?.abort();
+        initiateAbortRef.current = controller;
 
         const { setLineQuantity } = useCartStore.getState();
         const scope = useCartStore.getState().buyNowMap != null ? "checkout" : "cart";
@@ -316,9 +322,10 @@ export function CheckoutShippingView() {
                 shipping_zone_public_id: zone,
                 shipping_method_public_id: selectedMethodRef.current || undefined,
               }),
+              signal: controller.signal,
             }),
           ]);
-          if (!mounted) return;
+          if (!mounted || requestId !== initiateRequestIdRef.current || controller.signal.aborted) return;
           if (changed) {
             setStockAdjustedHint(t("stockAdjustedForCheckout"));
           }
@@ -333,19 +340,27 @@ export function CheckoutShippingView() {
           setFinalTotal(response.final_total);
           setErrorText(null);
         } catch (err) {
-          if (!mounted) return;
+          if (!mounted || requestId !== initiateRequestIdRef.current) return;
+          if (err instanceof DOMException && err.name === "AbortError") {
+            return;
+          }
           const stockErrs = stockValidationErrors(err);
           setErrorText(
             stockErrs.length ? stockErrs.join(" | ") : formatPaperbaseError(err),
           );
+        } finally {
+          if (initiateAbortRef.current === controller) {
+            initiateAbortRef.current = null;
+          }
         }
       })();
     }, 320);
     return () => {
       mounted = false;
       window.clearTimeout(tid);
+      initiateAbortRef.current?.abort();
     };
-  }, [cartItems, selectedMethod, selectedZone, t]);
+  }, [cartItems, selectedZone, t]);
 
   const handleIncrement = useCallback(
     (item: CartItem) => {

@@ -12,7 +12,12 @@ export async function GET(request: NextRequest) {
 
   try {
     const store = await getStorePublic();
-    return Response.json(store);
+    return new Response(JSON.stringify(store), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, s-maxage=600, stale-while-revalidate=3600",
+      },
+    });
   } catch (error) {
     return paperbaseErrorResponse(error);
   }
