@@ -193,6 +193,8 @@ export function CheckoutShippingView() {
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
   const [stockAdjustedHint, setStockAdjustedHint] = useState<string | null>(null);
+  const shippingOptionsCacheRef = useRef(new Map<string, PaperbaseShippingOption[]>());
+  const shippingOptionsInFlightRef = useRef(new Map<string, Promise<PaperbaseShippingOption[]>>());
 
   const cartItems = useMemo(
     () =>
@@ -203,6 +205,37 @@ export function CheckoutShippingView() {
       })),
     [checkoutItems],
   );
+  const pricingCartKey = useMemo(
+    () =>
+      checkoutItems
+        .map((item) => `${item.product_public_id}:${item.variant_public_id ?? ""}:${item.quantity}`)
+        .sort()
+        .join("|"),
+    [checkoutItems],
+  );
+
+  const getShippingOptionsForZone = useCallback(async (zonePublicId: string) => {
+    const cached = shippingOptionsCacheRef.current.get(zonePublicId);
+    if (cached) {
+      return cached;
+    }
+    const inFlight = shippingOptionsInFlightRef.current.get(zonePublicId);
+    if (inFlight) {
+      return inFlight;
+    }
+    const request = apiFetchJson<PaperbaseShippingOption[]>(
+      `/checkout/shipping/options?zone_public_id=${encodeURIComponent(zonePublicId)}`,
+    )
+      .then((options) => {
+        shippingOptionsCacheRef.current.set(zonePublicId, options);
+        return options;
+      })
+      .finally(() => {
+        shippingOptionsInFlightRef.current.delete(zonePublicId);
+      });
+    shippingOptionsInFlightRef.current.set(zonePublicId, request);
+    return request;
+  }, []);
 
   useEffect(() => {
     if (!hydrated || checkoutItems.length === 0) {
@@ -233,6 +266,11 @@ export function CheckoutShippingView() {
         setZones(activeZones);
         if (activeZones[0]) {
           setSelectedZone(activeZones[0].zone_public_id);
+          // Warm shipping options cache for immediate zone selection UX.
+          void getShippingOptionsForZone(activeZones[0].zone_public_id).catch(() => {});
+          for (const zone of activeZones.slice(1)) {
+            void getShippingOptionsForZone(zone.zone_public_id).catch(() => {});
+          }
         }
       } catch {
         if (!mounted) return;
@@ -243,7 +281,7 @@ export function CheckoutShippingView() {
     return () => {
       mounted = false;
     };
-  }, [hydrated, checkoutItems.length]);
+  }, [getShippingOptionsForZone, hydrated, checkoutItems.length, t]);
 
   useEffect(() => {
     let mounted = true;
@@ -254,9 +292,7 @@ export function CheckoutShippingView() {
       setLoading(true);
       setErrorText(null);
       try {
-        const options = await apiFetchJson<PaperbaseShippingOption[]>(
-          `/checkout/shipping/options?zone_public_id=${encodeURIComponent(selectedZone)}`,
-        );
+        const options = await getShippingOptionsForZone(selectedZone);
         if (!mounted) return;
         const firstId = options[0]?.method_public_id ?? "";
         setSelectedMethod(firstId);
@@ -271,16 +307,21 @@ export function CheckoutShippingView() {
     return () => {
       mounted = false;
     };
-  }, [selectedZone]);
+  }, [getShippingOptionsForZone, selectedZone, t]);
 
   const selectedMethodRef = useRef(selectedMethod);
   selectedMethodRef.current = selectedMethod;
   const selectedZoneRef = useRef(selectedZone);
   selectedZoneRef.current = selectedZone;
+  const tRef = useRef(t);
+  tRef.current = t;
   const initiateAbortRef = useRef<AbortController | null>(null);
   const initiateRequestIdRef = useRef(0);
 
   useEffect(() => {
+    if (loading || !selectedZone) {
+      return;
+    }
     let mounted = true;
     const requestId = ++initiateRequestIdRef.current;
     const tid = window.setTimeout(() => {
@@ -327,7 +368,7 @@ export function CheckoutShippingView() {
           ]);
           if (!mounted || requestId !== initiateRequestIdRef.current || controller.signal.aborted) return;
           if (changed) {
-            setStockAdjustedHint(t("stockAdjustedForCheckout"));
+            setStockAdjustedHint(tRef.current("stockAdjustedForCheckout"));
           }
 
           if (!snapshotItems.length) {
@@ -360,7 +401,7 @@ export function CheckoutShippingView() {
       window.clearTimeout(tid);
       initiateAbortRef.current?.abort();
     };
-  }, [cartItems, selectedZone, t]);
+  }, [loading, pricingCartKey, selectedZone]);
 
   const handleIncrement = useCallback(
     (item: CartItem) => {
