@@ -275,7 +275,7 @@ export function ProductCardVariantModal({ product, variant = "default" }: Props)
           className={cn(
             "flex cursor-pointer items-center justify-center text-white transition-colors duration-200 ease-out",
             isIcon
-              ? "size-9 rounded-full bg-transparent text-neutral-900 hover:bg-black/5"
+              ? "size-9 rounded-full bg-white/95 text-neutral-900 shadow-sm ring-1 ring-black/10 hover:bg-white"
               : "w-full",
             isCard
               ? "gap-2 rounded-md py-2.5 text-sm font-medium bg-primary hover:bg-primary/90 active:bg-primary/95"

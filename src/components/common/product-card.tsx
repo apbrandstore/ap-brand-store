@@ -29,7 +29,7 @@ export async function ProductCard({ product, locale: localeProp, priority, aosDe
     >
       <div className="relative shrink-0 overflow-hidden">
         <ProductCardGallery urls={imageUrls} alt={product.name} href={href} priority={priority} />
-        <div className="absolute bottom-2 right-2 z-[2]">
+        <div className="absolute bottom-2 right-2 z-[2] md:bottom-4 md:right-4 lg:bottom-5 lg:right-5">
           <ProductCardAddButton product={product} variant="icon" />
         </div>
       </div>
