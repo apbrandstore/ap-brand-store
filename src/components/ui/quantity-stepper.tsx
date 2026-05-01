@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const stepperBtnClass =
-  "min-w-9 px-0 text-neutral-900 hover:bg-neutral-100 hover:text-neutral-950 [&_svg]:text-neutral-900";
+  "min-w-9 px-0 text-text hover:bg-card-surface hover:text-primary [&_svg]:text-current";
 
 type QuantityStepperProps = {
   quantity: number;
@@ -33,20 +33,20 @@ export function QuantityStepper({
   if (layout === "segmented") {
     const segmentBtn = (side: "left" | "right") =>
       cn(
-        "flex h-10 w-10 shrink-0 items-center justify-center border-0 bg-white text-neutral-900 transition-colors focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-neutral-400 [&_svg]:size-[18px] [&_svg]:shrink-0 [&_svg]:stroke-[2.5]",
-        side === "left" && "border-e border-neutral-200",
+        "flex h-10 w-10 shrink-0 items-center justify-center border-0 bg-surface text-text transition-colors focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent/60 [&_svg]:size-[18px] [&_svg]:shrink-0 [&_svg]:stroke-[2.5]",
+        side === "left" && "border-e border-black/10",
         decrementDisabled && side === "left"
           ? "cursor-not-allowed opacity-40"
-          : !decrementDisabled && side === "left" && "cursor-pointer hover:bg-neutral-50 active:bg-neutral-100",
+          : !decrementDisabled && side === "left" && "cursor-pointer hover:bg-card-surface active:bg-card-surface/80",
         incrementDisabled && side === "right"
           ? "cursor-not-allowed opacity-40"
-          : !incrementDisabled && side === "right" && "cursor-pointer hover:bg-neutral-50 active:bg-neutral-100",
+          : !incrementDisabled && side === "right" && "cursor-pointer hover:bg-card-surface active:bg-card-surface/80",
       );
 
     return (
       <div
         className={cn(
-          "inline-flex select-none items-stretch overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-sm",
+          "inline-flex select-none items-stretch overflow-hidden rounded-md border border-black/10 bg-surface text-text shadow-sm",
           className,
         )}
       >
@@ -59,7 +59,7 @@ export function QuantityStepper({
         >
           <Minus aria-hidden />
         </button>
-        <span className="flex min-w-[2.75rem] items-center justify-center border-e border-neutral-200 bg-white px-2 tabular-nums text-sm font-medium text-neutral-900">
+        <span className="flex min-w-[2.75rem] items-center justify-center border-e border-black/10 bg-surface px-2 tabular-nums text-sm font-medium text-text">
           {quantity}
         </span>
         <button

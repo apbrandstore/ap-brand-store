@@ -81,9 +81,9 @@ const CheckoutSummaryItem = memo(function CheckoutSummaryItem({
   const imageSrc = resolveStorefrontImageUrl(item.image_url);
 
   return (
-    <li className="rounded-lg border border-neutral-200 bg-white p-4">
+    <li className="rounded-lg border border-black/10 bg-card-surface p-4">
       <div className="flex gap-2 sm:gap-3">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-neutral-100 bg-neutral-50">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-surface">
           <Image
             src={imageSrc}
             alt={item.name}
@@ -482,7 +482,7 @@ export function CheckoutShippingView() {
         <p className="mb-6 text-neutral-700">{t("empty")}</p>
         <Link
           href="/#products"
-          className="inline-flex rounded-lg bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
+          className="inline-flex rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-surface hover:bg-primary/90"
         >
           {t("continueShopping")}
         </Link>
@@ -491,9 +491,9 @@ export function CheckoutShippingView() {
   }
 
   const inputClass =
-    "w-full rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/10";
+    "w-full rounded-lg border border-black/10 bg-surface px-3 py-2.5 text-sm text-text outline-none placeholder:text-neutral-400 focus:border-primary/40 focus:ring-2 focus:ring-primary/10";
 
-  const shellCard = "rounded-lg border border-neutral-200 bg-white shadow-sm";
+  const shellCard = "rounded-lg border border-black/10 bg-card-surface shadow-sm";
 
   const orderTotalRows = (
     <>
@@ -558,10 +558,10 @@ export function CheckoutShippingView() {
             {orderTotalRows}
           </dl>
           {stockAdjustedHint ? (
-            <p className="mt-3 max-lg:hidden shrink-0 text-xs font-medium text-amber-800">{stockAdjustedHint}</p>
+            <p className="mt-3 max-lg:hidden shrink-0 text-xs font-medium text-primary">{stockAdjustedHint}</p>
           ) : null}
           {errorText ? (
-            <p className="mt-2 max-lg:hidden shrink-0 text-sm text-red-600">{errorText}</p>
+            <p className="mt-2 max-lg:hidden shrink-0 text-sm text-danger">{errorText}</p>
           ) : null}
           </aside>
         </div>
@@ -576,7 +576,7 @@ export function CheckoutShippingView() {
                 <label className="grid gap-2">
                   <span className="text-sm font-medium text-neutral-950">
                     {t("firstName")}
-                    <span className="text-red-600"> *</span>
+                    <span className="text-accent"> *</span>
                   </span>
                   <input
                     className={inputClass}
@@ -589,7 +589,7 @@ export function CheckoutShippingView() {
                 <label className="grid gap-2">
                   <span className="text-sm font-medium text-neutral-950">
                     {t("lastName")}
-                    <span className="text-red-600"> *</span>
+                    <span className="text-accent"> *</span>
                   </span>
                   <input
                     className={inputClass}
@@ -613,7 +613,7 @@ export function CheckoutShippingView() {
               <div className="grid min-w-0 gap-2">
                 <span className="text-sm font-medium text-neutral-950">
                   {t("phone")}
-                  <span className="text-red-600"> *</span>
+                  <span className="text-accent"> *</span>
                 </span>
                 <div className="flex min-w-0 gap-2">
                   <input type="hidden" name="dial" value="+880" />
@@ -643,7 +643,7 @@ export function CheckoutShippingView() {
                 <label className="grid gap-2">
                   <span className="text-sm font-medium text-neutral-950">
                     {t("thana")}
-                    <span className="text-red-600"> *</span>
+                    <span className="text-accent"> *</span>
                   </span>
                   <input
                     className={inputClass}
@@ -656,7 +656,7 @@ export function CheckoutShippingView() {
                 <label className="grid gap-2">
                   <span className="text-sm font-medium text-neutral-950">
                     {t("district")}
-                    <span className="text-red-600"> *</span>
+                    <span className="text-accent"> *</span>
                   </span>
                   <input
                     className={inputClass}
@@ -670,7 +670,7 @@ export function CheckoutShippingView() {
               <label className="grid gap-2">
                 <span className="text-sm font-medium text-neutral-950">
                   {t("addressField")}
-                  <span className="text-red-600"> *</span>
+                  <span className="text-accent"> *</span>
                 </span>
                 <textarea
                   className={cn(inputClass, "min-h-[5.5rem] resize-y")}
@@ -697,7 +697,7 @@ export function CheckoutShippingView() {
                         "flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors",
                         selected
                           ? "border-neutral-200 bg-primary/10"
-                          : "border-neutral-200 bg-white hover:border-neutral-300",
+                          : "border-neutral-200 bg-surface hover:border-neutral-300",
                       )}
                     >
                       <input
@@ -725,14 +725,14 @@ export function CheckoutShippingView() {
             </div>
 
             {stockAdjustedHint ? (
-              <p className="shrink-0 text-xs font-medium text-amber-800">{stockAdjustedHint}</p>
+              <p className="shrink-0 text-xs font-medium text-primary">{stockAdjustedHint}</p>
             ) : null}
-            {errorText ? <p className="shrink-0 text-sm text-red-600">{errorText}</p> : null}
+            {errorText ? <p className="shrink-0 text-sm text-danger">{errorText}</p> : null}
 
             <button
               type="submit"
               disabled={loading}
-              className="flex h-12 w-full shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
+              className="flex h-12 w-full shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-surface transition-colors hover:bg-primary/90 disabled:opacity-50"
             >
               {t("continueToPayment")}
             </button>

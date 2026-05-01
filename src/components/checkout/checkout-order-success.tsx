@@ -191,7 +191,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
       <h2 className="mt-6 text-xl font-semibold tracking-tight text-neutral-950">{t("orderSuccessTitle")}</h2>
       <p className="mt-2 max-w-md text-sm leading-relaxed text-neutral-600">{t("orderSuccessMessage")}</p>
 
-      <div className="mt-8 w-full max-w-md rounded-lg bg-neutral-50/80 px-4 py-5 text-start md:px-5">
+      <div className="mt-8 w-full max-w-md rounded-lg bg-card-surface px-4 py-5 text-start md:px-5">
         <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">{t("orderSuccessDeliveryTo")}</p>
         <p className="mt-1 text-sm text-neutral-800">
           <span className="font-semibold text-neutral-950">{order.customer_name}</span>
@@ -244,7 +244,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
 
       <button
         type="button"
-        className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-md border border-neutral-300 bg-white px-6 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-50 disabled:opacity-60"
+        className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-md border border-black/10 bg-surface px-6 text-sm font-semibold text-text transition-colors hover:bg-card-surface disabled:opacity-60"
         onClick={() => void handleInvoiceClick()}
         disabled={invoiceBusy}
       >
@@ -257,7 +257,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
       <div className="mt-4 flex w-full max-w-xs justify-center">
         <Link
           href="/"
-          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-surface transition-colors hover:bg-primary/90"
         >
           {t("continueShoppingAfterOrder")}
         </Link>

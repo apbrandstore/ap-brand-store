@@ -39,12 +39,12 @@ export async function Navbar() {
       <DesktopNavbarScrollVisibility targetId="storefront-header" />
       <header
         id="storefront-header"
-        className="relative sticky top-0 z-40 w-full min-w-0 overflow-x-clip bg-header text-white pt-[env(safe-area-inset-top,0px)] ps-[env(safe-area-inset-left,0px)] pe-[env(safe-area-inset-right,0px)]"
+        className="relative sticky top-0 z-40 w-full min-w-0 bg-header text-white pt-[env(safe-area-inset-top,0px)] ps-[env(safe-area-inset-left,0px)] pe-[env(safe-area-inset-right,0px)]"
       >
       {topNotice ? (
-        <div className="bg-[#e30613]">
+        <div className="bg-accent text-primary">
           <PageContainer>
-            <p className="flex items-center justify-center gap-3 py-2.5 text-center text-[13px] font-normal tracking-normal text-white md:py-3 md:text-[14px]">
+            <p className="flex items-center justify-center gap-3 py-2.5 text-center text-[13px] font-normal tracking-normal text-primary md:py-3 md:text-[14px]">
               {topNotice}
             </p>
           </PageContainer>

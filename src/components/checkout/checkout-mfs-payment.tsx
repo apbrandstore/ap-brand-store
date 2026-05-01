@@ -215,9 +215,9 @@ export function CheckoutMfsPayment() {
 
   if (!ready || !receipt || !orderPublicId) {
     return (
-      <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
+      <div className="bg-surface pb-12 pt-6 md:pb-16 md:pt-8">
         <CheckoutBreadcrumbs step="mfsProvider" />
-        <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 p-8 shadow-sm md:p-10">
+        <div className="mx-auto max-w-xl rounded-lg border border-black/10 bg-card-surface p-8 shadow-sm md:p-10">
           <div className="h-8 max-w-xs animate-pulse rounded-md bg-neutral-100" />
           <div className="mt-4 h-4 max-w-md animate-pulse rounded-md bg-neutral-100" />
           <div className="mt-8 grid gap-8">
@@ -277,11 +277,11 @@ export function CheckoutMfsPayment() {
       txTrim.length > 0 && txTrim.length <= 100 && isValidMfsMsisdn(phoneTrim);
 
     return (
-      <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
+      <div className="bg-surface pb-12 pt-6 md:pb-16 md:pt-8">
         <CheckoutBreadcrumbs step="mfsProvider" />
 
-        <div className="mx-auto w-full max-w-md overflow-hidden rounded-none bg-white shadow-md ring-1 ring-black/5 md:rounded-xl">
-          <header className="bg-white px-4 pb-3 pt-6 md:px-6">
+        <div className="mx-auto w-full max-w-md overflow-hidden rounded-none bg-card-surface shadow-md ring-1 ring-black/5 md:rounded-xl">
+          <header className="bg-card-surface px-4 pb-3 pt-6 md:px-6">
             <div className="mx-auto flex h-[6.75rem] max-w-sm items-center justify-center">
               <Image
                 src={logoSrc}
@@ -294,12 +294,12 @@ export function CheckoutMfsPayment() {
             <div className="mx-auto mt-4 h-px max-w-sm" style={{ backgroundColor: brandColor }} />
           </header>
 
-          <section className="flex items-start gap-3 border-b border-neutral-100 bg-white px-4 py-5 md:px-6">
+          <section className="flex items-start gap-3 border-b border-black/10 bg-card-surface px-4 py-5 md:px-6">
             <div
               className="flex size-12 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50"
               aria-hidden
             >
-              <ShoppingCart className="size-6 text-amber-900/80" strokeWidth={1.75} />
+              <ShoppingCart className="size-6 text-primary/80" strokeWidth={1.75} />
             </div>
             <div className="min-w-0 flex-1 pt-0.5">
               <p className="truncate text-[15px] font-medium text-neutral-700">{tCommon("brand")}</p>
@@ -315,14 +315,14 @@ export function CheckoutMfsPayment() {
           </section>
 
           <section
-            className="border-y-2 border-amber-300/90 bg-amber-50 px-4 py-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6)] md:px-6"
+            className="border-y-2 border-accent/60 bg-accent/15 px-4 py-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35)] md:px-6"
             aria-labelledby={sendMoneySectionId}
           >
-            <h2 id={sendMoneySectionId} className="text-base font-bold tracking-tight text-amber-950">
+            <h2 id={sendMoneySectionId} className="text-base font-bold tracking-tight text-primary">
               {sendMoneyTitle}
             </h2>
-            <p className="mt-2 text-sm font-medium leading-relaxed text-amber-950/95">{sendMoneyBody}</p>
-            <div className="mt-3 flex min-h-[3.25rem] items-center gap-2 rounded-lg border border-amber-400/80 bg-white px-3 py-2.5 shadow-sm">
+            <p className="mt-2 text-sm font-medium leading-relaxed text-primary/90">{sendMoneyBody}</p>
+            <div className="mt-3 flex min-h-[3.25rem] items-center gap-2 rounded-lg border border-accent/45 bg-surface px-3 py-2.5 shadow-sm">
               <p className="min-w-0 flex-1 text-xl font-bold tabular-nums leading-tight text-neutral-950 sm:text-2xl">
                 {instructionPhone}
               </p>
@@ -331,8 +331,8 @@ export function CheckoutMfsPayment() {
                 onClick={() => void copyStoreNumberToClipboard()}
                 disabled={storeInfoLoading || !storePublic?.phone?.trim()}
                 className={cn(
-                  "inline-flex shrink-0 items-center justify-center rounded-lg border border-amber-300/90 bg-amber-50/80 px-2.5 py-2 text-amber-900 transition-colors",
-                  "hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60",
+                  "inline-flex shrink-0 items-center justify-center rounded-lg border border-accent/40 bg-accent/20 px-2.5 py-2 text-primary transition-colors",
+                  "hover:bg-accent/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                   "disabled:pointer-events-none disabled:opacity-40",
                 )}
                 aria-label={storeNumberCopied ? copiedLabel : copyLabel}
@@ -380,7 +380,7 @@ export function CheckoutMfsPayment() {
                   value={transactionId}
                   disabled={payLoading}
                   onChange={(e) => setTransactionId(e.target.value)}
-                  className="mt-3 w-full rounded-lg border-0 bg-white px-4 py-3.5 text-base text-neutral-900 shadow-md outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-white/40 disabled:opacity-60"
+                  className="mt-3 w-full rounded-lg border-0 bg-surface px-4 py-3.5 text-base text-text shadow-md outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-white/40 disabled:opacity-60"
                 />
               </div>
               <div>
@@ -396,7 +396,7 @@ export function CheckoutMfsPayment() {
                   value={payerPhone}
                   disabled={payLoading}
                   onChange={(e) => setPayerPhone(e.target.value)}
-                  className="mt-3 w-full rounded-lg border-0 bg-white px-4 py-3.5 text-base text-neutral-900 shadow-md outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-white/40 disabled:opacity-60"
+                  className="mt-3 w-full rounded-lg border-0 bg-surface px-4 py-3.5 text-base text-text shadow-md outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-white/40 disabled:opacity-60"
                 />
               </div>
               <p className="pt-1 text-center text-[13px] leading-snug text-white/95">
@@ -420,7 +420,7 @@ export function CheckoutMfsPayment() {
           />
 
           {errorText ? (
-            <p className="border-t border-neutral-100 bg-rose-50 px-4 py-2 text-center text-sm text-rose-800 md:px-6">
+            <p className="border-t border-black/10 bg-accent/10 px-4 py-2 text-center text-sm text-primary md:px-6">
               {errorText}
             </p>
           ) : null}
@@ -485,7 +485,7 @@ export function CheckoutMfsPayment() {
             </button>
           </div>
 
-          <footer className="flex items-center justify-center gap-2 bg-white px-4 py-5">
+          <footer className="flex items-center justify-center gap-2 bg-card-surface px-4 py-5">
             <span
               className="flex size-9 items-center justify-center rounded-full text-white"
               style={{ backgroundColor: brandColor }}
@@ -508,14 +508,14 @@ export function CheckoutMfsPayment() {
   }
 
   return (
-    <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
+    <div className="bg-surface pb-12 pt-6 md:pb-16 md:pt-8">
       <CheckoutBreadcrumbs step="mfsProvider" />
 
-      <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 p-8 shadow-sm md:p-10">
+      <div className="mx-auto max-w-xl rounded-lg border border-black/10 bg-card-surface p-8 shadow-sm md:p-10">
         <h1 className="text-xl font-semibold text-text">{t("mfsProviderTitle")}</h1>
         <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("mfsProviderDescription")}</p>
 
-        {errorText ? <p className="mt-5 text-sm text-red-600">{errorText}</p> : null}
+        {errorText ? <p className="mt-5 text-sm text-danger">{errorText}</p> : null}
 
         <div className="mt-8 grid gap-8">
           <div className="space-y-2">
@@ -526,8 +526,8 @@ export function CheckoutMfsPayment() {
               id="checkout-mfs-bkash"
               type="button"
               className={cn(
-                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 py-2 transition-colors",
-                "hover:border-neutral-300 hover:bg-neutral-50",
+                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-black/10 bg-surface px-3 py-2 transition-colors",
+                "hover:border-black/15 hover:bg-card-surface",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40",
               )}
               onClick={() => {
@@ -552,8 +552,8 @@ export function CheckoutMfsPayment() {
               id="checkout-mfs-nagad"
               type="button"
               className={cn(
-                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 py-2 transition-colors",
-                "hover:border-neutral-300 hover:bg-neutral-50",
+                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-black/10 bg-surface px-3 py-2 transition-colors",
+                "hover:border-black/15 hover:bg-card-surface",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40",
               )}
               onClick={() => {

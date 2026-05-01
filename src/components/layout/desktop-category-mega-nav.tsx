@@ -162,8 +162,8 @@ export function DesktopCategoryMegaNav({
                   }}
                 >
                   {expandable ? (
-                    <button
-                      type="button"
+                    <NavHref
+                      href={category.href}
                       className={cn(
                         categoryBarItemClass,
                         "cursor-pointer gap-1 border-0 bg-transparent text-white/90 transition-colors",
@@ -171,11 +171,8 @@ export function DesktopCategoryMegaNav({
                         "focus-visible:decoration-white/80 focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
                         isOpen && "text-white decoration-white/80",
                       )}
-                      aria-expanded={isOpen}
-                      aria-controls={showPanel && active?.id === category.id ? panelId : undefined}
-                      id={`desktop-cat-trigger-${category.id}`}
                     >
-                      <span>{category.label}</span>
+                      <span id={`desktop-cat-trigger-${category.id}`}>{category.label}</span>
                       <ChevronDown
                         className={cn(
                           "pointer-events-none size-3 shrink-0 opacity-90 transition-transform duration-200 ease-out",
@@ -184,7 +181,7 @@ export function DesktopCategoryMegaNav({
                         strokeWidth={1.75}
                         aria-hidden
                       />
-                    </button>
+                    </NavHref>
                   ) : (
                     <NavHref
                       href={category.href}
@@ -215,7 +212,7 @@ export function DesktopCategoryMegaNav({
           <PageContainer>
             <div
               className={cn(
-                "origin-top overflow-hidden rounded-lg border border-black/[0.06] bg-white text-text shadow-[0_24px_48px_-12px_rgba(15,23,42,0.25)] ring-1 ring-black/[0.04]",
+                "origin-top overflow-hidden rounded-lg border border-black/[0.06] bg-surface text-text shadow-[0_24px_48px_-12px_rgba(15,23,42,0.25)] ring-1 ring-black/[0.04]",
                 "motion-safe:transition-[opacity,transform] motion-safe:duration-150 motion-safe:ease-out",
               )}
             >

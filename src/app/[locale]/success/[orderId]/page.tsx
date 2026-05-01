@@ -31,7 +31,7 @@ export default async function CheckoutSuccessPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-white">
+    <div className="min-h-screen overflow-x-clip bg-surface">
       <PageContainer>
         <CheckoutSuccessPageClient orderId={orderId} />
       </PageContainer>

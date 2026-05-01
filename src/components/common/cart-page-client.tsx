@@ -27,8 +27,8 @@ export function CartPageClient() {
   const { items, hydrated, subtotal, removeItem, increment, decrement } = useCart();
 
   return (
-    <div className="bg-white">
-      <div className="flex items-baseline justify-between gap-4 border-b border-neutral-100 pb-6">
+    <div className="bg-surface">
+      <div className="flex items-baseline justify-between gap-4 border-b border-black/10 pb-6">
         <h1 className="text-3xl font-thin tracking-tight text-text md:text-4xl">{t("title")}</h1>
         <Link
           href="/#products"
@@ -65,7 +65,7 @@ export function CartPageClient() {
                     className="grid grid-cols-[minmax(0,1fr)_12rem_10rem] gap-6 py-8"
                   >
                     <div className="flex min-w-0 items-start gap-4">
-                      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-neutral-100 bg-white">
+                      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card-surface">
                         <Image
                           src={imageSrc}
                           alt={item.name}
@@ -151,7 +151,7 @@ export function CartPageClient() {
                     className="py-6"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md border border-neutral-100 bg-white">
+                      <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card-surface">
                         <Image
                           src={imageSrc}
                           alt={item.name}
@@ -226,7 +226,7 @@ export function CartPageClient() {
           </div>
 
           {/* Summary */}
-          <div className="border-t border-neutral-100 pt-8">
+          <div className="border-t border-black/10 pt-8">
             <div className="flex flex-col items-end gap-2">
               <div className="flex items-baseline gap-4">
                 <p className="text-sm font-medium tracking-wide text-neutral-500">Estimated total</p>
@@ -237,8 +237,8 @@ export function CartPageClient() {
               <Link
                 href="/checkout"
                 className={cn(
-                  buttonVariants({ variant: "default", size: "md" }),
-                  "mt-5 w-full max-w-[22rem] rounded-md bg-black text-white hover:bg-black/90 md:w-[22rem]",
+                  buttonVariants({ variant: "primary", size: "md" }),
+                  "mt-5 w-full max-w-[22rem] rounded-md md:w-[22rem]",
                 )}
               >
                 Check out

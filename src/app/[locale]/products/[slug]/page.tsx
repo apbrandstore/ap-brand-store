@@ -109,7 +109,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   return (
     <div className="bg-background">
-      <section className="bg-white pb-12 lg:pb-20">
+      <section className="bg-surface pb-12 lg:pb-20">
         <PageContainer>
           {/* Breadcrumb */}
           <nav className="py-4 text-sm text-neutral-400" aria-label={tDetail("breadcrumbAria")}>
@@ -168,7 +168,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 <ProductDetailSkuRow />
 
                 {/* Price block */}
-                <div className="mt-5 rounded-lg bg-neutral-50 px-4 py-4 sm:px-5">
+                <div className="mt-5 rounded-lg bg-card-surface px-4 py-4 sm:px-5">
                   {product.original_price != null ? (
                     <>
                       <p className="price-display-eyebrow">{tDetail("nowLabel")}</p>
@@ -193,7 +193,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </div>
 
                 {/* Divider */}
-                <div className="my-5 h-px bg-neutral-100" />
+                <div className="my-5 h-px bg-black/10" />
 
                 {/* Variant picker + buy section */}
                 <ProductDetailBuySection
@@ -210,7 +210,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </VariantSelectionProvider>
 
               {/* Trust badges */}
-              <div className="mt-5 grid grid-cols-3 gap-2 rounded-lg border border-neutral-100 bg-neutral-50 p-3">
+              <div className="mt-5 grid grid-cols-3 gap-2 rounded-lg border border-black/10 bg-card-surface p-3">
                 <div className="flex flex-col items-center gap-1 text-center">
                   <Truck className="size-5 text-primary" strokeWidth={1.8} />
                   <span className="text-[10px] font-semibold leading-tight text-neutral-500">
@@ -246,7 +246,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </section>
 
       {product.related_products.length > 0 ? (
-        <section className="border-t border-neutral-100 bg-white py-10 md:py-12">
+        <section className="border-t border-black/10 bg-surface py-10 md:py-12">
           <PageContainer>
             <h2 className="mb-8 text-center text-2xl font-thin tracking-tight text-text/90 md:mb-10 md:text-3xl">
               {tDetail("relatedProductsTitle")}

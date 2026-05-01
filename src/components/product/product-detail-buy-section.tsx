@@ -9,6 +9,7 @@ import { useCart } from "@/hooks/useCart";
 import { useAddToCartDialogStore } from "@/lib/store/add-to-cart-dialog-store";
 import { triggerAddToCart, triggerViewContent } from "@/lib/tracker";
 import { cn } from "@/lib/utils";
+import { useRouter } from "@/i18n/routing";
 
 type ProductDetailBuySectionProps = {
   productPublicId: string;
@@ -37,6 +38,7 @@ export function ProductDetailBuySection({
   const tDetail = useTranslations("productDetail");
   const tPrepay = useTranslations("prepayment");
   const { addItem, startBuyNow } = useCart();
+  const router = useRouter();
   const openAddToCartDialog = useAddToCartDialogStore((s) => s.openDialog);
   const { variants, selectedValues, setSelectedValue, selectedVariant, optionsByAttribute } =
     useVariantSelection();
@@ -116,7 +118,7 @@ export function ProductDetailBuySection({
     // The main cart is NOT mutated — checkout reads from buyNowMap instead.
     startBuyNow(payload(), 1);
     // Checkout is an explicit flow; keep navigation.
-    window.location.assign("/checkout");
+    router.push("/checkout");
   }
 
   async function handleShare() {
@@ -166,8 +168,8 @@ export function ProductDetailBuySection({
                   className={cn(
                     "inline-flex min-h-9 cursor-pointer items-center rounded-md px-4 py-2 text-sm font-semibold",
                     selected
-                      ? "bg-primary text-white shadow-sm"
-                      : "border border-neutral-200 bg-white text-text hover:border-primary/40 hover:bg-primary/[0.04]",
+                      ? "bg-primary text-surface shadow-sm"
+                      : "border border-neutral-200 bg-surface text-text hover:border-primary/40 hover:bg-primary/[0.04]",
                   )}
                 >
                   {value.value}
@@ -179,7 +181,7 @@ export function ProductDetailBuySection({
       ))}
 
       {prepaymentType !== "none" ? (
-        <div className="inline-block w-fit max-w-full rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-medium leading-snug text-amber-900">
+        <div className="inline-block w-fit max-w-full rounded-md border border-accent/40 bg-accent/15 px-3 py-2 text-xs font-medium leading-snug text-primary">
           {prepaymentType === "full" ? tPrepay("badgeFull") : tPrepay("badgeDelivery")}
         </div>
       ) : null}
@@ -225,7 +227,7 @@ export function ProductDetailBuySection({
           disabled={!canPurchase}
           onClick={handleOrderNow}
           className={cn(
-            "flex h-12 w-full cursor-pointer items-center justify-center rounded-md px-4 text-sm font-bold tracking-normal text-white transition-all",
+            "flex h-12 w-full cursor-pointer items-center justify-center rounded-md px-4 text-sm font-bold tracking-normal text-surface transition-all",
             "bg-primary hover:bg-primary/90 active:scale-[0.98]",
             "disabled:cursor-not-allowed disabled:opacity-50",
           )}
@@ -239,7 +241,7 @@ export function ProductDetailBuySection({
             disabled={!canPurchase}
             onClick={handleAdd}
             className={cn(
-              "flex h-11 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-white px-3 text-sm font-semibold text-text transition-all",
+              "flex h-11 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-surface px-3 text-sm font-semibold text-text transition-all",
               "hover:border-primary/30 hover:bg-primary/[0.04] active:scale-[0.98]",
               "disabled:cursor-not-allowed disabled:opacity-50",
             )}
@@ -249,7 +251,7 @@ export function ProductDetailBuySection({
           <button
             type="button"
             onClick={handleShare}
-            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-white text-neutral-500 transition-all hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary active:scale-[0.98]"
+            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-surface text-neutral-500 transition-all hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary active:scale-[0.98]"
             aria-label={tDetail("shareProduct")}
           >
             <Share2 className="size-4" strokeWidth={2} aria-hidden />

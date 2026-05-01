@@ -65,18 +65,26 @@
   --radius-4xl: 6px;
   --radius: 4px;
 
-  /* Warm CTA / prices / discount energy (e‑market style) */
-  --color-primary: #f34f3f;
+  /**
+   * Storefront palette (boutique neutral + warm gold).
+   * Do NOT hardcode hex colors in components; consume via Tailwind color tokens.
+   */
+  /* Near-black: navbar/footer + primary CTAs + add-to-cart */
+  --color-primary: #1a1a18;
   /* Header, mega-nav strip, mobile drawer shell */
-  --color-header: #1c222d;
-  /* Secondary emphasis: ratings, highlights */
-  --color-accent: #f1c40f;
-  --color-rating: #f1c40f;
+  --color-header: #1a1a18;
+  /* Warm gold: conversion accents (badges, counts, discount callouts, hover accents) */
+  --color-accent: #c9a96e;
+  --color-rating: #c9a96e;
   --color-success: #2ecc71;
-  --color-surface: #ffffff;
-  --color-background: #f5f6f8;
-  --color-danger: #f34f3f;
-  --color-text: #1f2937;
+  /* Off-white: page background + general surface */
+  --color-surface: #f5f2ee;
+  --color-background: #f5f2ee;
+  /* Slightly darker surface for product cards */
+  --color-card-surface: #edeae5;
+  /* Keep "danger" semantic for errors; not used for sale/badge visuals */
+  --color-danger: #dc2626;
+  --color-text: #1a1a18;
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -217,15 +225,15 @@
 
 @layer components {
   .card {
-    @apply rounded-lg bg-background p-4 shadow-sm;
+    @apply rounded-lg bg-card-surface p-4 shadow-sm;
   }
 
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary/90;
+    @apply bg-primary text-surface hover:bg-primary/90;
   }
 
   .btn-accent {
-    @apply bg-accent text-black hover:bg-accent/90;
+    @apply bg-accent text-primary hover:bg-accent/90;
   }
 
   .price-text {
@@ -254,7 +262,7 @@
   }
 
   .price-display-discount-pill {
-    @apply inline-flex items-center rounded-sm bg-primary px-2.5 py-1 text-sm font-bold tabular-nums tracking-tight text-white;
+    @apply inline-flex items-center rounded-sm bg-accent px-2.5 py-1 text-sm font-bold tabular-nums tracking-tight text-primary;
   }
 
   .price-display-card {
@@ -287,7 +295,7 @@
   }
 
   .flash-sale {
-    @apply rounded-sm bg-danger px-2.5 py-1 text-xs font-semibold text-white;
+    @apply rounded-sm bg-accent px-2.5 py-1 text-xs font-semibold text-primary;
   }
 
   /** Horizontal category nav: thin thumb, transparent track (WebKit + Firefox) */
@@ -407,24 +415,25 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* Align shadcn semantic tokens with storefront palette */
+  --background: #f5f2ee;
+  --foreground: #1a1a18;
+  --card: #edeae5;
+  --card-foreground: #1a1a18;
+  --popover: #f5f2ee;
+  --popover-foreground: #1a1a18;
+  --primary: #1a1a18;
+  --primary-foreground: #f5f2ee;
+  --secondary: #edeae5;
+  --secondary-foreground: #1a1a18;
+  --muted: #edeae5;
+  --muted-foreground: #6b7280;
+  --accent: #c9a96e;
+  --accent-foreground: #1a1a18;
+  --destructive: #dc2626;
+  --border: rgb(0 0 0 / 0.1);
+  --input: rgb(0 0 0 / 0.1);
+  --ring: rgb(26 26 24 / 0.25);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

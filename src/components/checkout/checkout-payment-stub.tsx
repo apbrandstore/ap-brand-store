@@ -247,17 +247,17 @@ export function CheckoutPaymentStub() {
   }
 
   return (
-    <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
+    <div className="bg-surface pb-12 pt-6 md:pb-16 md:pt-8">
       <CheckoutBreadcrumbs step="payment" />
 
-      <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
+      <div className="mx-auto max-w-xl rounded-lg border border-black/10 bg-card-surface p-8 shadow-sm md:p-10">
         <h1 className="text-xl font-semibold text-text">{t("paymentStubHeading")}</h1>
         <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("paymentStubBody")}</p>
 
         {requiresPrepayment ? (
-          <div className="mt-5 rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          <div className="mt-5 rounded-md border border-accent/40 bg-accent/15 px-4 py-3 text-sm text-primary">
             <p className="font-semibold">{t("prepaymentRequiredTitle")}</p>
-            <p className="mt-1 text-amber-800">
+            <p className="mt-1 text-primary/80">
               {resolvedPrepayment === "full"
                 ? t("prepaymentRequiredFullBody")
                 : t("prepaymentRequiredDeliveryBody")}
@@ -304,7 +304,7 @@ export function CheckoutPaymentStub() {
                             "cursor-pointer",
                             selected
                               ? "border-neutral-200 bg-primary/10"
-                              : "border-neutral-200 bg-white hover:border-neutral-300",
+                              : "border-neutral-200 bg-surface hover:border-neutral-300",
                           ),
                     )}
                   >
@@ -333,7 +333,7 @@ export function CheckoutPaymentStub() {
                           </span>
                         ) : null}
                         {requiresPrepayment && option.id === "mfs" ? (
-                          <span className="inline-flex shrink-0 rounded-md bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                          <span className="inline-flex shrink-0 rounded-md bg-accent/20 px-2 py-0.5 text-xs font-semibold text-primary">
                             {t("paymentMfsPrepayBadge")}
                           </span>
                         ) : null}
@@ -354,7 +354,7 @@ export function CheckoutPaymentStub() {
           </div>
         </fieldset>
 
-        {errorText ? <p className="mt-4 text-sm text-red-600">{errorText}</p> : null}
+        {errorText ? <p className="mt-4 text-sm text-danger">{errorText}</p> : null}
 
         <div className="mt-8 flex w-full flex-nowrap items-stretch gap-2 sm:gap-3">
           <Link
@@ -367,7 +367,7 @@ export function CheckoutPaymentStub() {
             type="button"
             onClick={handlePrimaryClick}
             disabled={loading}
-            className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-primary/90 disabled:opacity-50 sm:flex-none sm:px-5 md:min-h-0"
+            className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 py-2.5 text-center text-sm font-semibold text-surface transition-colors hover:bg-primary/90 disabled:opacity-50 sm:flex-none sm:px-5 md:min-h-0"
           >
             {loading ? (
               <>

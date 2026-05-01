@@ -67,8 +67,8 @@ function VariantSync({
                   className={cn(
                     "inline-flex min-h-9 cursor-pointer items-center rounded-md px-3.5 py-2 text-xs font-semibold sm:text-sm",
                     selected
-                      ? "bg-neutral-950 text-white shadow-sm"
-                      : "border border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400",
+                      ? "bg-primary text-surface shadow-sm"
+                      : "border border-neutral-200 bg-surface text-text hover:border-primary/30",
                   )}
                 >
                   {value.value}
@@ -81,13 +81,13 @@ function VariantSync({
 
       <div className="min-h-[1.25rem] pt-0.5">
         {!allGroupsSelected ? (
-          <p className="text-xs font-medium text-amber-600">{tVariant("selectAllOptions")}</p>
+          <p className="text-xs font-medium text-primary/70">{tVariant("selectAllOptions")}</p>
         ) : selectedVariant == null ? (
-          <p className="text-xs font-medium text-red-600">{tVariant("unavailableCombination")}</p>
+          <p className="text-xs font-medium text-danger">{tVariant("unavailableCombination")}</p>
         ) : selectedVariant.stock_status === "out_of_stock" ? (
           <p className="text-xs font-medium text-neutral-500">{productT("outOfStock")}</p>
         ) : detail.stock_tracking ? (
-          <p className="text-xs font-medium text-sky-800/90">
+          <p className="text-xs font-medium text-primary/80">
             {tCheckout("stockAvailable", { count: selectedVariant.available_quantity })}
           </p>
         ) : (
@@ -108,7 +108,7 @@ function StaticVariantBadges({ item }: { item: CartItem }) {
           {pair.label ? (
             <p className="text-xs font-bold uppercase tracking-normal text-neutral-500">{pair.label}</p>
           ) : null}
-          <span className="mt-1 inline-flex rounded bg-neutral-950 px-2.5 py-1 text-xs font-medium text-white">
+          <span className="mt-1 inline-flex rounded bg-primary px-2.5 py-1 text-xs font-medium text-surface">
             {pair.value}
           </span>
         </div>

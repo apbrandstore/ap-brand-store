@@ -58,7 +58,7 @@ export function AddToCartDialogHost() {
     >
       <div
         className={cn(
-          "relative w-full max-w-[520px] overflow-hidden rounded-lg bg-[#0b0b0b] text-white shadow-2xl",
+          "relative w-full max-w-[520px] overflow-hidden rounded-lg bg-primary text-surface shadow-2xl",
           "sm:rounded-lg",
         )}
         onClick={(e) => e.stopPropagation()}
@@ -115,8 +115,8 @@ export function AddToCartDialogHost() {
               href="/checkout"
               onClick={closeDialog}
               className={cn(
-                buttonVariants({ variant: "default", size: "md" }),
-                "w-full justify-center rounded-none bg-white text-black hover:bg-white/90",
+                buttonVariants({ variant: "accent", size: "md" }),
+                "w-full justify-center rounded-none",
               )}
             >
               Check out
