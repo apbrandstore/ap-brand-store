@@ -18,8 +18,8 @@ export function BlogFeatureCard({ post, priority = false, className }: BlogFeatu
     <Link
       href={`/blog/${post.slug}`}
       className={cn(
-        "group relative flex min-h-[280px] flex-col overflow-hidden rounded-lg border border-neutral-200/90 shadow-sm ring-1 ring-neutral-950/5 md:min-h-[320px]",
-        hasImage ? "bg-neutral-900" : "bg-white",
+        "group relative flex min-h-[280px] flex-col overflow-hidden rounded-lg border border-border/90 shadow-sm ring-1 ring-foreground/5 md:min-h-[320px]",
+        hasImage ? "bg-card" : "bg-background",
         className,
       )}
     >
@@ -44,7 +44,7 @@ export function BlogFeatureCard({ post, priority = false, className }: BlogFeatu
         <span
           className={cn(
             "mb-2 w-fit rounded-sm px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
-            hasImage ? "bg-white/95 text-neutral-800" : "bg-neutral-100 text-neutral-700",
+            hasImage ? "bg-card/95 text-foreground" : "bg-card text-foreground",
           )}
         >
           {post.category}

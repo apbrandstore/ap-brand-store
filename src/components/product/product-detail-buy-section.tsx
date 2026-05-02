@@ -147,7 +147,7 @@ export function ProductDetailBuySection({
       {/* Variant selectors */}
       {[...optionsByAttribute.entries()].map(([slug, data]) => (
         <div key={slug}>
-          <p className="mb-2 text-[11px] font-bold uppercase tracking-normal text-neutral-500">
+          <p className="mb-2 text-[11px] font-bold uppercase tracking-normal text-muted-foreground">
             {data.attribute_name}
             {selectedValues[slug] ? (
               <span className="ml-1.5 font-semibold normal-case tracking-normal text-foreground">
@@ -169,7 +169,7 @@ export function ProductDetailBuySection({
                     "inline-flex min-h-9 cursor-pointer items-center rounded-md px-4 py-2 text-sm font-semibold",
                     selected
                       ? "bg-primary text-primary-foreground shadow-sm"
-                      : "border border-neutral-200 bg-card text-foreground hover:border-primary/40 hover:bg-primary/[0.04]",
+                      : "border border-border bg-card text-foreground hover:border-primary/40 hover:bg-primary/[0.04]",
                   )}
                 >
                   {value.value}
@@ -189,8 +189,8 @@ export function ProductDetailBuySection({
       {/* Stock status — quantity bands when tracking; only after variant pick when multiple variants */}
       {showStockHint ? (
         !inStock ? (
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-neutral-400">
-            <span className="inline-block size-1.5 rounded-full bg-neutral-300" />
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+            <span className="inline-block size-1.5 rounded-full bg-muted-foreground" />
             {t("outOfStock")}
           </p>
         ) : stockTracking &&
@@ -241,7 +241,7 @@ export function ProductDetailBuySection({
             disabled={!canPurchase}
             onClick={handleAdd}
             className={cn(
-              "flex h-11 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-card px-3 text-sm font-semibold text-foreground transition-all",
+              "flex h-11 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-md border border-border bg-card px-3 text-sm font-semibold text-foreground transition-all",
               "hover:border-primary/30 hover:bg-primary/[0.04] active:scale-[0.98]",
               "disabled:cursor-not-allowed disabled:opacity-50",
             )}
@@ -251,7 +251,7 @@ export function ProductDetailBuySection({
           <button
             type="button"
             onClick={handleShare}
-            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-card text-neutral-500 transition-all hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary active:scale-[0.98]"
+            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary active:scale-[0.98]"
             aria-label={tDetail("shareProduct")}
           >
             <Share2 className="size-4" strokeWidth={2} aria-hidden />

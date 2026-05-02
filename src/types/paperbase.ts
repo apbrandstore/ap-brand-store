@@ -65,6 +65,8 @@ export type PaperbaseProductListItem = {
   price: string;
   original_price: string | null;
   image_url: string | null;
+  /** Primary + optional second image for product-card hover (from main + gallery). */
+  card_gallery_urls?: string[];
   category_public_id: string;
   category_slug: string;
   category_name: string;

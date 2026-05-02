@@ -34,7 +34,7 @@ export function QuantityStepper({
     const segmentBtn = (side: "left" | "right") =>
       cn(
         "flex h-10 w-10 shrink-0 items-center justify-center border-0 bg-card text-foreground transition-colors focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent/60 [&_svg]:size-[18px] [&_svg]:shrink-0 [&_svg]:stroke-[2.5]",
-        side === "left" && "border-e border-black/10",
+        side === "left" && "border-e border-border",
         decrementDisabled && side === "left"
           ? "cursor-not-allowed opacity-40"
           : !decrementDisabled && side === "left" && "cursor-pointer hover:bg-card active:bg-card/80",
@@ -46,7 +46,7 @@ export function QuantityStepper({
     return (
       <div
         className={cn(
-          "inline-flex select-none items-stretch overflow-hidden rounded-md border border-black/10 bg-card text-foreground shadow-sm",
+          "inline-flex select-none items-stretch overflow-hidden rounded-md border border-border bg-card text-foreground shadow-sm",
           className,
         )}
       >
@@ -88,7 +88,7 @@ export function QuantityStepper({
       >
         <Minus className="size-4 shrink-0 stroke-[2.5]" aria-hidden />
       </Button>
-      <span className="min-w-6 text-center text-sm font-medium tabular-nums text-neutral-900">{quantity}</span>
+      <span className="min-w-6 text-center text-sm font-medium tabular-nums text-foreground">{quantity}</span>
       <Button
         type="button"
         variant="ghost"

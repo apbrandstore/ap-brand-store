@@ -7,7 +7,7 @@ type BlogHeroProps = {
 export function BlogHero({ badge, title, intro }: BlogHeroProps) {
   return (
     <header className="mx-auto max-w-3xl px-1 text-center">
-      <p className="mb-4 inline-flex rounded-sm border border-neutral-200 bg-neutral-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+      <p className="mb-4 inline-flex rounded-sm border border-border bg-muted px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {badge}
       </p>
       <h1 className="text-pretty text-2xl font-light tracking-tight text-foreground md:text-3xl lg:text-4xl">{title}</h1>

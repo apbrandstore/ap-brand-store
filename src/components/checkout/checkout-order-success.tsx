@@ -188,25 +188,25 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
   return (
     <div className="flex flex-col items-center text-center">
       <CheckoutSuccessLottie />
-      <h2 className="mt-6 text-xl font-semibold tracking-tight text-neutral-950">{t("orderSuccessTitle")}</h2>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-neutral-600">{t("orderSuccessMessage")}</p>
+      <h2 className="mt-6 text-xl font-semibold tracking-tight text-foreground">{t("orderSuccessTitle")}</h2>
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">{t("orderSuccessMessage")}</p>
 
       <div className="mt-8 w-full max-w-md rounded-lg bg-card px-4 py-5 text-start md:px-5">
-        <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">{t("orderSuccessDeliveryTo")}</p>
-        <p className="mt-1 text-sm text-neutral-800">
-          <span className="font-semibold text-neutral-950">{order.customer_name}</span>
-          <span className="text-neutral-300"> · </span>
+        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t("orderSuccessDeliveryTo")}</p>
+        <p className="mt-1 text-sm text-foreground">
+          <span className="font-semibold text-foreground">{order.customer_name}</span>
+          <span className="text-muted-foreground"> · </span>
           <span className="tabular-nums">{order.phone}</span>
         </p>
 
-        <dl className="mt-5 space-y-3 border-t border-neutral-200/60 pt-5 text-sm">
+        <dl className="mt-5 space-y-3 border-t border-border/60 pt-5 text-sm">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <dt className="text-neutral-600">{t("orderNumberLabel")}</dt>
-            <dd className="font-semibold tabular-nums text-neutral-950">{order.order_number}</dd>
+            <dt className="text-muted-foreground">{t("orderNumberLabel")}</dt>
+            <dd className="font-semibold tabular-nums text-foreground">{order.order_number}</dd>
           </div>
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <dt className="text-neutral-600">{t("orderConfirmPaymentMethod")}</dt>
-            <dd className="font-medium text-neutral-950">
+            <dt className="text-muted-foreground">{t("orderConfirmPaymentMethod")}</dt>
+            <dd className="font-medium text-foreground">
               {paymentMethod === "cod"
                 ? t("paymentMethodCod")
                 : mfsProvider === "bkash"
@@ -217,25 +217,25 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
             </dd>
           </div>
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <dt className="text-neutral-600">{t("total")}</dt>
-            <dd className="font-semibold tabular-nums text-neutral-950">{formatMoney(order.total, locale)}</dd>
+            <dt className="text-muted-foreground">{t("total")}</dt>
+            <dd className="font-semibold tabular-nums text-foreground">{formatMoney(order.total, locale)}</dd>
           </div>
         </dl>
 
-        <div className="mt-5 border-t border-neutral-200/60 pt-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">{t("orderSummary")}</p>
-          <ul className="mt-2 space-y-2 text-sm text-neutral-700">
+        <div className="mt-5 border-t border-border/60 pt-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t("orderSummary")}</p>
+          <ul className="mt-2 space-y-2 text-sm text-foreground">
             {order.items.slice(0, 3).map((item, index) => (
               <li key={`${item.product_name}-${index}`} className="flex justify-between gap-3">
                 <span className="min-w-0 truncate">
                   {item.product_name}
-                  <span className="text-neutral-400"> ×{item.quantity}</span>
+                  <span className="text-muted-foreground"> ×{item.quantity}</span>
                 </span>
               </li>
             ))}
           </ul>
           {order.items.length > 3 ? (
-            <p className="mt-2 text-xs text-neutral-500">
+            <p className="mt-2 text-xs text-muted-foreground">
               {t("orderSuccessMoreItems", { count: order.items.length - 3 })}
             </p>
           ) : null}
@@ -244,14 +244,14 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
 
       <button
         type="button"
-        className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-md border border-black/10 bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:bg-card disabled:opacity-60"
+        className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-md border border-border bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:bg-card disabled:opacity-60"
         onClick={() => void handleInvoiceClick()}
         disabled={invoiceBusy}
       >
         {invoiceButtonLabel}
       </button>
       {invoiceMessage ? (
-        <p className="mt-2 max-w-xs text-center text-xs text-neutral-600">{invoiceMessage}</p>
+        <p className="mt-2 max-w-xs text-center text-xs text-muted-foreground">{invoiceMessage}</p>
       ) : null}
 
       <div className="mt-4 flex w-full max-w-xs justify-center">

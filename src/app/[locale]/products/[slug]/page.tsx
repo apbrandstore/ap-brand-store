@@ -112,7 +112,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       <section className="bg-card pb-12 lg:pb-20">
         <PageContainer>
           {/* Breadcrumb */}
-          <nav className="py-4 text-sm text-neutral-400" aria-label={tDetail("breadcrumbAria")}>
+          <nav className="py-4 text-sm text-muted-foreground" aria-label={tDetail("breadcrumbAria")}>
             <ol className="flex flex-wrap items-center gap-1">
               <li>
                 <Link href="/" className="transition-colors hover:text-primary">
@@ -120,7 +120,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </Link>
               </li>
               <li aria-hidden>
-                <ChevronRight className="size-3.5 text-neutral-300" strokeWidth={2.5} />
+                <ChevronRight className="size-3.5 text-muted-foreground" strokeWidth={2.5} />
               </li>
               <li>
                 <Link href="/#products" className="transition-colors hover:text-primary">
@@ -128,9 +128,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </Link>
               </li>
               <li aria-hidden>
-                <ChevronRight className="size-3.5 text-neutral-300" strokeWidth={2.5} />
+                <ChevronRight className="size-3.5 text-muted-foreground" strokeWidth={2.5} />
               </li>
-              <li className="max-w-[min(100%,28rem)] truncate font-thin text-neutral-600">
+              <li className="max-w-[min(100%,28rem)] truncate font-thin text-muted-foreground">
                 {productName}
               </li>
             </ol>
@@ -193,7 +193,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </div>
 
                 {/* Divider */}
-                <div className="my-5 h-px bg-black/10" />
+                <div className="my-5 h-px bg-border/60" />
 
                 {/* Variant picker + buy section */}
                 <ProductDetailBuySection
@@ -210,22 +210,22 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </VariantSelectionProvider>
 
               {/* Trust badges */}
-              <div className="mt-5 grid grid-cols-3 gap-2 rounded-lg border border-black/10 bg-card p-3">
+              <div className="mt-5 grid grid-cols-3 gap-2 rounded-lg border border-border bg-card p-3">
                 <div className="flex flex-col items-center gap-1 text-center">
                   <Truck className="size-5 text-primary" strokeWidth={1.8} />
-                  <span className="text-[10px] font-semibold leading-tight text-neutral-500">
+                  <span className="text-[10px] font-semibold leading-tight text-muted-foreground">
                     {tDetail("trustFastDelivery")}
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 text-center">
                   <RotateCcw className="size-5 text-primary" strokeWidth={1.8} />
-                  <span className="text-[10px] font-semibold leading-tight text-neutral-500">
+                  <span className="text-[10px] font-semibold leading-tight text-muted-foreground">
                     {tDetail("trustEasyReturns")}
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 text-center">
                   <ShieldCheck className="size-5 text-primary" strokeWidth={1.8} />
-                  <span className="text-[10px] font-semibold leading-tight text-neutral-500">
+                  <span className="text-[10px] font-semibold leading-tight text-muted-foreground">
                     {tDetail("trustSecurePayment")}
                   </span>
                 </div>
@@ -246,7 +246,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </section>
 
       {product.related_products.length > 0 ? (
-        <section className="border-t border-black/10 bg-card py-10 md:py-12">
+        <section className="border-t border-border bg-card py-10 md:py-12">
           <PageContainer>
             <h2 className="mb-8 text-center text-2xl font-thin tracking-tight text-foreground/90 md:mb-10 md:text-3xl">
               {tDetail("relatedProductsTitle")}

@@ -81,15 +81,16 @@ const CheckoutSummaryItem = memo(function CheckoutSummaryItem({
   const imageSrc = resolveStorefrontImageUrl(item.image_url);
 
   return (
-    <li className="rounded-lg border border-black/10 bg-card p-4">
+    <li className="rounded-lg border border-border bg-card p-4">
       <div className="flex gap-2 sm:gap-3">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-border bg-card">
           <Image
             src={imageSrc}
             alt={item.name}
             fill
             sizes="80px"
-            className="object-contain p-1.5"
+            className="block object-contain p-1.5 mix-blend-multiply [-webkit-user-drag:none]"
+            draggable={false}
             unoptimized={storefrontImageUnoptimized(imageSrc)}
           />
         </div>
@@ -99,15 +100,15 @@ const CheckoutSummaryItem = memo(function CheckoutSummaryItem({
               href={productHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-fit max-w-full text-sm font-light leading-snug text-neutral-900 underline decoration-neutral-400 decoration-1 underline-offset-[3px] hover:text-neutral-950 hover:decoration-neutral-800"
+              className="block w-fit max-w-full text-sm font-light leading-snug text-foreground underline decoration-muted-foreground decoration-1 underline-offset-[3px] hover:text-foreground hover:decoration-foreground"
             >
               {item.name}
             </Link>
           ) : (
-            <p className="text-sm font-light leading-snug text-neutral-900">{item.name}</p>
+            <p className="text-sm font-light leading-snug text-foreground">{item.name}</p>
           )}
           <CheckoutLineVariants item={item} />
-          <p className="mt-3 text-xs font-normal text-neutral-500">
+          <p className="mt-3 text-xs font-normal text-muted-foreground">
             <span className="price-display-line">{formatMoney(item.price, locale)}</span>{" "}
             <span>{t("each")}</span>
           </p>
@@ -137,15 +138,15 @@ const CheckoutSummaryItem = memo(function CheckoutSummaryItem({
             <button
               type="button"
               onClick={() => onRemove(item)}
-              className="text-xs font-medium text-neutral-500 underline decoration-neutral-300 underline-offset-2 transition-colors hover:text-primary"
+              className="text-xs font-medium text-muted-foreground underline decoration-muted-foreground underline-offset-2 transition-colors hover:text-primary"
             >
               {tCart("remove")}
             </button>
           </div>
         ) : null}
       </div>
-      <p className="mt-3 border-t border-neutral-100 pt-3 text-end text-xs font-normal text-neutral-500">
-        <span className="tabular-nums text-neutral-700">
+      <p className="mt-3 border-t border-border pt-3 text-end text-xs font-normal text-muted-foreground">
+        <span className="tabular-nums text-foreground">
           {formatMoney(parseDecimal(item.price) * item.quantity, locale)}
         </span>
       </p>
@@ -472,14 +473,14 @@ export function CheckoutShippingView() {
 
   if (!hydrated) {
     return (
-      <div className="py-16 text-center text-sm text-neutral-600">{tStates("loading")}</div>
+      <div className="py-16 text-center text-sm text-muted-foreground">{tStates("loading")}</div>
     );
   }
 
   if (checkoutItems.length === 0) {
     return (
       <div className="py-16 text-center">
-        <p className="mb-6 text-neutral-700">{t("empty")}</p>
+        <p className="mb-6 text-foreground">{t("empty")}</p>
         <Link
           href="/#products"
           className="inline-flex rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
@@ -491,22 +492,22 @@ export function CheckoutShippingView() {
   }
 
   const inputClass =
-    "w-full rounded-lg border border-black/10 bg-card px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-neutral-400 focus:border-primary/40 focus:ring-2 focus:ring-primary/10";
+    "w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary/40 focus:ring-2 focus:ring-primary/10";
 
-  const shellCard = "rounded-lg border border-black/10 bg-card shadow-sm";
+  const shellCard = "rounded-lg border border-border bg-card shadow-sm";
 
   const orderTotalRows = (
     <>
       <div className="flex items-baseline justify-between gap-4">
-        <dt className="font-normal text-neutral-500">{t("subtotal")}</dt>
+        <dt className="font-normal text-muted-foreground">{t("subtotal")}</dt>
         <dd className="price-display-summary shrink-0 text-end">{formatMoney(checkoutSubtotal, locale)}</dd>
       </div>
       <div className="flex items-baseline justify-between gap-4">
-        <dt className="font-normal text-neutral-500">{t("shippingLine")}</dt>
+        <dt className="font-normal text-muted-foreground">{t("shippingLine")}</dt>
         <dd className="price-display-summary shrink-0 text-end">{formatMoney(shippingCost, locale)}</dd>
       </div>
-      <div className="flex items-baseline justify-between gap-4 border-t border-neutral-200 pt-3">
-        <dt className="text-sm font-normal text-neutral-700">{t("total")}</dt>
+      <div className="flex items-baseline justify-between gap-4 border-t border-border pt-3">
+        <dt className="text-sm font-normal text-foreground">{t("total")}</dt>
         <dd className="price-display-total shrink-0 text-end leading-none !text-primary">
           {formatMoney(finalTotal, locale)}
         </dd>
@@ -531,7 +532,7 @@ export function CheckoutShippingView() {
               "lg:absolute lg:inset-0 lg:overflow-hidden",
             )}
           >
-          <h2 className="shrink-0 text-xl font-semibold tracking-normal uppercase text-neutral-950">
+          <h2 className="shrink-0 text-xl font-semibold tracking-normal uppercase text-foreground">
             {t("orderSummary")}
           </h2>
 
@@ -551,7 +552,7 @@ export function CheckoutShippingView() {
 
           <dl
             className={cn(
-              "mt-6 shrink-0 space-y-2.5 border-t border-neutral-200 pt-5 text-sm",
+              "mt-6 shrink-0 space-y-2.5 border-t border-border pt-5 text-sm",
               "max-lg:hidden",
             )}
           >
@@ -568,13 +569,13 @@ export function CheckoutShippingView() {
 
         <div className="flex min-h-0 min-w-0 flex-col gap-6 lg:h-full">
           <section className={cn("shrink-0", shellCard, "p-5 sm:p-6")}>
-            <h1 className="text-xl font-semibold tracking-normal uppercase text-neutral-950">
+            <h1 className="text-xl font-semibold tracking-normal uppercase text-foreground">
               {t("customerInfoTitle")}
             </h1>
             <div className="mt-6 grid gap-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="grid gap-2">
-                  <span className="text-sm font-medium text-neutral-950">
+                  <span className="text-sm font-medium text-foreground">
                     {t("firstName")}
                     <span className="text-accent"> *</span>
                   </span>
@@ -587,7 +588,7 @@ export function CheckoutShippingView() {
                   />
                 </label>
                 <label className="grid gap-2">
-                  <span className="text-sm font-medium text-neutral-950">
+                  <span className="text-sm font-medium text-foreground">
                     {t("lastName")}
                     <span className="text-accent"> *</span>
                   </span>
@@ -601,7 +602,7 @@ export function CheckoutShippingView() {
                 </label>
               </div>
               <label className="grid gap-2">
-                <span className="text-sm font-medium text-neutral-950">{t("email")}</span>
+                <span className="text-sm font-medium text-foreground">{t("email")}</span>
                 <input
                   className={inputClass}
                   name="email"
@@ -611,7 +612,7 @@ export function CheckoutShippingView() {
                 />
               </label>
               <div className="grid min-w-0 gap-2">
-                <span className="text-sm font-medium text-neutral-950">
+                <span className="text-sm font-medium text-foreground">
                   {t("phone")}
                   <span className="text-accent"> *</span>
                 </span>
@@ -620,7 +621,7 @@ export function CheckoutShippingView() {
                   <span
                     className={cn(
                       inputClass,
-                      "inline-flex max-w-[7.5rem] shrink-0 cursor-default select-none items-center text-neutral-600 sm:max-w-[8.5rem]",
+                      "inline-flex max-w-[7.5rem] shrink-0 cursor-default select-none items-center text-muted-foreground sm:max-w-[8.5rem]",
                     )}
                   >
                     {t("dialOption_bd")}
@@ -641,7 +642,7 @@ export function CheckoutShippingView() {
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="grid gap-2">
-                  <span className="text-sm font-medium text-neutral-950">
+                  <span className="text-sm font-medium text-foreground">
                     {t("thana")}
                     <span className="text-accent"> *</span>
                   </span>
@@ -654,7 +655,7 @@ export function CheckoutShippingView() {
                   />
                 </label>
                 <label className="grid gap-2">
-                  <span className="text-sm font-medium text-neutral-950">
+                  <span className="text-sm font-medium text-foreground">
                     {t("district")}
                     <span className="text-accent"> *</span>
                   </span>
@@ -668,7 +669,7 @@ export function CheckoutShippingView() {
                 </label>
               </div>
               <label className="grid gap-2">
-                <span className="text-sm font-medium text-neutral-950">
+                <span className="text-sm font-medium text-foreground">
                   {t("addressField")}
                   <span className="text-accent"> *</span>
                 </span>
@@ -685,7 +686,7 @@ export function CheckoutShippingView() {
 
           <div className="flex min-h-0 flex-col gap-6 lg:flex-1 lg:justify-end">
             <section className={cn(shellCard, "p-5 sm:p-6")}>
-              <h2 className="text-base font-semibold text-neutral-950">{t("shippingZone")}</h2>
+              <h2 className="text-base font-semibold text-foreground">{t("shippingZone")}</h2>
               <fieldset className="mt-4 grid gap-3">
                 <legend className="sr-only">{t("shippingZone")}</legend>
                 {zones.map((zone) => {
@@ -696,8 +697,8 @@ export function CheckoutShippingView() {
                       className={cn(
                         "flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors",
                         selected
-                          ? "border-neutral-200 bg-primary/10"
-                          : "border-neutral-200 bg-card hover:border-neutral-300",
+                          ? "border-border bg-primary/10"
+                          : "border-border bg-card hover:border-border",
                       )}
                     >
                       <input
@@ -708,7 +709,7 @@ export function CheckoutShippingView() {
                         onChange={() => setSelectedZone(zone.zone_public_id)}
                         className="size-4 shrink-0 accent-primary"
                       />
-                      <span className="text-sm font-medium text-neutral-950">{zone.name}</span>
+                      <span className="text-sm font-medium text-foreground">{zone.name}</span>
                     </label>
                   );
                 })}

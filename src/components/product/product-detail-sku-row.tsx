@@ -51,7 +51,7 @@ export function ProductDetailSkuRow() {
 
   if (skuDisplay.mode === "prompt") {
     return (
-      <p className="mt-2 text-xs font-normal text-neutral-500">
+      <p className="mt-2 text-xs font-normal text-muted-foreground">
         {tDetail("skuSelectOptions")}
       </p>
     );
@@ -66,7 +66,7 @@ export function ProductDetailSkuRow() {
       onClick={() => copySkuToClipboard(skuDisplay.sku)}
       aria-label={`${skuDisplay.sku}. ${copyHint}`}
       className={cn(
-        "group mt-2 inline-flex max-w-full cursor-pointer items-center gap-1.5 rounded-sm text-left text-xs tabular-nums text-neutral-600 outline-none transition-colors",
+        "group mt-2 inline-flex max-w-full cursor-pointer items-center gap-1.5 rounded-sm text-left text-xs tabular-nums text-muted-foreground outline-none transition-colors",
         "hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-1",
       )}
     >

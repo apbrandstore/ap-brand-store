@@ -25,7 +25,7 @@ export function BlogSidebar({
   return (
     <aside className="flex min-w-0 flex-col gap-8 lg:gap-10">
       <section aria-labelledby="blog-featured-heading">
-        <div className="border-b border-neutral-200 pb-2">
+        <div className="border-b border-border pb-2">
           <h2 id="blog-featured-heading" className="text-sm font-semibold tracking-tight text-foreground">
             {featuredHeading}
           </h2>
@@ -41,7 +41,7 @@ export function BlogSidebar({
 
       {showLatestSection ? (
         <section aria-labelledby="blog-latest-heading">
-          <div className="border-b border-neutral-200 pb-2">
+          <div className="border-b border-border pb-2">
             <h2 id="blog-latest-heading" className="text-sm font-semibold tracking-tight text-foreground">
               {latestHeading}
             </h2>

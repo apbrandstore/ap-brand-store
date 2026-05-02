@@ -16,10 +16,10 @@ export function ProductCardGallery({ urls, alt, href, priority }: ProductCardGal
   const unoptimized = storefrontImageUnoptimized(src);
 
   return (
-    <div className="relative aspect-square w-full shrink-0 border border-border bg-transparent">
+    <div className="relative aspect-square w-full shrink-0 border border-border bg-card">
       <Link
         href={href}
-        className="relative block size-full outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neutral-900/15"
+        className="relative block size-full bg-card outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foreground/15"
         aria-label={alt}
       >
         <Image
@@ -27,10 +27,11 @@ export function ProductCardGallery({ urls, alt, href, priority }: ProductCardGal
           alt={alt}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-          className="object-contain object-center"
+          className="block object-contain object-center mix-blend-multiply [-webkit-user-drag:none]"
           unoptimized={unoptimized}
           priority={priority}
           loading={priority ? "eager" : undefined}
+          draggable={false}
         />
       </Link>
     </div>

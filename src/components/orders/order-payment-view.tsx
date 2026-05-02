@@ -220,13 +220,13 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
   // and let the backend be the source of truth.
   if (!order) {
     return (
-      <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
-        <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
+      <div className="bg-background pb-12 pt-6 md:pb-16 md:pt-8">
+        <div className="mx-auto max-w-xl rounded-lg border border-border/60 bg-card p-8 shadow-sm md:p-10">
           <h1 className="text-xl font-semibold text-foreground">{t("lostSessionTitle")}</h1>
-          <p className="mt-3 text-sm text-neutral-600">{t("lostSessionBody")}</p>
+          <p className="mt-3 text-sm text-muted-foreground">{t("lostSessionBody")}</p>
           <Link
             href="/"
-            className="mt-8 inline-flex rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
+            className="mt-8 inline-flex rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             {tCheckout("continueShoppingAfterOrder")}
           </Link>
@@ -244,13 +244,13 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
 
   if (!requiresPayment) {
     return (
-      <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
-        <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
+      <div className="bg-background pb-12 pt-6 md:pb-16 md:pt-8">
+        <div className="mx-auto max-w-xl rounded-lg border border-border/60 bg-card p-8 shadow-sm md:p-10">
           <h1 className="text-xl font-semibold text-foreground">{tCheckout("orderPlacedTitle")}</h1>
           <OrderReceiptList order={order} locale={locale} />
           <Link
             href="/"
-            className="mt-8 inline-flex rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
+            className="mt-8 inline-flex rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
           >
             {tCheckout("continueShoppingAfterOrder")}
           </Link>
@@ -268,8 +268,8 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
   const showRejected = status === "cancelled" && paymentStatus === "failed";
 
   return (
-    <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
-      <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
+    <div className="bg-background pb-12 pt-6 md:pb-16 md:pt-8">
+      <div className="mx-auto max-w-xl rounded-lg border border-border/60 bg-card p-8 shadow-sm md:p-10">
         {showConfirmed ? (
           <ConfirmedView order={order} locale={locale} />
         ) : showRejected ? (
@@ -302,10 +302,10 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
         ) : (
           <div>
             <h1 className="text-xl font-semibold text-foreground">{t("unexpectedTitle")}</h1>
-            <p className="mt-3 text-sm text-neutral-600">{t("unexpectedBody")}</p>
+            <p className="mt-3 text-sm text-muted-foreground">{t("unexpectedBody")}</p>
             <Link
               href="/"
-              className="mt-8 inline-flex rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
+              className="mt-8 inline-flex rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
             >
               {tCheckout("continueShoppingAfterOrder")}
             </Link>
@@ -334,32 +334,32 @@ function OrderReceiptList({
         : null;
 
   return (
-    <dl className="mt-4 space-y-3 text-sm leading-relaxed text-neutral-600">
+    <dl className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
       <div>
-        <dt className="font-medium text-neutral-950">{tCheckout("orderNumberLabel")}</dt>
+        <dt className="font-medium text-foreground">{tCheckout("orderNumberLabel")}</dt>
         <dd className="mt-0.5">{order.order_number}</dd>
       </div>
       <div>
-        <dt className="font-medium text-neutral-950">{tCheckout("orderConfirmCustomerName")}</dt>
+        <dt className="font-medium text-foreground">{tCheckout("orderConfirmCustomerName")}</dt>
         <dd className="mt-0.5">{order.customer_name}</dd>
       </div>
       <div>
-        <dt className="font-medium text-neutral-950">{tCheckout("orderConfirmPhone")}</dt>
+        <dt className="font-medium text-foreground">{tCheckout("orderConfirmPhone")}</dt>
         <dd className="mt-0.5">{order.phone}</dd>
       </div>
       <div>
-        <dt className="font-medium text-neutral-950">{tCheckout("orderConfirmAddress")}</dt>
+        <dt className="font-medium text-foreground">{tCheckout("orderConfirmAddress")}</dt>
         <dd className="mt-0.5 whitespace-pre-wrap">{order.shipping_address}</dd>
       </div>
       {prepaymentNotice ? (
         <div>
-          <dt className="font-medium text-neutral-950">{tCheckout("orderPrepaymentNoticeLabel")}</dt>
-          <dd className="mt-0.5 text-neutral-700">{prepaymentNotice}</dd>
+          <dt className="font-medium text-foreground">{tCheckout("orderPrepaymentNoticeLabel")}</dt>
+          <dd className="mt-0.5 text-foreground">{prepaymentNotice}</dd>
         </div>
       ) : null}
       <div>
-        <dt className="font-medium text-neutral-950">{tCheckout("total")}</dt>
-        <dd className="mt-0.5 tabular-nums text-neutral-950">{formatMoney(order.total, locale)}</dd>
+        <dt className="font-medium text-foreground">{tCheckout("total")}</dt>
+        <dd className="mt-0.5 tabular-nums text-foreground">{formatMoney(order.total, locale)}</dd>
       </div>
     </dl>
   );
@@ -377,9 +377,9 @@ function AmountRow({
   const t = useTranslations("orderPayment");
   const label = kind === "delivery_only" ? t("amountDeliveryLabel") : t("amountFullLabel");
   return (
-    <div className="mt-6 flex items-baseline justify-between gap-4 rounded-md border border-neutral-200 bg-neutral-50 px-4 py-3">
-      <span className="text-sm font-medium text-neutral-700">{label}</span>
-      <span className="text-lg font-semibold tabular-nums text-neutral-950">
+    <div className="mt-6 flex items-baseline justify-between gap-4 rounded-md border border-border bg-muted px-4 py-3">
+      <span className="text-sm font-medium text-foreground">{label}</span>
+      <span className="text-lg font-semibold tabular-nums text-foreground">
         {formatMoney(amount, locale)}
       </span>
     </div>
@@ -419,7 +419,7 @@ function FormView({
 }) {
   const t = useTranslations("orderPayment");
   const inputClass =
-    "w-full rounded-lg border border-neutral-200 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/10";
+    "w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/10";
   const errorInputClass = "border-red-400 focus:border-red-500 focus:ring-red-500/10";
 
   return (
@@ -427,14 +427,14 @@ function FormView({
       <h1 className="text-xl font-semibold text-foreground">
         {isResubmitting ? t("resubmitTitle") : t("formTitle")}
       </h1>
-      <p className="mt-3 text-sm text-neutral-600">
+      <p className="mt-3 text-sm text-muted-foreground">
         {kind === "delivery_only" ? t("formIntroDelivery") : t("formIntroFull")}
       </p>
 
       <AmountRow amount={amount} kind={kind} locale={locale} />
 
-      <div className="mt-6 rounded-md border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
-        <p className="font-medium text-neutral-950">{t("instructionsTitle")}</p>
+      <div className="mt-6 rounded-md border border-border bg-muted px-4 py-3 text-sm text-foreground">
+        <p className="font-medium text-foreground">{t("instructionsTitle")}</p>
         {store?.phone ? (
           <p className="mt-1">
             {t("instructionsPaymentNumberLabel")}{" "}
@@ -448,7 +448,7 @@ function FormView({
 
       <form onSubmit={onSubmit} className="mt-6 grid gap-5" noValidate>
         <label className="grid gap-2">
-          <span className="text-sm font-medium text-neutral-950">
+          <span className="text-sm font-medium text-foreground">
             {t("transactionIdLabel")}
             <span className="text-red-600"> *</span>
           </span>
@@ -468,7 +468,7 @@ function FormView({
         </label>
 
         <label className="grid gap-2">
-          <span className="text-sm font-medium text-neutral-950">
+          <span className="text-sm font-medium text-foreground">
             {t("payerNumberLabel")}
             <span className="text-red-600"> *</span>
           </span>
@@ -521,25 +521,25 @@ function AwaitingView({
   return (
     <>
       <h1 className="text-xl font-semibold text-foreground">{t("awaitingTitle")}</h1>
-      <p className="mt-3 text-sm text-neutral-600">{t("awaitingBody")}</p>
-      <p className="mt-2 text-sm text-neutral-600">{t("awaitingEmailHint")}</p>
+      <p className="mt-3 text-sm text-muted-foreground">{t("awaitingBody")}</p>
+      <p className="mt-2 text-sm text-muted-foreground">{t("awaitingEmailHint")}</p>
 
       <AmountRow amount={amount} kind={kind} locale={locale} />
 
-      <dl className="mt-6 space-y-3 text-sm leading-relaxed text-neutral-600">
+      <dl className="mt-6 space-y-3 text-sm leading-relaxed text-muted-foreground">
         <div>
-          <dt className="font-medium text-neutral-950">{tCheckout("orderNumberLabel")}</dt>
+          <dt className="font-medium text-foreground">{tCheckout("orderNumberLabel")}</dt>
           <dd className="mt-0.5">{order.order_number}</dd>
         </div>
         {order.transaction_id ? (
           <div>
-            <dt className="font-medium text-neutral-950">{t("submittedTransactionLabel")}</dt>
+            <dt className="font-medium text-foreground">{t("submittedTransactionLabel")}</dt>
             <dd className="mt-0.5 break-all">{order.transaction_id}</dd>
           </div>
         ) : null}
         {order.payer_number ? (
           <div>
-            <dt className="font-medium text-neutral-950">{t("submittedPayerLabel")}</dt>
+            <dt className="font-medium text-foreground">{t("submittedPayerLabel")}</dt>
             <dd className="mt-0.5">{order.payer_number}</dd>
           </div>
         ) : null}
@@ -690,11 +690,11 @@ function ConfirmedView({
   return (
     <>
       <h1 className="text-xl font-semibold text-foreground">{t("confirmedTitle")}</h1>
-      <p className="mt-3 text-sm text-neutral-600">{t("confirmedBody")}</p>
+      <p className="mt-3 text-sm text-muted-foreground">{t("confirmedBody")}</p>
       <OrderReceiptList order={order} locale={locale} />
       <button
         type="button"
-        className="mt-6 inline-flex h-11 items-center justify-center rounded-md border border-neutral-300 bg-white px-5 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-50 disabled:opacity-60"
+        className="mt-6 inline-flex h-11 items-center justify-center rounded-md border border-border bg-card px-5 text-sm font-semibold text-foreground transition-colors hover:bg-muted disabled:opacity-60"
         onClick={() => void handleInvoiceClick()}
         disabled={invoiceBusy}
       >
@@ -704,15 +704,15 @@ function ConfirmedView({
         <button
           type="button"
           onClick={() => dispatchInvoiceState({ status: "idle" })}
-          className="mt-3 inline-flex h-10 items-center justify-center rounded-md border border-neutral-300 bg-white px-4 text-sm font-medium text-neutral-800 hover:bg-neutral-50"
+          className="mt-3 inline-flex h-10 items-center justify-center rounded-md border border-border bg-card px-4 text-sm font-medium text-foreground hover:bg-muted"
         >
           {tCheckout("invoiceButtonRetryDownload")}
         </button>
       ) : null}
-      {invoiceMessage ? <p className="mt-2 text-xs text-neutral-600">{invoiceMessage}</p> : null}
+      {invoiceMessage ? <p className="mt-2 text-xs text-muted-foreground">{invoiceMessage}</p> : null}
       <Link
         href="/"
-        className="mt-8 inline-flex rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-900"
+        className="mt-8 inline-flex rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
       >
         {tCheckout("continueShoppingAfterOrder")}
       </Link>
@@ -727,11 +727,11 @@ function RejectedView({ order }: { order: PaperbaseOrderReceipt }) {
   return (
     <>
       <h1 className="text-xl font-semibold text-foreground">{t("rejectedTitle")}</h1>
-      <p className="mt-3 text-sm text-neutral-600">{t("rejectedBody")}</p>
+      <p className="mt-3 text-sm text-muted-foreground">{t("rejectedBody")}</p>
 
-      <dl className="mt-6 space-y-3 text-sm leading-relaxed text-neutral-600">
+      <dl className="mt-6 space-y-3 text-sm leading-relaxed text-muted-foreground">
         <div>
-          <dt className="font-medium text-neutral-950">{tCheckout("orderNumberLabel")}</dt>
+          <dt className="font-medium text-foreground">{tCheckout("orderNumberLabel")}</dt>
           <dd className="mt-0.5">{order.order_number}</dd>
         </div>
       </dl>
@@ -739,7 +739,7 @@ function RejectedView({ order }: { order: PaperbaseOrderReceipt }) {
       <div className="mt-8">
         <Link
           href="/"
-          className="inline-flex h-12 items-center justify-center rounded-md bg-neutral-950 px-5 text-sm font-semibold text-white hover:bg-neutral-900"
+          className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
         >
           {tCheckout("continueShoppingAfterOrder")}
         </Link>

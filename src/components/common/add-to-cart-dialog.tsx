@@ -58,7 +58,7 @@ export function AddToCartDialogHost() {
     >
       <div
         className={cn(
-          "relative w-full max-w-[520px] overflow-hidden rounded-lg bg-primary text-primary-foreground shadow-2xl",
+          "relative w-full max-w-[520px] overflow-hidden rounded-lg bg-card text-foreground shadow-2xl",
           "sm:rounded-lg",
         )}
         onClick={(e) => e.stopPropagation()}
@@ -67,13 +67,13 @@ export function AddToCartDialogHost() {
           type="button"
           onClick={closeDialog}
           aria-label={common("close")}
-          className="absolute right-4 top-4 inline-flex size-9 items-center justify-center rounded-md text-white/80 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
+          className="absolute right-4 top-4 inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <X className="size-5" strokeWidth={2} aria-hidden />
         </button>
 
         <div className="px-6 pb-6 pt-5 sm:px-8 sm:pb-8 sm:pt-6">
-          <div className="flex items-center gap-2 text-sm font-medium text-white/90">
+          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
             <span className="inline-flex size-6 items-center justify-center rounded-full bg-success">
               <Check className="size-4 text-white" strokeWidth={2.5} aria-hidden />
             </span>
@@ -81,7 +81,7 @@ export function AddToCartDialogHost() {
           </div>
 
           <div className="mt-5 flex items-start gap-4">
-            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-white">
+            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
               <Image
                 src={imageSrc}
                 alt={product.name}
@@ -94,7 +94,7 @@ export function AddToCartDialogHost() {
             <div className="min-w-0">
               <p className="text-base font-semibold leading-snug">{product.name}</p>
               {variantLine ? (
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-white/70">{variantLine}</p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{variantLine}</p>
               ) : null}
             </div>
           </div>
@@ -105,7 +105,7 @@ export function AddToCartDialogHost() {
               onClick={closeDialog}
               className={cn(
                 buttonVariants({ variant: "outline", size: "md" }),
-                "w-full justify-center rounded-none border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white",
+                "w-full justify-center rounded-none border-border bg-transparent text-foreground hover:bg-muted hover:text-foreground",
               )}
             >
               View cart ({itemCount})
@@ -127,7 +127,7 @@ export function AddToCartDialogHost() {
               variant="ghost"
               size="md"
               onClick={closeDialog}
-              className="w-full rounded-none bg-transparent text-white underline decoration-white/50 underline-offset-4 hover:bg-transparent hover:text-white hover:decoration-white"
+              className="w-full rounded-none bg-transparent text-muted-foreground underline decoration-muted-foreground/50 underline-offset-4 hover:bg-transparent hover:text-foreground hover:decoration-muted-foreground"
             >
               {tCheckout("continueShopping")}
             </Button>

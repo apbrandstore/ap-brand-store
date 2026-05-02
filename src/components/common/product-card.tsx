@@ -37,7 +37,7 @@ export async function ProductCard({ product, locale: localeProp, priority, aosDe
       <div className="flex min-h-0 flex-1 flex-col px-3 pb-2 pt-4">
         <Link
           href={href}
-          className="min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/20 focus-visible:ring-offset-2"
+          className="min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2"
         >
           <h3 className="line-clamp-2 text-[18px] font-light uppercase leading-tight tracking-wide text-foreground [font-size:clamp(10px,1.6vw,19px)]">
             {product.name}

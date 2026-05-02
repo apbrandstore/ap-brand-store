@@ -54,7 +54,7 @@ export function DesktopSearchOverlay({
         aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => setOpen(true)}
-        className="hidden size-10 items-center justify-center text-primary-foreground transition-transform duration-150 hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/40 md:inline-flex"
+        className="hidden size-10 items-center justify-center text-header-foreground transition-transform duration-150 hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-header-foreground/40 md:inline-flex"
       >
         <Search className="size-5" strokeWidth={1.9} aria-hidden />
       </button>
@@ -62,7 +62,7 @@ export function DesktopSearchOverlay({
       {open && isClient
         ? createPortal(
             <div
-              className="fixed inset-0 z-[120] hidden min-h-0 flex-col bg-neutral-100 pt-[env(safe-area-inset-top,0px)] md:flex"
+              className="fixed inset-0 z-[120] hidden min-h-0 flex-col bg-background pt-[env(safe-area-inset-top,0px)] md:flex"
               role="dialog"
               aria-modal="true"
               aria-label={openSearchAriaLabel}

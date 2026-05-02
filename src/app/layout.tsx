@@ -30,6 +30,21 @@ export default function RootLayout({ children }: RootLayoutProps) {
             Object.entries(p).forEach(([k, val]) => {
               r.style.setProperty('--' + k, val);
             });
+            var headerBg = p['header'] || p['background'];
+            if (headerBg && typeof headerBg === 'string') {
+              var hex = headerBg.trim();
+              if (hex.charAt(0) === '#') hex = hex.slice(1);
+              if (hex.length === 3 && /^[0-9a-fA-F]{3}$/.test(hex)) {
+                hex = hex.charAt(0)+hex.charAt(0)+hex.charAt(1)+hex.charAt(1)+hex.charAt(2)+hex.charAt(2);
+              }
+              if (hex.length === 6 && /^[0-9a-fA-F]{6}$/.test(hex)) {
+                var r0 = parseInt(hex.slice(0,2), 16);
+                var g0 = parseInt(hex.slice(2,4), 16);
+                var b0 = parseInt(hex.slice(4,6), 16);
+                var lum = (0.299*r0 + 0.587*g0 + 0.114*b0)/255;
+                r.setAttribute('data-theme-mode', lum < 0.5 ? 'dark' : 'light');
+              }
+            }
           }
         } catch(e) {}
       `,

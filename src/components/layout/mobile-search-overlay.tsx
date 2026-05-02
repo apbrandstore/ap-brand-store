@@ -59,7 +59,7 @@ export function MobileSearchOverlay({
           aria-label={openSearchAriaLabel}
           aria-haspopup="dialog"
           aria-expanded={open}
-          className="inline-flex size-10 shrink-0 items-center justify-center border-0 bg-transparent p-0 text-primary-foreground transition-transform duration-150 hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/80 md:hidden"
+          className="inline-flex size-10 shrink-0 items-center justify-center border-0 bg-transparent p-0 text-header-foreground transition-transform duration-150 hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-header-foreground/80 md:hidden"
         >
           <Search className="size-6 shrink-0" strokeWidth={1.75} aria-hidden />
         </button>
@@ -74,7 +74,7 @@ export function MobileSearchOverlay({
         >
           <span className="min-h-9 min-w-0 flex-1 truncate py-2 text-sm text-foreground/45">{placeholder}</span>
           <span
-            className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-header text-header-foreground"
             aria-hidden
           >
             <Search className="size-[18px]" strokeWidth={2} />
@@ -85,7 +85,7 @@ export function MobileSearchOverlay({
       {open && isClient
         ? createPortal(
             <div
-              className="fixed inset-0 z-[110] flex min-h-0 flex-col bg-neutral-100 pt-[env(safe-area-inset-top,0px)] md:hidden"
+              className="fixed inset-0 z-[110] flex min-h-0 flex-col bg-background pt-[env(safe-area-inset-top,0px)] md:hidden"
               role="dialog"
               aria-modal="true"
               aria-label={openSearchAriaLabel}

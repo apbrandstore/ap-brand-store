@@ -71,7 +71,7 @@ export async function Footer() {
   const year = new Date().getFullYear();
 
   const socialClass =
-    "flex size-11 items-center justify-center rounded-md border border-white/15 bg-white/5 text-primary-foreground transition-colors hover:border-accent/50 hover:bg-white/10 hover:text-accent";
+    "flex size-11 items-center justify-center rounded-md border border-primary-foreground/15 bg-primary-foreground/5 text-primary-foreground transition-colors hover:border-accent/50 hover:bg-primary-foreground/10 hover:text-accent";
 
   const socials = [
     {

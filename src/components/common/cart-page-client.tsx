@@ -28,11 +28,11 @@ export function CartPageClient() {
 
   return (
     <div className="bg-card">
-      <div className="flex items-baseline justify-between gap-4 border-b border-black/10 pb-6">
+      <div className="flex items-baseline justify-between gap-4 border-b border-border pb-6">
         <h1 className="text-3xl font-thin tracking-tight text-foreground md:text-4xl">{t("title")}</h1>
         <Link
           href="/#products"
-          className="text-sm font-medium text-neutral-500 underline decoration-neutral-300 underline-offset-4 hover:text-neutral-800"
+          className="text-sm font-medium text-muted-foreground underline decoration-muted-foreground underline-offset-4 hover:text-foreground"
         >
           {tCheckout("continueShopping")}
         </Link>
@@ -46,13 +46,13 @@ export function CartPageClient() {
         <>
           {/* Desktop table-like layout */}
           <div className="hidden md:block">
-            <div className="grid grid-cols-[minmax(0,1fr)_12rem_10rem] gap-6 pt-6 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+            <div className="grid grid-cols-[minmax(0,1fr)_12rem_10rem] gap-6 pt-6 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               <p>Product</p>
               <p className="text-center">Quantity</p>
               <p className="text-right">Total</p>
             </div>
 
-            <div className="divide-y divide-neutral-100">
+            <div className="divide-y divide-border">
               {items.map((item) => {
                 const imageSrc = resolveStorefrontImageUrl(item.image_url);
                 const variantPairs = parseVariantAttributePairs(item.variant_details);
@@ -65,13 +65,14 @@ export function CartPageClient() {
                     className="grid grid-cols-[minmax(0,1fr)_12rem_10rem] gap-6 py-8"
                   >
                     <div className="flex min-w-0 items-start gap-4">
-                      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card">
+                      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-border bg-card">
                         <Image
                           src={imageSrc}
                           alt={item.name}
                           fill
                           sizes="80px"
-                          className="object-contain p-2"
+                          className="block object-contain p-2 mix-blend-multiply [-webkit-user-drag:none]"
+                          draggable={false}
                           unoptimized={storefrontImageUnoptimized(imageSrc)}
                         />
                       </div>
@@ -84,10 +85,10 @@ export function CartPageClient() {
                         ) : (
                           <p className="text-sm font-semibold text-foreground">{item.name}</p>
                         )}
-                        <p className="mt-1 text-sm text-neutral-600">{formatMoney(item.price, locale)}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">{formatMoney(item.price, locale)}</p>
 
                         {variantPairs.length > 0 ? (
-                          <div className="mt-2 space-y-0.5 text-xs text-neutral-500">
+                          <div className="mt-2 space-y-0.5 text-xs text-muted-foreground">
                             {variantPairs.map((pair, idx) => (
                               <p key={`${pair.label}-${pair.value}-${idx}`}>
                                 {pair.label ? `${pair.label.toUpperCase()}: ` : ""}
@@ -121,7 +122,7 @@ export function CartPageClient() {
                         type="button"
                         variant="ghost"
                         size="icon-sm"
-                        className="text-neutral-500 hover:text-neutral-900"
+                        className="text-muted-foreground hover:text-foreground"
                         onClick={() => removeItem(item.product_public_id, item.variant_public_id)}
                         aria-label={t("remove")}
                       >
@@ -138,7 +139,7 @@ export function CartPageClient() {
 
           {/* Mobile stacked layout */}
           <div className="md:hidden">
-            <div className="divide-y divide-neutral-100">
+            <div className="divide-y divide-border">
               {items.map((item) => {
                 const imageSrc = resolveStorefrontImageUrl(item.image_url);
                 const variantPairs = parseVariantAttributePairs(item.variant_details);
@@ -151,13 +152,14 @@ export function CartPageClient() {
                     className="py-6"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card">
+                      <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md border border-border bg-card">
                         <Image
                           src={imageSrc}
                           alt={item.name}
                           fill
                           sizes="64px"
-                          className="object-contain p-2"
+                          className="block object-contain p-2 mix-blend-multiply [-webkit-user-drag:none]"
+                          draggable={false}
                           unoptimized={storefrontImageUnoptimized(imageSrc)}
                         />
                       </div>
@@ -172,10 +174,10 @@ export function CartPageClient() {
                             ) : (
                               <p className="text-sm font-semibold text-foreground">{item.name}</p>
                             )}
-                            <p className="mt-1 text-sm text-neutral-600">{formatMoney(item.price, locale)}</p>
+                            <p className="mt-1 text-sm text-muted-foreground">{formatMoney(item.price, locale)}</p>
 
                             {variantPairs.length > 0 ? (
-                              <p className="mt-1 text-xs tracking-wide text-neutral-500">
+                              <p className="mt-1 text-xs tracking-wide text-muted-foreground">
                                 {variantPairs
                                   .map((pair) => (pair.label ? `${pair.label.toUpperCase()}: ${pair.value}` : pair.value))
                                   .join(" · ")}
@@ -210,7 +212,7 @@ export function CartPageClient() {
                             type="button"
                             variant="ghost"
                             size="icon-sm"
-                            className="text-neutral-500 hover:text-neutral-900"
+                            className="text-muted-foreground hover:text-foreground"
                             onClick={() => removeItem(item.product_public_id, item.variant_public_id)}
                             aria-label={t("remove")}
                           >
@@ -226,13 +228,13 @@ export function CartPageClient() {
           </div>
 
           {/* Summary */}
-          <div className="border-t border-black/10 pt-8">
+          <div className="border-t border-border pt-8">
             <div className="flex flex-col items-end gap-2">
               <div className="flex items-baseline gap-4">
-                <p className="text-sm font-medium tracking-wide text-neutral-500">Estimated total</p>
+                <p className="text-sm font-medium tracking-wide text-muted-foreground">Estimated total</p>
                 <p className="text-sm font-semibold text-foreground">{formatMoney(subtotal, locale)}</p>
               </div>
-              <p className="text-xs text-neutral-500">Taxes, discounts and shipping calculated at checkout.</p>
+              <p className="text-xs text-muted-foreground">Taxes, discounts and shipping calculated at checkout.</p>
 
               <Link
                 href="/checkout"

@@ -217,7 +217,7 @@ export function CheckoutMfsPayment() {
     return (
       <div className="bg-card pb-12 pt-6 md:pb-16 md:pt-8">
         <CheckoutBreadcrumbs step="mfsProvider" />
-        <div className="mx-auto max-w-xl rounded-lg border border-black/10 bg-card p-8 shadow-sm md:p-10">
+        <div className="mx-auto max-w-xl rounded-lg border border-border bg-card p-8 shadow-sm md:p-10">
           <div className="h-8 max-w-xs animate-pulse rounded-md bg-neutral-100" />
           <div className="mt-4 h-4 max-w-md animate-pulse rounded-md bg-neutral-100" />
           <div className="mt-8 grid gap-8">
@@ -280,7 +280,7 @@ export function CheckoutMfsPayment() {
       <div className="bg-card pb-12 pt-6 md:pb-16 md:pt-8">
         <CheckoutBreadcrumbs step="mfsProvider" />
 
-        <div className="mx-auto w-full max-w-md overflow-hidden rounded-none bg-card shadow-md ring-1 ring-black/5 md:rounded-xl">
+        <div className="mx-auto w-full max-w-md overflow-hidden rounded-none bg-card shadow-md ring-1 ring-foreground/5 md:rounded-xl">
           <header className="bg-card px-4 pb-3 pt-6 md:px-6">
             <div className="mx-auto flex h-[6.75rem] max-w-sm items-center justify-center">
               <Image
@@ -294,21 +294,21 @@ export function CheckoutMfsPayment() {
             <div className="mx-auto mt-4 h-px max-w-sm" style={{ backgroundColor: brandColor }} />
           </header>
 
-          <section className="flex items-start gap-3 border-b border-black/10 bg-card px-4 py-5 md:px-6">
+          <section className="flex items-start gap-3 border-b border-border bg-card px-4 py-5 md:px-6">
             <div
-              className="flex size-12 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50"
+              className="flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-muted"
               aria-hidden
             >
               <ShoppingCart className="size-6 text-primary/80" strokeWidth={1.75} />
             </div>
             <div className="min-w-0 flex-1 pt-0.5">
-              <p className="truncate text-[15px] font-medium text-neutral-700">{tCommon("brand")}</p>
-              <p className="mt-0.5 text-sm text-neutral-500">
+              <p className="truncate text-[15px] font-medium text-foreground">{tCommon("brand")}</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
                 {invoiceLabel}: {invoiceId}
               </p>
             </div>
             <div className="shrink-0 pt-0.5 text-right">
-              <p className="text-xl font-semibold tabular-nums tracking-tight text-neutral-800">
+              <p className="text-xl font-semibold tabular-nums tracking-tight text-foreground">
                 {formatTakaAmount(receipt.total, locale)}
               </p>
             </div>
@@ -323,7 +323,7 @@ export function CheckoutMfsPayment() {
             </h2>
             <p className="mt-2 text-sm font-medium leading-relaxed text-primary/90">{sendMoneyBody}</p>
             <div className="mt-3 flex min-h-[3.25rem] items-center gap-2 rounded-lg border border-accent/45 bg-card px-3 py-2.5 shadow-sm">
-              <p className="min-w-0 flex-1 text-xl font-bold tabular-nums leading-tight text-neutral-950 sm:text-2xl">
+              <p className="min-w-0 flex-1 text-xl font-bold tabular-nums leading-tight text-foreground sm:text-2xl">
                 {instructionPhone}
               </p>
               <button
@@ -369,7 +369,7 @@ export function CheckoutMfsPayment() {
             />
             <div className="relative space-y-4 px-4 pb-6 pt-6 md:px-6" style={{ backgroundColor: brandColor }}>
               <div>
-                <label htmlFor={inputTxId} className="block text-center text-[15px] font-bold text-white">
+                <label htmlFor={inputTxId} className="block text-center text-[15px] font-bold text-primary-foreground">
                   {txLabel}
                 </label>
                 <input
@@ -380,11 +380,11 @@ export function CheckoutMfsPayment() {
                   value={transactionId}
                   disabled={payLoading}
                   onChange={(e) => setTransactionId(e.target.value)}
-                  className="mt-3 w-full rounded-lg border-0 bg-card px-4 py-3.5 text-base text-foreground shadow-md outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-white/40 disabled:opacity-60"
+                  className="mt-3 w-full rounded-lg border-0 bg-card px-4 py-3.5 text-base text-foreground shadow-md outline-none ring-0 placeholder:text-muted-foreground focus:ring-2 focus:ring-primary-foreground/40 disabled:opacity-60"
                 />
               </div>
               <div>
-                <label htmlFor={inputPayerId} className="block text-center text-[15px] font-bold text-white">
+                <label htmlFor={inputPayerId} className="block text-center text-[15px] font-bold text-primary-foreground">
                   {payerLabel}
                 </label>
                 <input
@@ -396,17 +396,17 @@ export function CheckoutMfsPayment() {
                   value={payerPhone}
                   disabled={payLoading}
                   onChange={(e) => setPayerPhone(e.target.value)}
-                  className="mt-3 w-full rounded-lg border-0 bg-card px-4 py-3.5 text-base text-foreground shadow-md outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-white/40 disabled:opacity-60"
+                  className="mt-3 w-full rounded-lg border-0 bg-card px-4 py-3.5 text-base text-foreground shadow-md outline-none ring-0 placeholder:text-muted-foreground focus:ring-2 focus:ring-primary-foreground/40 disabled:opacity-60"
                 />
               </div>
-              <p className="pt-1 text-center text-[13px] leading-snug text-white/95">
-                {consentBefore} <strong className="font-bold text-white">{confirmWord}</strong>
+              <p className="pt-1 text-center text-[13px] leading-snug text-primary-foreground/95">
+                {consentBefore} <strong className="font-bold text-primary-foreground">{confirmWord}</strong>
                 {consentAfter}{" "}
                 <a
                   href={termsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-normal underline decoration-white/90 underline-offset-2"
+                  className="font-normal underline decoration-primary-foreground/90 underline-offset-2"
                 >
                   {termsLabel}
                 </a>
@@ -415,23 +415,23 @@ export function CheckoutMfsPayment() {
           </div>
 
           <div
-            className="h-1.5 w-full shrink-0 bg-gradient-to-b from-neutral-950/35 via-neutral-950/15 to-transparent shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
+            className="h-1.5 w-full shrink-0 bg-gradient-to-b from-foreground/35 via-foreground/15 to-transparent shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
             aria-hidden
           />
 
           {errorText ? (
-            <p className="border-t border-black/10 bg-accent/10 px-4 py-2 text-center text-sm text-primary md:px-6">
+            <p className="border-t border-border bg-accent/10 px-4 py-2 text-center text-sm text-primary md:px-6">
               {errorText}
             </p>
           ) : null}
 
           {payLoading ? (
-            <p className="border-t border-neutral-100 bg-neutral-50 px-4 py-2 text-center text-sm text-neutral-600 md:px-6">
+            <p className="border-t border-border bg-muted px-4 py-2 text-center text-sm text-muted-foreground md:px-6">
               {t("confirmingPayment")}
             </p>
           ) : null}
 
-          <div className="grid grid-cols-2 border-t border-neutral-950/20 bg-neutral-500 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.18)]">
+          <div className="grid grid-cols-2 border-t border-border bg-primary shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.18)]">
             <button
               type="button"
               disabled={payLoading}
@@ -447,8 +447,8 @@ export function CheckoutMfsPayment() {
                 }
               }}
               className={cn(
-                "cursor-pointer border-r border-neutral-400/80 py-4 text-center text-sm font-bold uppercase tracking-wide text-white transition-colors",
-                "hover:bg-neutral-500/90",
+                "cursor-pointer border-r border-primary-foreground/25 py-4 text-center text-sm font-bold uppercase tracking-wide text-primary-foreground transition-colors",
+                "hover:bg-primary/90",
                 "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-60",
               )}
             >
@@ -464,11 +464,11 @@ export function CheckoutMfsPayment() {
                 "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-60",
                 confirmFormReady && !payLoading
                   ? cn(
-                      "text-white",
+                      "text-primary-foreground",
                       "shadow-[inset_0_2px_6px_rgba(0,0,0,0.22),inset_0_-1px_0_rgba(255,255,255,0.18)]",
-                      "ring-1 ring-inset ring-white/30",
+                      "ring-1 ring-inset ring-primary-foreground/30",
                     )
-                  : "bg-neutral-600 text-neutral-400 hover:bg-neutral-500 hover:text-neutral-200",
+                  : "bg-muted text-muted-foreground hover:bg-muted hover:text-muted-foreground",
               )}
               style={
                 confirmFormReady && !payLoading
@@ -479,7 +479,7 @@ export function CheckoutMfsPayment() {
               }
             >
               {payLoading ? (
-                <Loader2 className="size-5 shrink-0 animate-spin text-white" strokeWidth={2.25} aria-hidden />
+                <Loader2 className="size-5 shrink-0 animate-spin text-primary-foreground" strokeWidth={2.25} aria-hidden />
               ) : null}
               {confirmLabel}
             </button>
@@ -487,7 +487,7 @@ export function CheckoutMfsPayment() {
 
           <footer className="flex items-center justify-center gap-2 bg-card px-4 py-5">
             <span
-              className="flex size-9 items-center justify-center rounded-full text-white"
+              className="flex size-9 items-center justify-center rounded-full text-primary-foreground"
               style={{ backgroundColor: brandColor }}
               aria-hidden
             >
@@ -511,24 +511,24 @@ export function CheckoutMfsPayment() {
     <div className="bg-card pb-12 pt-6 md:pb-16 md:pt-8">
       <CheckoutBreadcrumbs step="mfsProvider" />
 
-      <div className="mx-auto max-w-xl rounded-lg border border-black/10 bg-card p-8 shadow-sm md:p-10">
+      <div className="mx-auto max-w-xl rounded-lg border border-border bg-card p-8 shadow-sm md:p-10">
         <h1 className="text-xl font-semibold text-foreground">{t("mfsProviderTitle")}</h1>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("mfsProviderDescription")}</p>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("mfsProviderDescription")}</p>
 
         {errorText ? <p className="mt-5 text-sm text-danger">{errorText}</p> : null}
 
         <div className="mt-8 grid gap-8">
           <div className="space-y-2">
-            <label htmlFor="checkout-mfs-bkash" className="block text-sm font-light text-neutral-800">
+            <label htmlFor="checkout-mfs-bkash" className="block text-sm font-light text-foreground">
               {t("payViaBkash")}
             </label>
             <button
               id="checkout-mfs-bkash"
               type="button"
               className={cn(
-                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-black/10 bg-card px-3 py-2 transition-colors",
-                "hover:border-black/15 hover:bg-card",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40",
+                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-border bg-card px-3 py-2 transition-colors",
+                "hover:border-border hover:bg-card",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
               )}
               onClick={() => {
                 setErrorText(null);
@@ -545,16 +545,16 @@ export function CheckoutMfsPayment() {
             </button>
           </div>
           <div className="space-y-2">
-            <label htmlFor="checkout-mfs-nagad" className="block text-sm font-light text-neutral-800">
+            <label htmlFor="checkout-mfs-nagad" className="block text-sm font-light text-foreground">
               {t("payViaNagad")}
             </label>
             <button
               id="checkout-mfs-nagad"
               type="button"
               className={cn(
-                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-black/10 bg-card px-3 py-2 transition-colors",
-                "hover:border-black/15 hover:bg-card",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40",
+                "flex h-[6rem] w-full cursor-pointer items-center justify-center rounded-lg border border-border bg-card px-3 py-2 transition-colors",
+                "hover:border-border hover:bg-card",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
               )}
               onClick={() => {
                 setErrorText(null);

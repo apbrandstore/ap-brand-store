@@ -100,7 +100,7 @@ export function SupportTicketForm() {
       >
         {loading ? t("submitting") : t("submit")}
       </button>
-      {status ? <p className="text-sm text-neutral-700">{status}</p> : null}
+      {status ? <p className="text-sm text-foreground">{status}</p> : null}
     </form>
   );
 }

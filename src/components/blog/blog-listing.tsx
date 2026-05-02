@@ -59,12 +59,12 @@ export function BlogListing({
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start lg:gap-12">
         <div className="min-w-0">
-          <div className="mb-6 border-b border-neutral-200 pb-2">
+          <div className="mb-6 border-b border-border pb-2">
             <h2 className="text-base font-semibold tracking-tight text-foreground md:text-lg">{sectionTitle}</h2>
           </div>
 
           {filtered.length === 0 ? (
-            <p className="rounded-lg border border-dashed border-neutral-200 bg-neutral-50/80 px-4 py-8 text-center text-sm text-neutral-600">
+            <p className="rounded-lg border border-dashed border-border bg-muted/80 px-4 py-8 text-center text-sm text-muted-foreground">
               {emptySearch}
             </p>
           ) : (

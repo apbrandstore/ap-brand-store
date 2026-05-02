@@ -20,9 +20,9 @@ export default async function SupportPage({ params }: SupportPageProps) {
   return (
     <div className="bg-card py-8">
       <PageContainer>
-        <div className="mx-auto max-w-2xl rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+        <div className="mx-auto max-w-2xl rounded-lg border border-border bg-card p-6 shadow-sm">
           <h1 className="text-2xl font-semibold text-foreground">{t("title")}</h1>
-          <p className="mt-2 text-sm text-neutral-600">{t("intro")}</p>
+          <p className="mt-2 text-sm text-muted-foreground">{t("intro")}</p>
           <div className="mt-6">
             <SupportTicketForm />
           </div>

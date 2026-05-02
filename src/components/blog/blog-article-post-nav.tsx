@@ -27,10 +27,10 @@ export function BlogArticlePostNav({ prev, next, prevLabel, nextLabel }: BlogArt
           title={prev.title}
           aria-label={`${prevLabel}: ${prev.title}`}
           className={cn(
-            "inline-flex min-h-10 max-w-full items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2.5 text-start transition-colors hover:border-neutral-300 hover:bg-white",
+            "inline-flex min-h-10 max-w-full items-center gap-2 rounded-lg border border-border bg-muted px-4 py-2.5 text-start transition-colors hover:border-border hover:bg-card",
           )}
         >
-          <ChevronLeft className="size-4 shrink-0 text-neutral-500" strokeWidth={2.25} aria-hidden />
+          <ChevronLeft className="size-4 shrink-0 text-muted-foreground" strokeWidth={2.25} aria-hidden />
           <span className="text-xs font-medium text-foreground">{prevLabel}</span>
         </Link>
       ) : null}

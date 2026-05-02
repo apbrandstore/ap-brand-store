@@ -50,7 +50,7 @@ function VariantSync({
           <p className="mb-2 text-xs font-bold uppercase tracking-normal text-primary">
             {data.attribute_name}
             {selectedValues[slug] ? (
-              <span className="ml-1.5 font-semibold normal-case tracking-normal text-neutral-800">
+              <span className="ml-1.5 font-semibold normal-case tracking-normal text-foreground">
                 : {data.values.find((v) => v.value_public_id === selectedValues[slug])?.value}
               </span>
             ) : null}
@@ -68,7 +68,7 @@ function VariantSync({
                     "inline-flex min-h-9 cursor-pointer items-center rounded-md px-3.5 py-2 text-xs font-semibold sm:text-sm",
                     selected
                       ? "bg-primary text-primary-foreground shadow-sm"
-                      : "border border-neutral-200 bg-card text-foreground hover:border-primary/30",
+                      : "border border-border bg-card text-foreground hover:border-primary/30",
                   )}
                 >
                   {value.value}
@@ -85,7 +85,7 @@ function VariantSync({
         ) : selectedVariant == null ? (
           <p className="text-xs font-medium text-danger">{tVariant("unavailableCombination")}</p>
         ) : selectedVariant.stock_status === "out_of_stock" ? (
-          <p className="text-xs font-medium text-neutral-500">{productT("outOfStock")}</p>
+          <p className="text-xs font-medium text-muted-foreground">{productT("outOfStock")}</p>
         ) : detail.stock_tracking ? (
           <p className="text-xs font-medium text-primary/80">
             {tCheckout("stockAvailable", { count: selectedVariant.available_quantity })}
@@ -106,7 +106,7 @@ function StaticVariantBadges({ item }: { item: CartItem }) {
       {variantPairs.map((pair, idx) => (
         <div key={`${pair.label}-${pair.value}-${idx}`} className="min-w-0">
           {pair.label ? (
-            <p className="text-xs font-bold uppercase tracking-normal text-neutral-500">{pair.label}</p>
+            <p className="text-xs font-bold uppercase tracking-normal text-muted-foreground">{pair.label}</p>
           ) : null}
           <span className="mt-1 inline-flex rounded bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground">
             {pair.value}

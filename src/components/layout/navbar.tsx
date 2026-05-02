@@ -39,12 +39,12 @@ export async function Navbar() {
       <DesktopNavbarScrollVisibility targetId="storefront-header" />
       <header
         id="storefront-header"
-        className="relative sticky top-0 z-40 w-full min-w-0 bg-primary text-primary-foreground pt-[env(safe-area-inset-top,0px)] ps-[env(safe-area-inset-left,0px)] pe-[env(safe-area-inset-right,0px)]"
+        className="relative sticky top-0 z-40 w-full min-w-0 bg-header text-header-foreground pt-[env(safe-area-inset-top,0px)] ps-[env(safe-area-inset-left,0px)] pe-[env(safe-area-inset-right,0px)]"
       >
       {topNotice ? (
         <div className="bg-accent text-primary">
           <PageContainer>
-            <p className="flex items-center justify-center gap-3 py-2.5 text-center text-[13px] font-normal tracking-normal text-primary md:py-3 md:text-[14px]">
+            <p className="flex items-center justify-center gap-2 py-1.5 text-center text-[14px] font-medium leading-[1.12] tracking-normal text-primary md:py-2 md:text-[15px]">
               {topNotice}
             </p>
           </PageContainer>
@@ -61,10 +61,10 @@ export async function Navbar() {
             <div className="flex min-w-0 items-center justify-center">
               <Link
                 href="/"
-                className="inline-flex min-w-0 items-center justify-center rounded-md text-primary-foreground"
+                className="inline-flex min-w-0 items-center justify-center rounded-md text-header-foreground"
                 aria-label={store.store_name}
               >
-                <span className="block max-w-full truncate whitespace-nowrap text-base font-medium uppercase tracking-[0.06em] text-primary-foreground leading-tight">
+                <span className="block max-w-full truncate whitespace-nowrap text-base font-medium uppercase tracking-[0.06em] text-header-foreground leading-tight">
                   {store.store_name}
                 </span>
               </Link>
@@ -94,7 +94,7 @@ export async function Navbar() {
               className="inline-flex items-center justify-center leading-tight"
               aria-label={store.store_name}
             >
-              <span className="block max-w-full truncate whitespace-nowrap text-xl font-medium uppercase tracking-[0.08em] leading-tight text-primary-foreground">
+              <span className="block max-w-full truncate whitespace-nowrap text-xl font-medium uppercase tracking-[0.08em] leading-tight text-header-foreground">
                 {store.store_name}
               </span>
             </Link>
@@ -106,9 +106,9 @@ export async function Navbar() {
           </div>
         </div>
       </PageContainer>
-      <div className="h-px w-full bg-foreground/15 md:hidden" />
+      <div className="h-px w-full bg-header-foreground/15 md:hidden" />
 
-      <div className="hidden h-px w-full bg-primary-foreground/15 md:block" />
+      <div className="hidden h-px w-full bg-header-foreground/15 md:block" />
 
       <div className="hidden md:block">
         <DesktopCategoryMegaNav

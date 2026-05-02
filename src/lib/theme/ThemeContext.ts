@@ -5,6 +5,8 @@ import { createContext, useContext } from "react"
 export interface ResolvedPalette {
   background: string
   foreground: string
+  header: string
+  "header-foreground": string
   primary: string
   "primary-foreground": string
   secondary: string

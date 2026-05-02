@@ -66,11 +66,11 @@ function CategoryScreen({
   return (
     <div className="pt-3">
       {parent ? (
-        <div className="flex h-10 items-center bg-foreground/15 px-4">
+        <div className="flex h-10 items-center bg-header-foreground/15 px-4">
           <button
             type="button"
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-primary-foreground/90"
+            className="inline-flex items-center gap-2 text-sm uppercase tracking-wide text-header-foreground/90"
           >
             <ArrowLeft className="size-4" aria-hidden />
             <span>{parent.label}</span>
@@ -81,7 +81,7 @@ function CategoryScreen({
         <div key={node.id} className="flex items-center">
           <CategoryNavLink
             href={node.href}
-            className="min-w-0 flex-1 px-4 py-3.5 text-[17px] text-primary-foreground/95 hover:bg-primary-foreground/10"
+            className="min-w-0 flex-1 px-4 py-3.5 text-[17px] text-header-foreground/95 hover:bg-header-foreground/10"
             onClick={onNavigate}
           >
             {node.label}
@@ -91,9 +91,9 @@ function CategoryScreen({
               type="button"
               aria-label={node.label}
               onClick={() => onEnterSubmenu(node)}
-              className="flex size-12 shrink-0 items-center justify-center hover:bg-primary-foreground/10"
+              className="flex size-12 shrink-0 items-center justify-center hover:bg-header-foreground/10"
             >
-              <ArrowRight className="size-4 shrink-0 text-primary-foreground/70" aria-hidden />
+              <ArrowRight className="size-4 shrink-0 text-header-foreground/70" aria-hidden />
             </button>
           ) : null}
         </div>
@@ -202,7 +202,7 @@ export function MobileNavDrawer({
       <button
         ref={triggerRef}
         type="button"
-        className="flex size-10 shrink-0 items-center justify-start ps-0.5 self-center rounded-md text-primary-foreground md:hidden hover:bg-primary-foreground/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/80"
+        className="flex size-10 shrink-0 items-center justify-start ps-0.5 self-center rounded-md text-header-foreground md:hidden hover:bg-header-foreground/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-header-foreground/80"
         aria-label={open ? tNav("closeMenu") : menuTitle}
         aria-expanded={open}
         aria-controls={panelId}
@@ -255,7 +255,7 @@ export function MobileNavDrawer({
                 aria-modal="true"
                 aria-labelledby={headingId}
                 inert={open ? undefined : true}
-                className={`absolute left-0 top-0 flex h-full w-full max-w-none flex-col border-t border-foreground/15 bg-primary text-primary-foreground shadow-2xl transition-transform duration-300 ease-out ${
+                className={`absolute left-0 top-0 flex h-full w-full max-w-none flex-col border-t border-header-foreground/15 bg-header text-header-foreground shadow-2xl transition-transform duration-300 ease-out ${
                   open ? "translate-x-0" : "-translate-x-full"
                 }`}
               >
@@ -263,7 +263,7 @@ export function MobileNavDrawer({
                   {menuTitle}
                 </h2>
 
-                <div className="h-px w-full bg-foreground/15" />
+                <div className="h-px w-full bg-header-foreground/15" />
 
                 <nav className="relative min-h-0 flex-1 overflow-hidden overscroll-contain">
                   {slide ? (

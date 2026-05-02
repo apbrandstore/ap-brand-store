@@ -8,11 +8,11 @@ function StarSlot({ fill, className }: { fill: number; className?: string }) {
     return <Star className={cn("size-[1.05rem] fill-rating text-rating", className)} strokeWidth={0} aria-hidden />;
   }
   if (f <= 0) {
-    return <Star className={cn("size-[1.05rem] text-neutral-300", className)} fill="none" aria-hidden />;
+    return <Star className={cn("size-[1.05rem] text-muted-foreground", className)} fill="none" aria-hidden />;
   }
   return (
     <span className={cn("relative inline-block size-[1.05rem]", className)}>
-      <Star className="size-[1.05rem] text-neutral-300" fill="none" aria-hidden />
+      <Star className="size-[1.05rem] text-muted-foreground" fill="none" aria-hidden />
       <span className="absolute inset-0 overflow-hidden" style={{ width: `${f * 100}%` }}>
         <Star className="size-[1.05rem] fill-rating text-rating" strokeWidth={0} aria-hidden />
       </span>

@@ -35,8 +35,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-4">
       {/* Main image — first on mobile (stacked); right column on md+ */}
-      <div className="relative order-1 min-w-0 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-neutral-100 md:order-2 md:flex-1">
-        <div className="relative aspect-square w-full">
+      <div className="relative order-1 min-w-0 overflow-hidden rounded-lg bg-card shadow-sm ring-1 ring-border md:order-2 md:flex-1">
+        <div className="relative aspect-square w-full bg-card">
           <Image
             key={safeActive}
             src={mainSrc}
@@ -46,7 +46,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             loading="eager"
             unoptimized={mainUnoptimized}
             sizes="(max-width: 768px) 90vw, (max-width: 1024px) 48vw, 42vw"
-            className="object-contain"
+            className="block object-contain mix-blend-multiply [-webkit-user-drag:none]"
+            draggable={false}
             onError={() => handleError(safeActive)}
           />
         </div>
@@ -70,20 +71,21 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                 aria-label={tProduct("viewImageAria", { index: i + 1 })}
                 aria-current={active ? "true" : undefined}
                 className={cn(
-                  "group relative aspect-square shrink-0 cursor-pointer overflow-hidden rounded-lg bg-white transition-shadow duration-150",
+                  "group relative aspect-square shrink-0 cursor-pointer overflow-hidden rounded-lg bg-card transition-shadow duration-150",
                   "h-[4.25rem] w-[4.25rem] sm:h-[4.5rem] sm:w-[4.5rem] md:h-auto md:w-full",
                   active ? "shadow-md" : "shadow-sm",
                 )}
               >
                 {/* Clip image to rounded rect; stays under the frame overlay */}
-                <span className="absolute inset-0 overflow-hidden rounded-lg bg-white">
+                <span className="absolute inset-0 overflow-hidden rounded-lg bg-card">
                   <Image
                     src={getImageSrc(src, i)}
                     alt=""
                     fill
                     sizes="(max-width: 768px) 72px, 80px"
                     unoptimized={storefrontImageUnoptimized(getImageSrc(src, i))}
-                    className="object-contain"
+                    className="block object-contain mix-blend-multiply [-webkit-user-drag:none]"
+                    draggable={false}
                     onError={() => handleError(i)}
                   />
                 </span>
@@ -93,7 +95,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                     "pointer-events-none absolute inset-0 z-[1] rounded-lg transition-shadow",
                     active
                       ? "ring-2 ring-inset ring-primary"
-                      : "ring-1 ring-inset ring-neutral-200 group-hover:ring-neutral-300",
+                      : "ring-1 ring-inset ring-border group-hover:ring-border",
                   )}
                   aria-hidden
                 />

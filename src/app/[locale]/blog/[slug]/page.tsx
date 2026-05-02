@@ -83,7 +83,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
         <nav aria-label={t("backToBlog")} className="mb-6 flex min-w-0 max-w-full items-center">
           <Link
             href="/blog"
-            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-neutral-200 bg-white px-2.5 py-1.5 text-xs font-medium text-neutral-900 transition-colors hover:bg-neutral-50"
+            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
           >
             <ChevronLeft className="size-3.5 shrink-0" strokeWidth={2.25} aria-hidden />
             {t("backToBlog")}
@@ -93,15 +93,15 @@ export default async function BlogArticlePage({ params }: PageProps) {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
           <div className="min-w-0">
             <header>
-              <p className="text-sm text-neutral-500">{metaLine}</p>
+              <p className="text-sm text-muted-foreground">{metaLine}</p>
               <h1 className="mt-3 text-pretty text-2xl font-semibold tracking-tight text-foreground md:text-3xl lg:text-[2rem] lg:leading-tight">
                 {post.title}
               </h1>
-              <p className="mt-4 text-pretty text-base leading-relaxed text-neutral-600 md:text-lg">{post.excerpt}</p>
+              <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">{post.excerpt}</p>
             </header>
 
             {post.imageUrl ? (
-              <div className="mt-8 w-full overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100">
+              <div className="mt-8 w-full overflow-hidden rounded-lg border border-border bg-muted">
                 <div className="relative h-[260px] w-full sm:h-[340px] md:h-[420px] lg:h-[520px]">
                   <Image
                     src={post.imageUrl}
@@ -120,7 +120,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-sm border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-800"
+                  className="rounded-sm border border-border bg-card px-2.5 py-1 text-xs font-medium text-foreground"
                 >
                   {tag}
                 </span>

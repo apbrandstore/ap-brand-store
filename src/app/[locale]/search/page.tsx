@@ -59,18 +59,18 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
         <header className="max-w-3xl">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">{t("title")}</h1>
           {queryReady ? (
-            <p className="mt-2 text-sm text-neutral-600 md:text-base">
+            <p className="mt-2 text-sm text-muted-foreground md:text-base">
               {t("resultsFor", { q })}
               {searchData ? (
-                <span className="ms-1 text-neutral-500">
+                <span className="ms-1 text-muted-foreground">
                   ({t("resultCount", { count: searchData.count })})
                 </span>
               ) : null}
             </p>
           ) : q.length === 1 ? (
-            <p className="mt-2 text-sm text-neutral-600">{t("minCharsHint")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("minCharsHint")}</p>
           ) : (
-            <p className="mt-2 text-sm text-neutral-600">{t("emptyQueryHint")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("emptyQueryHint")}</p>
           )}
         </header>
 
@@ -86,7 +86,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     href={`/categories/${cat.slug}`}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "sm" }),
-                      "rounded-sm border border-neutral-200 bg-white px-4 text-foreground shadow-sm hover:bg-neutral-50",
+                      "rounded-sm border border-border bg-card px-4 text-foreground shadow-sm hover:bg-muted",
                     )}
                   >
                     {cat.name}
@@ -139,13 +139,13 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
 
         {showPagination ? (
           <nav
-            className="mt-10 flex flex-wrap items-center justify-center gap-3 border-t border-neutral-200/80 pt-8"
+            className="mt-10 flex flex-wrap items-center justify-center gap-3 border-t border-border/80 pt-8"
             aria-label={t("paginationAria")}
           >
             {page > 1 ? (
               <Link
                 href={buildSearchHref(q, page - 1)}
-                className={cn(buttonVariants({ variant: "ghost", size: "md" }), "min-w-[7rem] border border-neutral-200")}
+                className={cn(buttonVariants({ variant: "ghost", size: "md" }), "min-w-[7rem] border border-border")}
               >
                 {t("previous")}
               </Link>
@@ -153,20 +153,20 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
               <span
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "md" }),
-                  "pointer-events-none min-w-[7rem] border border-neutral-100 text-neutral-400",
+                  "pointer-events-none min-w-[7rem] border border-border text-muted-foreground",
                 )}
                 aria-disabled="true"
               >
                 {t("previous")}
               </span>
             )}
-            <span className="text-sm tabular-nums text-neutral-600">
+            <span className="text-sm tabular-nums text-muted-foreground">
               {t("pageStatus", { current: page, total: totalPages })}
             </span>
             {page < totalPages ? (
               <Link
                 href={buildSearchHref(q, page + 1)}
-                className={cn(buttonVariants({ variant: "ghost", size: "md" }), "min-w-[7rem] border border-neutral-200")}
+                className={cn(buttonVariants({ variant: "ghost", size: "md" }), "min-w-[7rem] border border-border")}
               >
                 {t("next")}
               </Link>
@@ -174,7 +174,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
               <span
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "md" }),
-                  "pointer-events-none min-w-[7rem] border border-neutral-100 text-neutral-400",
+                  "pointer-events-none min-w-[7rem] border border-border text-muted-foreground",
                 )}
                 aria-disabled="true"
               >

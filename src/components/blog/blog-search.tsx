@@ -17,18 +17,18 @@ export function BlogSearch({ value, onChange, placeholder, searchButtonLabel, cl
   return (
     <div
       className={cn(
-        "mx-auto flex max-w-xl flex-col gap-2 sm:flex-row sm:items-stretch sm:gap-0 sm:overflow-hidden sm:rounded-lg sm:border sm:border-neutral-200 sm:bg-white sm:shadow-sm",
+        "mx-auto flex max-w-xl flex-col gap-2 sm:flex-row sm:items-stretch sm:gap-0 sm:overflow-hidden sm:rounded-lg sm:border sm:border-border sm:bg-card sm:shadow-sm",
         className,
       )}
     >
-      <label className="relative flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-neutral-200 bg-white px-3 py-2.5 shadow-sm sm:rounded-none sm:border-0 sm:shadow-none sm:py-0 sm:ps-4">
-        <Search className="size-4 shrink-0 text-neutral-400" strokeWidth={2} aria-hidden />
+      <label className="relative flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-border bg-card px-3 py-2.5 shadow-sm sm:rounded-none sm:border-0 sm:shadow-none sm:py-0 sm:ps-4">
+        <Search className="size-4 shrink-0 text-muted-foreground" strokeWidth={2} aria-hidden />
         <input
           type="search"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="min-w-0 flex-1 border-0 bg-transparent text-sm text-foreground outline-none placeholder:text-neutral-400"
+          className="min-w-0 flex-1 border-0 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
           autoComplete="off"
           aria-label={placeholder}
         />

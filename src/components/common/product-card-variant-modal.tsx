@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useState } from "react";
@@ -85,7 +85,7 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
     <div className="flex flex-col gap-5">
       {/* Product thumbnail + name */}
       <div className="flex items-center gap-3">
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-100 bg-neutral-50">
+        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-background">
           <Image
             src={imageSrc}
             alt={detail.name}
@@ -96,7 +96,7 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
           />
         </div>
         <div className="min-w-0">
-          <p className="text-sm font-light leading-snug text-neutral-900 line-clamp-2">
+          <p className="text-sm font-light leading-snug text-foreground line-clamp-2">
             {detail.name}
           </p>
           {selectedVariant ? (
@@ -104,7 +104,7 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
               {formatMoney(selectedVariant.price, locale)}
             </p>
           ) : (
-            <p className="mt-1 text-xs text-neutral-400">
+            <p className="mt-1 text-xs text-muted-foreground">
               {t("yourPrice")}
             </p>
           )}
@@ -115,10 +115,10 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
       <div className="space-y-4">
         {[...optionsByAttribute.entries()].map(([slug, data]) => (
           <div key={slug}>
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-neutral-500">
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
               {data.attribute_name}
               {selectedValues[slug] ? (
-                <span className="ml-1.5 font-semibold normal-case tracking-normal text-neutral-800">
+                <span className="ml-1.5 font-semibold normal-case tracking-normal text-foreground">
                   :{" "}
                   {data.values.find((v) => v.value_public_id === selectedValues[slug])?.value}
                 </span>
@@ -162,8 +162,8 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
             {t("unavailableCombination")}
           </p>
         ) : outOfStock ? (
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-neutral-400">
-            <span className="inline-block size-1.5 rounded-full bg-neutral-300" />
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+            <span className="inline-block size-1.5 rounded-full bg-muted-foreground" />
             {productT("outOfStock")}
           </p>
         ) : canAdd && selectedVariant ? (
@@ -344,25 +344,30 @@ export function ProductCardVariantModal({ product, variant = "default" }: Props)
           onTouchStart={prefetchDetail}
           aria-label={disabled ? productT("outOfStock") : triggerLabel}
           className={cn(
-            "flex cursor-pointer items-center justify-center text-white transition-colors duration-200 ease-out",
+            "flex cursor-pointer items-center justify-center transition-colors duration-200 ease-out",
             isIcon
-              ? "size-9 rounded-full bg-primary text-primary-foreground shadow-sm ring-1 ring-black/10 hover:bg-primary/90 hover:ring-accent/40"
-              : "w-full",
+              ? "size-9 rounded-full bg-background text-foreground shadow-sm ring-1 ring-foreground/10 hover:bg-background/95 hover:ring-foreground/15"
+              : "w-full text-primary-foreground",
             isCard
               ? "gap-2 rounded-md py-2.5 text-sm font-medium bg-primary hover:bg-primary/90 active:bg-primary/95"
               : isIcon
                 ? ""
                 : "h-8 gap-1 rounded-md text-[11px] font-semibold sm:h-9 sm:gap-1.5 sm:text-[13px] bg-primary hover:bg-primary/90",
-            "disabled:cursor-not-allowed disabled:bg-neutral-300 disabled:text-neutral-500 disabled:hover:bg-neutral-300",
+            "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:hover:bg-muted",
+            isIcon && "disabled:bg-muted disabled:text-muted-foreground",
           )}
         >
-          <ShoppingCart
-            className={cn(
-              "shrink-0 stroke-[2]",
-              isCard ? "size-[18px]" : isIcon ? "size-5" : "size-3.5 sm:size-4 md:size-4",
-            )}
-            aria-hidden
-          />
+          {isIcon ? (
+            <Heart className="size-5 shrink-0" strokeWidth={1.75} aria-hidden />
+          ) : (
+            <ShoppingCart
+              className={cn(
+                "shrink-0 stroke-[2]",
+                isCard ? "size-[18px]" : "size-3.5 sm:size-4 md:size-4",
+              )}
+              aria-hidden
+            />
+          )}
           {isIcon ? <span className="sr-only">{disabled ? productT("outOfStock") : triggerLabel}</span> : <span>{disabled ? productT("outOfStock") : triggerLabel}</span>}
         </button>
       </DialogTrigger>
@@ -375,7 +380,7 @@ export function ProductCardVariantModal({ product, variant = "default" }: Props)
         <div className="mt-4">
           {loadError ? (
             <div className="space-y-3 text-center py-4">
-              <p className="text-sm text-neutral-600">{t("loadError")}</p>
+              <p className="text-sm text-muted-foreground">{t("loadError")}</p>
               <button
                 type="button"
                 onClick={fetchDetail}

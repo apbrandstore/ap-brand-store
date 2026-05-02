@@ -15,7 +15,7 @@ export function BlogRelatedPosts({ posts, heading }: BlogRelatedPostsProps) {
   }
 
   return (
-    <section className="mt-16 border-t border-neutral-200 pt-12" aria-labelledby="blog-related-heading">
+    <section className="mt-16 border-t border-border pt-12" aria-labelledby="blog-related-heading">
       <h2 id="blog-related-heading" className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
         {heading}
       </h2>
@@ -24,10 +24,10 @@ export function BlogRelatedPosts({ posts, heading }: BlogRelatedPostsProps) {
           <li key={post.slug}>
             <Link
               href={`/blog/${post.slug}`}
-              className="group block overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+              className="group block overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-shadow hover:shadow-md"
             >
               {post.imageUrl ? (
-                <div className="relative aspect-[4/3] bg-neutral-100">
+                <div className="relative aspect-[4/3] bg-muted">
                   <Image
                     src={post.imageUrl}
                     alt={post.title}

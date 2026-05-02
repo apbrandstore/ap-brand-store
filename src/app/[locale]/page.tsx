@@ -130,7 +130,7 @@ export default async function HomePage() {
                     <div className="flex justify-center pt-1">
                       <Link
                         href={`/categories/${section.slug}`}
-                        className="inline-flex h-10 items-center justify-center rounded-lg border border-neutral-200 bg-white px-5 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-neutral-50"
+                        className="inline-flex h-10 items-center justify-center rounded-lg border border-border bg-card px-5 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted"
                       >
                         {tHome("viewMore")}
                       </Link>

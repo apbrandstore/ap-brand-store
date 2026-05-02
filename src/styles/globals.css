@@ -70,6 +70,8 @@
    * Runtime theme — only :root is updated (applyTheme + FOUC); no duplicate hex palette here.
    */
   --color-background: var(--background);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
   --color-primary: var(--primary);
   --color-accent: var(--accent);
   --font-heading: var(--font-sans);
@@ -205,6 +207,21 @@
     color: var(--foreground);
   }
 
+  /**
+   * Light themes: mix-blend-multiply helps white-backed product PNGs read on pale surfaces.
+   * Dark themes (Noir): multiply against near-black wipes images out — force normal blend.
+   * `data-theme-mode` is set from palette header luminance (fallback: background) in applyTheme + FOUC script.
+   */
+  [data-theme-mode="dark"] :is(
+    .mix-blend-multiply,
+    .mix-blend-screen,
+    .mix-blend-overlay,
+    .mix-blend-darken,
+    .mix-blend-lighten
+  ) {
+    mix-blend-mode: normal !important;
+  }
+
   .font-sans-en {
     font-family: "Storefront English Figures", var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   }
@@ -237,7 +254,7 @@
   }
 
   .price-display-eyebrow-neutral {
-    @apply text-[11px] font-bold uppercase tracking-normal text-neutral-500;
+    @apply text-[11px] font-bold uppercase tracking-normal text-muted-foreground;
   }
 
   .price-display-hero {
@@ -249,7 +266,7 @@
   }
 
   .price-display-compare {
-    @apply text-lg font-semibold tabular-nums tracking-tight text-neutral-400 line-through decoration-neutral-300 decoration-2 sm:text-xl;
+    @apply text-lg font-semibold tabular-nums tracking-tight text-muted-foreground line-through decoration-muted-foreground decoration-2 sm:text-xl;
   }
 
   .price-display-discount-pill {
@@ -274,15 +291,15 @@
 
   /** Inline / cart / checkout — subdued so titles and labels stay primary focus */
   .price-display-line {
-    @apply text-sm font-normal tabular-nums tracking-tight text-neutral-600;
+    @apply text-sm font-normal tabular-nums tracking-tight text-muted-foreground;
   }
 
   .price-display-summary {
-    @apply text-sm font-normal tabular-nums tracking-tight text-neutral-600;
+    @apply text-sm font-normal tabular-nums tracking-tight text-muted-foreground;
   }
 
   .price-display-total {
-    @apply text-base font-normal tabular-nums tracking-tight text-neutral-900 sm:text-lg;
+    @apply text-base font-normal tabular-nums tracking-tight text-foreground sm:text-lg;
   }
 
   .flash-sale {
@@ -424,6 +441,8 @@
   --border: #e5e4df;
   --input: #e5e4df;
   --ring: #c9a96e;
+  --header: #1a1a1a;
+  --header-foreground: #fafaf8;
   --radius: 0.5rem;
   --destructive: #dc2626;
   --chart-1: oklch(0.87 0 0);

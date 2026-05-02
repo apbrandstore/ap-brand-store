@@ -250,9 +250,9 @@ export function CheckoutPaymentStub() {
     <div className="bg-card pb-12 pt-6 md:pb-16 md:pt-8">
       <CheckoutBreadcrumbs step="payment" />
 
-      <div className="mx-auto max-w-xl rounded-lg border border-black/10 bg-card p-8 shadow-sm md:p-10">
+      <div className="mx-auto max-w-xl rounded-lg border border-border bg-card p-8 shadow-sm md:p-10">
         <h1 className="text-xl font-semibold text-foreground">{t("paymentStubHeading")}</h1>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("paymentStubBody")}</p>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("paymentStubBody")}</p>
 
         {requiresPrepayment ? (
           <div className="mt-5 rounded-md border border-accent/40 bg-accent/15 px-4 py-3 text-sm text-primary">
@@ -266,7 +266,7 @@ export function CheckoutPaymentStub() {
         ) : null}
 
         <fieldset className="mt-8">
-          <legend className="text-base font-semibold text-neutral-950">{t("paymentMethodSection")}</legend>
+          <legend className="text-base font-semibold text-foreground">{t("paymentMethodSection")}</legend>
           <div className="mt-4 grid gap-3">
             {(() => {
               const options: PaymentOption[] = [
@@ -299,12 +299,12 @@ export function CheckoutPaymentStub() {
                     className={cn(
                       "flex items-start gap-3 rounded-lg border p-4 transition-colors",
                       disabled
-                        ? "cursor-not-allowed border-neutral-200 bg-neutral-50/90 opacity-90"
+                        ? "cursor-not-allowed border-border bg-background/90 opacity-90"
                         : cn(
                             "cursor-pointer",
                             selected
-                              ? "border-neutral-200 bg-primary/10"
-                              : "border-neutral-200 bg-card hover:border-neutral-300",
+                              ? "border-border bg-primary/10"
+                              : "border-border bg-card hover:border-border",
                           ),
                     )}
                   >
@@ -326,9 +326,9 @@ export function CheckoutPaymentStub() {
                     />
                     <span className="min-w-0 text-start">
                       <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="text-sm font-medium text-neutral-950">{option.title}</span>
+                        <span className="text-sm font-medium text-foreground">{option.title}</span>
                         {option.showComingSoon ? (
-                          <span className="inline-flex shrink-0 rounded-md bg-neutral-200/90 px-2 py-0.5 text-xs font-medium text-neutral-600">
+                          <span className="inline-flex shrink-0 rounded-md bg-muted/90 px-2 py-0.5 text-xs font-medium text-muted-foreground">
                             {t("paymentMfsComingSoon")}
                           </span>
                         ) : null}
@@ -338,12 +338,7 @@ export function CheckoutPaymentStub() {
                           </span>
                         ) : null}
                       </span>
-                      <span
-                        className={cn(
-                          "mt-0.5 block text-sm",
-                          disabled ? "text-neutral-500" : "text-neutral-600",
-                        )}
-                      >
+                      <span className="mt-0.5 block text-sm text-muted-foreground">
                         {option.description}
                       </span>
                     </span>
@@ -359,7 +354,7 @@ export function CheckoutPaymentStub() {
         <div className="mt-8 flex w-full flex-nowrap items-stretch gap-2 sm:gap-3">
           <Link
             href="/checkout"
-            className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-md border border-neutral-300 px-3 py-2.5 text-center text-sm font-semibold text-neutral-700 sm:flex-none sm:px-5 md:min-h-0 hover:bg-neutral-100"
+            className="inline-flex min-h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-md border border-border px-3 py-2.5 text-center text-sm font-semibold text-foreground sm:flex-none sm:px-5 md:min-h-0 hover:bg-muted"
           >
             {t("backToShipping")}
           </Link>

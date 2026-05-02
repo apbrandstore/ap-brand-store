@@ -177,9 +177,9 @@ export function StorefrontLiveSearch({
   }, [trimmed, router, onAfterNavigate]);
 
   const panelClass = cn(
-    "live-search-panel-scroll overflow-y-auto rounded-lg border border-black/10 bg-white py-2",
+    "live-search-panel-scroll overflow-y-auto rounded-lg border border-border bg-background py-2",
     mode === "desktop"
-      ? "absolute start-0 end-0 top-[calc(100%+0.35rem)] z-[60] max-h-[min(70vh,520px)] shadow-xl ring-1 ring-black/5"
+      ? "absolute start-0 end-0 top-[calc(100%+0.35rem)] z-[60] max-h-[min(70vh,520px)] shadow-xl ring-1 ring-foreground/5"
       : "mt-3 min-h-0 flex-1 shadow-md",
   );
 
@@ -191,9 +191,9 @@ export function StorefrontLiveSearch({
       <form
         role="search"
         className={cn(
-          "flex w-full items-center rounded-md border border-black/5 bg-white py-1 ps-4 pe-1 shadow-sm",
-          mode === "desktop" && "h-10 border-black/35 bg-transparent py-0 pe-2 shadow-none",
-          mode === "mobile" && "relative border-violet-200 py-1 pe-2",
+          "flex w-full items-center rounded-md border border-border bg-background py-1 ps-4 pe-1 shadow-sm",
+          mode === "desktop" && "h-10 border-border bg-transparent py-0 pe-2 shadow-none",
+          mode === "mobile" && "relative border-border py-1 pe-2",
         )}
         onSubmit={(e) => {
           e.preventDefault();
@@ -217,8 +217,8 @@ export function StorefrontLiveSearch({
           aria-autocomplete="list"
           className={cn(
             "min-h-9 min-w-0 flex-1 border-none bg-transparent py-2 text-sm text-foreground outline-none placeholder:text-foreground/45",
-            mode === "desktop" && "min-h-0 py-1 text-[12px] placeholder:text-black/35",
-            mode === "mobile" && "min-h-11 py-2 pe-11 placeholder:text-neutral-400",
+            mode === "desktop" && "min-h-0 py-1 text-[12px] placeholder:text-foreground/35",
+            mode === "mobile" && "min-h-11 py-2 pe-11 placeholder:text-muted-foreground",
           )}
         />
         <button
@@ -227,9 +227,9 @@ export function StorefrontLiveSearch({
           className={cn(
             "inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
             mode === "desktop" &&
-              "size-7 rounded-sm bg-transparent text-black/55 hover:bg-transparent hover:text-black/70 focus-visible:outline-primary",
+              "size-7 rounded-sm bg-transparent text-foreground/55 hover:bg-transparent hover:text-foreground/70 focus-visible:outline-primary",
             mode === "mobile" &&
-              "absolute end-2 top-1/2 z-[1] -translate-y-1/2 bg-transparent text-foreground hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              "absolute end-2 top-1/2 z-[1] -translate-y-1/2 bg-transparent text-foreground hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
           )}
         >
           {(mode === "desktop" || mode === "mobile") && trimmed.length > 0 ? (
@@ -276,7 +276,7 @@ export function StorefrontLiveSearch({
         >
 
           {loading ? (
-            <p className="px-4 py-3 text-sm text-neutral-500">{t("liveLoading")}</p>
+            <p className="px-4 py-3 text-sm text-muted-foreground">{t("liveLoading")}</p>
           ) : null}
 
           {error ? (
@@ -284,8 +284,8 @@ export function StorefrontLiveSearch({
           ) : null}
 
           {data?.categories.length ? (
-            <div className="border-b border-neutral-100 px-3 py-2">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+            <div className="border-b border-border px-3 py-2">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 {t("matchingCategories")}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -295,7 +295,7 @@ export function StorefrontLiveSearch({
                     href={`/categories/${cat.slug}`}
                     role="option"
                     aria-selected={false}
-                    className="rounded-sm border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-foreground hover:bg-neutral-100"
+                    className="rounded-sm border border-border bg-muted px-3 py-1 text-xs font-medium text-foreground hover:bg-muted/80"
                     onClick={() => {
                       setPanelOpen(false);
                       onAfterNavigate?.();
@@ -309,8 +309,8 @@ export function StorefrontLiveSearch({
           ) : null}
 
           {data?.suggestions.length ? (
-            <div className="border-b border-neutral-100 px-3 py-2">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+            <div className="border-b border-border px-3 py-2">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 {t("suggestions")}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -320,7 +320,7 @@ export function StorefrontLiveSearch({
                     type="button"
                     role="option"
                     aria-selected={false}
-                    className="rounded-sm border border-violet-200/80 bg-violet-50/90 px-3 py-1 text-xs font-medium text-foreground hover:bg-violet-100"
+                    className="rounded-sm border border-primary/25 bg-primary/5 px-3 py-1 text-xs font-medium text-foreground hover:bg-primary/10"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => {
                       setQuery(label);
@@ -342,14 +342,14 @@ export function StorefrontLiveSearch({
                 href={`/products/${p.slug}`}
                 role="option"
                 aria-selected={false}
-                className="flex gap-3 px-3 py-2.5 hover:bg-neutral-50"
+                className="flex gap-3 px-3 py-2.5 hover:bg-muted"
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => {
                   setPanelOpen(false);
                   onAfterNavigate?.();
                 }}
               >
-                <div className="relative size-12 shrink-0 overflow-hidden rounded-sm bg-neutral-100">
+                <div className="relative size-12 shrink-0 overflow-hidden rounded-sm bg-muted">
                   {imageSrc ? (
                     <Image
                       src={imageSrc}
@@ -363,7 +363,7 @@ export function StorefrontLiveSearch({
                 </div>
                 <div className="min-w-0 flex-1 text-start">
                   <p className="truncate text-sm font-medium text-foreground">{p.name}</p>
-                  <p className="mt-0.5 text-xs text-neutral-500">
+                  <p className="mt-0.5 text-xs text-muted-foreground">
                     {p.brand ? `${p.brand} · ` : null}
                     {formatMoney(p.price, locale)}
                   </p>
@@ -373,11 +373,11 @@ export function StorefrontLiveSearch({
           })}
 
           {!loading && !error && trimmed.length >= 2 && data && !hasListContent ? (
-            <p className="px-4 py-3 text-sm text-neutral-600">{t("liveNoMatches")}</p>
+            <p className="px-4 py-3 text-sm text-muted-foreground">{t("liveNoMatches")}</p>
           ) : null}
 
           {showViewAll ? (
-            <div className="border-t border-neutral-100 px-2 pt-1 pb-2">
+            <div className="border-t border-border px-2 pt-1 pb-2">
               <button
                 type="button"
                 className="w-full rounded-md px-3 py-2.5 text-start text-sm font-semibold text-primary hover:bg-primary/5"

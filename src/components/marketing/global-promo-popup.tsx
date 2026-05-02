@@ -75,7 +75,7 @@ export function GlobalPromoPopup({ popup }: { popup: PaperbaseStorePopup | null 
         showCloseButton={false}
         className="rounded-none !px-0 !pt-0 sm:max-w-lg sm:rounded-none"
       >
-        <div className="relative overflow-hidden border border-neutral-200 bg-neutral-50">
+        <div className="relative overflow-hidden border border-border bg-muted">
           <button
             type="button"
             onClick={() => setOpen(false)}
@@ -93,13 +93,13 @@ export function GlobalPromoPopup({ popup }: { popup: PaperbaseStorePopup | null 
               className="h-60 w-full object-cover sm:h-72"
             />
           ) : (
-            <div className="h-60 w-full bg-neutral-100 sm:h-72" />
+            <div className="h-60 w-full bg-muted sm:h-72" />
           )}
         </div>
         <div className="px-5 pb-4 pt-5">
           <DialogHeader className="text-center">
             <DialogTitle className="text-xl">{popup.title}</DialogTitle>
-            <DialogDescription className="mt-1 text-sm text-neutral-600">
+            <DialogDescription className="mt-1 text-sm text-muted-foreground">
               {descriptionPreview}
             </DialogDescription>
           </DialogHeader>

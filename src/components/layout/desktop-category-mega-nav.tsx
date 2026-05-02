@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 
@@ -12,9 +11,9 @@ import { cn } from "@/lib/utils";
 
 const CLOSE_DELAY_MS = 160;
 
-/** Same typography for button vs link (UA button styles can otherwise differ from anchors). */
-const categoryBarItemClass =
-  "inline-flex min-h-10 max-w-none items-center rounded-md px-2 py-1.5 text-base font-medium leading-tight whitespace-nowrap md:px-2.5";
+/** Category strip: background lives on `<li>` (card = mega panel) so the link never stacks a second bg. */
+const categoryBarLinkClass =
+  "inline-flex h-full min-h-9 w-full max-w-none items-center border-0 bg-transparent px-2 py-1 text-sm font-medium leading-tight whitespace-nowrap md:px-2.5";
 
 type NavHrefProps = {
   href: string;
@@ -38,13 +37,6 @@ function NavHref({ href, className, children }: NavHrefProps) {
   );
 }
 
-type DesktopCategoryMegaNavProps = {
-  categories: HeaderCategoryNav[];
-  ariaLabel: string;
-  browseEyebrow: string;
-  newBadgeLabel: string;
-};
-
 function flattenCategoryLinks(nodes: HeaderCategoryNav[]): { id: string; href: string; label: string }[] {
   const out: { id: string; href: string; label: string }[] = [];
   function walk(node: HeaderCategoryNav) {
@@ -67,7 +59,7 @@ function CategoryNavFlatStack({ items }: { items: HeaderCategoryNav[] }) {
         <NavHref
           key={link.id}
           href={link.href}
-          className="block font-normal leading-snug text-foreground transition-colors hover:text-primary"
+          className="block w-fit font-normal leading-snug text-foreground underline decoration-foreground/45 underline-offset-[0.2em] transition-colors hover:text-primary hover:decoration-primary/60"
         >
           {link.label}
         </NavHref>
@@ -75,6 +67,13 @@ function CategoryNavFlatStack({ items }: { items: HeaderCategoryNav[] }) {
     </div>
   );
 }
+
+type DesktopCategoryMegaNavProps = {
+  categories: HeaderCategoryNav[];
+  ariaLabel: string;
+  browseEyebrow: string;
+  newBadgeLabel: string;
+};
 
 export function DesktopCategoryMegaNav({
   categories,
@@ -145,7 +144,7 @@ export function DesktopCategoryMegaNav({
           className="desktop-category-scroll w-full min-w-0 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth py-2"
           aria-label={ariaLabel}
         >
-          <ul className="flex w-max min-w-full flex-nowrap items-center gap-x-1 md:gap-x-2">
+          <ul className="flex w-max min-w-full flex-nowrap items-stretch gap-x-1 md:gap-x-2">
             {categories.map((category) => {
               const expandable = Boolean(category.children?.length);
               const isOpen = openId === category.id;
@@ -153,7 +152,12 @@ export function DesktopCategoryMegaNav({
               return (
                 <li
                   key={category.id}
-                  className="shrink-0"
+                  className={cn(
+                    "group flex min-h-9 shrink-0 items-stretch rounded-md hover:bg-card focus-within:bg-card",
+                    isOpen &&
+                      expandable &&
+                      "relative z-[35] -my-2 rounded-none bg-card py-2 !shadow-none ring-0",
+                  )}
                   onMouseEnter={() => {
                     open(category.id);
                   }}
@@ -165,31 +169,26 @@ export function DesktopCategoryMegaNav({
                     <NavHref
                       href={category.href}
                       className={cn(
-                        categoryBarItemClass,
-                        "cursor-pointer gap-1 border-0 bg-transparent text-primary-foreground/90 transition-colors",
-                        "underline decoration-transparent decoration-1 underline-offset-8 hover:decoration-primary-foreground/80 hover:text-primary-foreground",
-                        "focus-visible:decoration-primary-foreground/80 focus-visible:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/40",
-                        isOpen && "text-primary-foreground decoration-primary-foreground/80",
+                        categoryBarLinkClass,
+                        "cursor-pointer transition-[color,text-decoration-color]",
+                        isOpen
+                          ? "rounded-none text-card-foreground decoration-transparent"
+                          : "text-header-foreground/90 underline decoration-transparent decoration-1 underline-offset-8 group-hover:text-card-foreground group-hover:decoration-card-foreground/50 group-focus-within:text-card-foreground group-focus-within:decoration-card-foreground/50",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+                        isOpen && "focus-visible:ring-primary/20",
                       )}
                     >
                       <span id={`desktop-cat-trigger-${category.id}`}>{category.label}</span>
-                      <ChevronDown
-                        className={cn(
-                          "pointer-events-none size-3 shrink-0 opacity-90 transition-transform duration-200 ease-out",
-                          isOpen && "-rotate-180",
-                        )}
-                        strokeWidth={1.75}
-                        aria-hidden
-                      />
                     </NavHref>
                   ) : (
                     <NavHref
                       href={category.href}
                       className={cn(
-                        categoryBarItemClass,
-                        "text-primary-foreground/90 transition-colors",
-                        "underline decoration-transparent decoration-1 underline-offset-8 hover:decoration-primary-foreground/80 hover:text-primary-foreground",
-                        "focus-visible:decoration-primary-foreground/80 focus-visible:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/40",
+                        categoryBarLinkClass,
+                        "text-header-foreground/90 transition-[color,text-decoration-color]",
+                        "underline decoration-transparent decoration-1 underline-offset-8 group-hover:text-card-foreground group-hover:decoration-card-foreground/50",
+                        "group-focus-within:text-card-foreground group-focus-within:decoration-card-foreground/50",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
                       )}
                     >
                       {category.label}
@@ -207,24 +206,24 @@ export function DesktopCategoryMegaNav({
           id={panelId}
           role="region"
           aria-labelledby={`desktop-cat-trigger-${active.id}`}
-          className="absolute inset-x-0 top-[calc(100%-10px)] z-50 pt-3 pb-6"
+          className="absolute inset-x-0 top-full z-[30] -mt-px pb-6"
         >
           <PageContainer>
             <div
               className={cn(
-                "origin-top overflow-hidden rounded-lg border border-black/[0.06] bg-card text-foreground shadow-[0_24px_48px_-12px_rgba(15,23,42,0.25)] ring-1 ring-black/[0.04]",
+                "origin-top overflow-hidden rounded-b-lg rounded-t-none border-x border-b border-border/60 border-t-0 bg-card text-foreground shadow-[0_20px_50px_-16px_rgba(15,23,42,0.22)]",
                 "motion-safe:transition-[opacity,transform] motion-safe:duration-150 motion-safe:ease-out",
               )}
             >
               <div className="max-h-[min(70vh,520px)] overflow-y-auto overscroll-y-contain p-5 sm:p-6">
-                <div className="flex flex-col gap-4 border-b border-neutral-100 pb-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="flex flex-col gap-4 border-b border-border pb-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="min-w-0 space-y-1">
-                    <p className="text-[11px] font-semibold tracking-wide text-neutral-500 uppercase">{browseEyebrow}</p>
-                    <p className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">{active.label}</p>
+                    <p className="text-[11px] font-normal tracking-wide text-muted-foreground uppercase">{browseEyebrow}</p>
+                    <p className="text-lg font-normal tracking-tight text-foreground sm:text-xl">{active.label}</p>
                   </div>
                   <NavHref
                     href={active.href}
-                    className="shrink-0 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                    className="shrink-0 text-sm font-normal text-primary underline decoration-primary underline-offset-4 hover:text-primary/90"
                   >
                     {tNav("megaMenuSeeAllFromCategory")}
                   </NavHref>
@@ -235,12 +234,12 @@ export function DesktopCategoryMegaNav({
                     <section key={item.id} className="min-w-0">
                       <NavHref
                         href={item.href}
-                        className="block pb-3 text-base font-semibold uppercase tracking-wide text-neutral-950 outline-none focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:ring-offset-2"
+                        className="block w-fit pb-3 text-base font-normal uppercase tracking-wide text-foreground underline decoration-foreground/50 underline-offset-4 outline-none focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:ring-offset-2"
                       >
                         <span className="inline-flex flex-wrap items-center gap-2">
                           {item.label}
                           {item.isNew ? (
-                            <Badge className="bg-success px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+                            <Badge className="bg-success px-2 py-0.5 text-[10px] font-normal tracking-wide text-white">
                               {newBadgeLabel}
                             </Badge>
                           ) : null}
@@ -251,7 +250,7 @@ export function DesktopCategoryMegaNav({
                           <CategoryNavFlatStack items={item.children} />
                         </div>
                       ) : item.description ? (
-                        <p className="mt-3 text-sm leading-snug text-neutral-600">{item.description}</p>
+                        <p className="mt-3 text-sm leading-snug text-muted-foreground">{item.description}</p>
                       ) : null}
                     </section>
                   ))}

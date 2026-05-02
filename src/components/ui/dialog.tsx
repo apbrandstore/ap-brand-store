@@ -61,7 +61,7 @@ const DialogContentInner = React.forwardRef<
       forceMount
       ref={ref}
       className={cn(
-        "fixed z-50 grid w-full gap-4 bg-white shadow-lg",
+        "fixed z-50 grid w-full gap-4 bg-card shadow-lg",
         "transition-[opacity,transform] duration-150 ease-out will-change-[transform,opacity]",
         "data-[state=open]:opacity-100 data-[state=closed]:opacity-0 data-[state=closed]:pointer-events-none",
         // Mobile: slides up from bottom as a bottom sheet
@@ -77,7 +77,7 @@ const DialogContentInner = React.forwardRef<
     >
       {children}
         {showCloseButton ? (
-          <Dialog.Close className="absolute right-4 top-4 rounded-full p-1 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+          <Dialog.Close className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
             <X className="size-4" strokeWidth={2} aria-hidden />
             <span className="sr-only">{tCommon("close")}</span>
           </Dialog.Close>
@@ -99,7 +99,7 @@ function DialogTitle({
 }: React.ComponentPropsWithoutRef<typeof Dialog.Title>) {
   return (
     <Dialog.Title
-      className={cn("text-base font-semibold leading-tight text-neutral-950", className)}
+      className={cn("text-base font-semibold leading-tight text-foreground", className)}
       {...props}
     />
   )
@@ -112,7 +112,7 @@ function DialogDescription({
 }: React.ComponentPropsWithoutRef<typeof Dialog.Description>) {
   return (
     <Dialog.Description
-      className={cn("text-sm text-neutral-500", className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   )
