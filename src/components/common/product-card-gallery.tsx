@@ -16,7 +16,7 @@ export function ProductCardGallery({ urls, alt, href, priority }: ProductCardGal
   const unoptimized = storefrontImageUnoptimized(src);
 
   return (
-    <div className="relative aspect-square w-full shrink-0 border border-neutral-200 bg-transparent">
+    <div className="relative aspect-square w-full shrink-0 border border-border bg-transparent">
       <Link
         href={href}
         className="relative block size-full outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neutral-900/15"

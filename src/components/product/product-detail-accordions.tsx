@@ -40,7 +40,7 @@ export function ProductDetailAccordions({
               aria-expanded={open}
               className="flex w-full cursor-pointer items-center justify-between gap-4 px-4 py-3.5 text-start transition-colors hover:bg-neutral-50"
             >
-              <span className="text-sm font-bold uppercase tracking-normal text-text">
+              <span className="text-sm font-bold uppercase tracking-normal text-foreground">
                 {item.title}
               </span>
               <ChevronDown

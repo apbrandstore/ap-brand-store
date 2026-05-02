@@ -222,7 +222,7 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
     return (
       <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
         <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
-          <h1 className="text-xl font-semibold text-text">{t("lostSessionTitle")}</h1>
+          <h1 className="text-xl font-semibold text-foreground">{t("lostSessionTitle")}</h1>
           <p className="mt-3 text-sm text-neutral-600">{t("lostSessionBody")}</p>
           <Link
             href="/"
@@ -246,7 +246,7 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
     return (
       <div className="bg-white pb-12 pt-6 md:pb-16 md:pt-8">
         <div className="mx-auto max-w-xl rounded-lg border border-neutral-200/60 bg-white p-8 shadow-sm md:p-10">
-          <h1 className="text-xl font-semibold text-text">{tCheckout("orderPlacedTitle")}</h1>
+          <h1 className="text-xl font-semibold text-foreground">{tCheckout("orderPlacedTitle")}</h1>
           <OrderReceiptList order={order} locale={locale} />
           <Link
             href="/"
@@ -301,7 +301,7 @@ export function OrderPaymentView({ publicId }: OrderPaymentViewProps) {
           />
         ) : (
           <div>
-            <h1 className="text-xl font-semibold text-text">{t("unexpectedTitle")}</h1>
+            <h1 className="text-xl font-semibold text-foreground">{t("unexpectedTitle")}</h1>
             <p className="mt-3 text-sm text-neutral-600">{t("unexpectedBody")}</p>
             <Link
               href="/"
@@ -424,7 +424,7 @@ function FormView({
 
   return (
     <>
-      <h1 className="text-xl font-semibold text-text">
+      <h1 className="text-xl font-semibold text-foreground">
         {isResubmitting ? t("resubmitTitle") : t("formTitle")}
       </h1>
       <p className="mt-3 text-sm text-neutral-600">
@@ -493,7 +493,7 @@ function FormView({
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
+          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
         >
           {submitting ? t("submitting") : t("submit")}
         </button>
@@ -520,7 +520,7 @@ function AwaitingView({
 
   return (
     <>
-      <h1 className="text-xl font-semibold text-text">{t("awaitingTitle")}</h1>
+      <h1 className="text-xl font-semibold text-foreground">{t("awaitingTitle")}</h1>
       <p className="mt-3 text-sm text-neutral-600">{t("awaitingBody")}</p>
       <p className="mt-2 text-sm text-neutral-600">{t("awaitingEmailHint")}</p>
 
@@ -550,7 +550,7 @@ function AwaitingView({
       <div className="mt-8 flex justify-center">
         <Link
           href="/"
-          className="inline-flex h-12 min-w-[200px] items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+          className="inline-flex h-12 min-w-[200px] items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           {tCheckout("continueShoppingAfterOrder")}
         </Link>
@@ -581,7 +581,7 @@ function ConfirmedView({
       if (signal.aborted) {
         throw new DOMException("Aborted", "AbortError");
       }
-      const res = await fetch(`/api/orders/${orderId}/invoice/status`, {
+      const res = await fetch(`/api/v1/orders/${orderId}/invoice/status`, {
         cache: "no-store",
         signal,
       });
@@ -652,7 +652,7 @@ function ConfirmedView({
         await startInvoiceFlow();
         break;
       case "ready":
-        window.location.assign(`/api/orders/${orderId}/invoice/download`);
+        window.location.assign(`/api/v1/orders/${orderId}/invoice/download`);
         dispatchInvoiceState({ status: "opening", url: invoiceState.url });
         break;
       case "error":
@@ -689,7 +689,7 @@ function ConfirmedView({
 
   return (
     <>
-      <h1 className="text-xl font-semibold text-text">{t("confirmedTitle")}</h1>
+      <h1 className="text-xl font-semibold text-foreground">{t("confirmedTitle")}</h1>
       <p className="mt-3 text-sm text-neutral-600">{t("confirmedBody")}</p>
       <OrderReceiptList order={order} locale={locale} />
       <button
@@ -726,7 +726,7 @@ function RejectedView({ order }: { order: PaperbaseOrderReceipt }) {
 
   return (
     <>
-      <h1 className="text-xl font-semibold text-text">{t("rejectedTitle")}</h1>
+      <h1 className="text-xl font-semibold text-foreground">{t("rejectedTitle")}</h1>
       <p className="mt-3 text-sm text-neutral-600">{t("rejectedBody")}</p>
 
       <dl className="mt-6 space-y-3 text-sm leading-relaxed text-neutral-600">

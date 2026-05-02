@@ -28,7 +28,7 @@ export function BlogSearch({ value, onChange, placeholder, searchButtonLabel, cl
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="min-w-0 flex-1 border-0 bg-transparent text-sm text-text outline-none placeholder:text-neutral-400"
+          className="min-w-0 flex-1 border-0 bg-transparent text-sm text-foreground outline-none placeholder:text-neutral-400"
           autoComplete="off"
           aria-label={placeholder}
         />

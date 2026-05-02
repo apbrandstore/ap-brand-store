@@ -67,7 +67,7 @@ function CategoryNavFlatStack({ items }: { items: HeaderCategoryNav[] }) {
         <NavHref
           key={link.id}
           href={link.href}
-          className="block font-normal leading-snug text-text transition-colors hover:text-primary"
+          className="block font-normal leading-snug text-foreground transition-colors hover:text-primary"
         >
           {link.label}
         </NavHref>
@@ -166,10 +166,10 @@ export function DesktopCategoryMegaNav({
                       href={category.href}
                       className={cn(
                         categoryBarItemClass,
-                        "cursor-pointer gap-1 border-0 bg-transparent text-white/90 transition-colors",
-                        "underline decoration-transparent decoration-1 underline-offset-8 hover:decoration-white/80 hover:text-white",
-                        "focus-visible:decoration-white/80 focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                        isOpen && "text-white decoration-white/80",
+                        "cursor-pointer gap-1 border-0 bg-transparent text-primary-foreground/90 transition-colors",
+                        "underline decoration-transparent decoration-1 underline-offset-8 hover:decoration-primary-foreground/80 hover:text-primary-foreground",
+                        "focus-visible:decoration-primary-foreground/80 focus-visible:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/40",
+                        isOpen && "text-primary-foreground decoration-primary-foreground/80",
                       )}
                     >
                       <span id={`desktop-cat-trigger-${category.id}`}>{category.label}</span>
@@ -187,9 +187,9 @@ export function DesktopCategoryMegaNav({
                       href={category.href}
                       className={cn(
                         categoryBarItemClass,
-                        "text-white/90 transition-colors",
-                        "underline decoration-transparent decoration-1 underline-offset-8 hover:decoration-white/80 hover:text-white",
-                        "focus-visible:decoration-white/80 focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                        "text-primary-foreground/90 transition-colors",
+                        "underline decoration-transparent decoration-1 underline-offset-8 hover:decoration-primary-foreground/80 hover:text-primary-foreground",
+                        "focus-visible:decoration-primary-foreground/80 focus-visible:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/40",
                       )}
                     >
                       {category.label}
@@ -212,7 +212,7 @@ export function DesktopCategoryMegaNav({
           <PageContainer>
             <div
               className={cn(
-                "origin-top overflow-hidden rounded-lg border border-black/[0.06] bg-surface text-text shadow-[0_24px_48px_-12px_rgba(15,23,42,0.25)] ring-1 ring-black/[0.04]",
+                "origin-top overflow-hidden rounded-lg border border-black/[0.06] bg-card text-foreground shadow-[0_24px_48px_-12px_rgba(15,23,42,0.25)] ring-1 ring-black/[0.04]",
                 "motion-safe:transition-[opacity,transform] motion-safe:duration-150 motion-safe:ease-out",
               )}
             >
@@ -220,7 +220,7 @@ export function DesktopCategoryMegaNav({
                 <div className="flex flex-col gap-4 border-b border-neutral-100 pb-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="min-w-0 space-y-1">
                     <p className="text-[11px] font-semibold tracking-wide text-neutral-500 uppercase">{browseEyebrow}</p>
-                    <p className="text-lg font-semibold tracking-tight text-text sm:text-xl">{active.label}</p>
+                    <p className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">{active.label}</p>
                   </div>
                   <NavHref
                     href={active.href}

@@ -86,7 +86,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
     const delays = [1500, 3000, 5000, 8000, 12000, 12000];
     for (const delay of delays) {
       if (signal.aborted) throw new DOMException("Aborted", "AbortError");
-      const res = await fetch(`/api/orders/${orderId}/invoice/status`, { cache: "no-store", signal });
+      const res = await fetch(`/api/v1/orders/${orderId}/invoice/status`, { cache: "no-store", signal });
       if (!res.ok) throw new Error(`Status ${res.status}`);
       const data = (await res.json()) as InvoiceStatusResponse;
       if (data.ready === true && data.url) return data.url;
@@ -150,7 +150,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
         await startInvoiceFlow();
         break;
       case "ready":
-        window.location.assign(`/api/orders/${orderId}/invoice/download`);
+        window.location.assign(`/api/v1/orders/${orderId}/invoice/download`);
         dispatchInvoiceState({ status: "opening", url: invoiceState.url });
         break;
       case "error":
@@ -191,7 +191,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
       <h2 className="mt-6 text-xl font-semibold tracking-tight text-neutral-950">{t("orderSuccessTitle")}</h2>
       <p className="mt-2 max-w-md text-sm leading-relaxed text-neutral-600">{t("orderSuccessMessage")}</p>
 
-      <div className="mt-8 w-full max-w-md rounded-lg bg-card-surface px-4 py-5 text-start md:px-5">
+      <div className="mt-8 w-full max-w-md rounded-lg bg-card px-4 py-5 text-start md:px-5">
         <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">{t("orderSuccessDeliveryTo")}</p>
         <p className="mt-1 text-sm text-neutral-800">
           <span className="font-semibold text-neutral-950">{order.customer_name}</span>
@@ -244,7 +244,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
 
       <button
         type="button"
-        className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-md border border-black/10 bg-surface px-6 text-sm font-semibold text-text transition-colors hover:bg-card-surface disabled:opacity-60"
+        className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-md border border-black/10 bg-card px-6 text-sm font-semibold text-foreground transition-colors hover:bg-card disabled:opacity-60"
         onClick={() => void handleInvoiceClick()}
         disabled={invoiceBusy}
       >
@@ -257,7 +257,7 @@ export function CheckoutOrderSuccess({ order, paymentMethod, mfsProvider }: Chec
       <div className="mt-4 flex w-full max-w-xs justify-center">
         <Link
           href="/"
-          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-surface transition-colors hover:bg-primary/90"
+          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           {t("continueShoppingAfterOrder")}
         </Link>

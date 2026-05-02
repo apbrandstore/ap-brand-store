@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import {
   getBrowserPaperbaseBackendOrigin,
   PAPERBASE_PRODUCTION_API_ORIGIN,
+  rewritePaperbaseProductionFetchUrl,
 } from "@/lib/paperbase-public";
 
 type StorefrontRuntimeBootProps = {
@@ -43,7 +44,7 @@ export function StorefrontRuntimeBoot({ publishableKey, trackerSrc }: Storefront
       if (!inputUrl || !inputUrl.startsWith(PAPERBASE_PRODUCTION_API_ORIGIN)) {
         return originalFetch.call(this, input as RequestInfo | URL, init);
       }
-      const rewrittenUrl = rewriteOrigin + inputUrl.slice(PAPERBASE_PRODUCTION_API_ORIGIN.length);
+      const rewrittenUrl = rewritePaperbaseProductionFetchUrl(inputUrl, rewriteOrigin);
       if (typeof input === "string") {
         return originalFetch.call(this, rewrittenUrl, init);
       }

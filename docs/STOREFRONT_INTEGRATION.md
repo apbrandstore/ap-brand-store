@@ -2016,8 +2016,9 @@ fired automatically by `tracker.js` when the user navigates to the checkout rout
 ### 15.1 Fetch helper
 
 ```ts
-const API = process.env.NEXT_PUBLIC_BACKEND_ORIGIN + "/api/v1";
-const KEY = process.env.NEXT_PUBLIC_PAPERBASE_PUBLISHABLE_KEY!;
+// Server-side only — never expose the publishable key in client bundles.
+const API = process.env.PAPERBASE_API_URL ?? "";
+const KEY = process.env.PAPERBASE_PUBLISHABLE_KEY!;
 
 async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const res = await fetch(`${API}${path}`, {

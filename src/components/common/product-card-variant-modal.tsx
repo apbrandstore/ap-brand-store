@@ -136,8 +136,8 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
                     className={cn(
                       "inline-flex min-h-9 cursor-pointer items-center rounded-md px-4 py-2 text-sm font-semibold",
                       selected
-                        ? "bg-primary text-white shadow-sm"
-                        : "border border-neutral-200 bg-white text-neutral-800 hover:border-primary/40 hover:bg-primary/[0.04]",
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "border border-border bg-background text-foreground hover:border-primary/40 hover:bg-primary/[0.04]",
                     )}
                   >
                     {value.value}
@@ -201,7 +201,7 @@ const VariantPicker = memo(function VariantPicker({ detail, onAdded }: PickerPro
         disabled={!canAdd}
         onClick={handleAdd}
         className={cn(
-          "flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md px-4 text-sm font-bold tracking-wide text-white transition-all",
+          "flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md px-4 text-sm font-bold tracking-wide text-primary-foreground transition-all",
           "bg-primary hover:bg-primary/90 active:scale-[0.98]",
           "disabled:cursor-not-allowed disabled:opacity-50",
         )}
@@ -346,7 +346,7 @@ export function ProductCardVariantModal({ product, variant = "default" }: Props)
           className={cn(
             "flex cursor-pointer items-center justify-center text-white transition-colors duration-200 ease-out",
             isIcon
-              ? "size-9 rounded-full bg-primary text-surface shadow-sm ring-1 ring-black/10 hover:bg-primary/90 hover:ring-accent/40"
+              ? "size-9 rounded-full bg-primary text-primary-foreground shadow-sm ring-1 ring-black/10 hover:bg-primary/90 hover:ring-accent/40"
               : "w-full",
             isCard
               ? "gap-2 rounded-md py-2.5 text-sm font-medium bg-primary hover:bg-primary/90 active:bg-primary/95"

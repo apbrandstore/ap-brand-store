@@ -57,7 +57,7 @@ export default async function HomePage() {
             ) : (
               <PageContainer>
                 <div className="card mx-auto max-w-4xl px-4 py-6 text-center md:px-6">
-                  <p className="text-pretty text-base font-semibold leading-snug text-text md:text-lg">{banner.title}</p>
+                  <p className="text-pretty text-base font-semibold leading-snug text-foreground md:text-lg">{banner.title}</p>
                 </div>
               </PageContainer>
             )}
@@ -69,7 +69,7 @@ export default async function HomePage() {
 
   return (
     <div
-      className={`bg-surface ${heroBanner?.image_url ? "pt-0" : "pt-4 md:pt-6"} ${hasBottomBanners ? "pb-0" : "pb-10 md:pb-14"}`}
+      className={`bg-card ${heroBanner?.image_url ? "pt-0" : "pt-4 md:pt-6"} ${hasBottomBanners ? "pb-0" : "pb-10 md:pb-14"}`}
     >
       {heroBanner ? (
         <section className="mb-10 w-full md:mb-12">
@@ -100,17 +100,17 @@ export default async function HomePage() {
       <PageContainer>
         <section id="products" className="space-y-12 md:space-y-16">
           {categorySections.length === 0 ? (
-            <p className="card mx-auto max-w-lg text-center text-sm text-text/80">{tHome("emptyProducts")}</p>
+            <p className="card mx-auto max-w-lg text-center text-sm text-foreground/80">{tHome("emptyProducts")}</p>
           ) : (
             <>
               {categorySections.map((section, sectionIdx) => (
                 <div key={section.slug} className="space-y-5 md:space-y-6">
                   <header className="mx-auto max-w-4xl px-1 text-center">
-                    <h2 className="text-pretty text-2xl font-light tracking-tight text-text md:text-3xl lg:text-4xl">
+                    <h2 className="text-pretty text-2xl font-light tracking-tight text-foreground md:text-3xl lg:text-4xl">
                       {section.name}
                     </h2>
                     {section.description ? (
-                      <p className="mx-auto mt-3 max-w-3xl text-pretty text-base font-normal leading-snug text-text/85 md:mt-4 md:text-lg md:leading-relaxed">
+                      <p className="mx-auto mt-3 max-w-3xl text-pretty text-base font-normal leading-snug text-foreground/85 md:mt-4 md:text-lg md:leading-relaxed">
                         {section.description}
                       </p>
                     ) : null}
@@ -130,7 +130,7 @@ export default async function HomePage() {
                     <div className="flex justify-center pt-1">
                       <Link
                         href={`/categories/${section.slug}`}
-                        className="inline-flex h-10 items-center justify-center rounded-lg border border-neutral-200 bg-white px-5 text-sm font-medium text-text shadow-sm transition-colors hover:bg-neutral-50"
+                        className="inline-flex h-10 items-center justify-center rounded-lg border border-neutral-200 bg-white px-5 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-neutral-50"
                       >
                         {tHome("viewMore")}
                       </Link>

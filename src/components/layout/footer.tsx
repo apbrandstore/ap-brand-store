@@ -71,7 +71,7 @@ export async function Footer() {
   const year = new Date().getFullYear();
 
   const socialClass =
-    "flex size-11 items-center justify-center rounded-md border border-white/15 bg-white/5 text-surface transition-colors hover:border-accent/50 hover:bg-white/10 hover:text-accent";
+    "flex size-11 items-center justify-center rounded-md border border-white/15 bg-white/5 text-primary-foreground transition-colors hover:border-accent/50 hover:bg-white/10 hover:text-accent";
 
   const socials = [
     {
@@ -101,33 +101,33 @@ export async function Footer() {
   ].filter((item) => Boolean(item.href?.trim()));
 
   return (
-    <footer className="border-t border-white/10 bg-header pt-10 pb-8 text-surface">
+    <footer className="border-t border-white/10 bg-primary pt-10 pb-8 text-primary-foreground">
       <PageContainer>
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div>
-            <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-surface">
+            <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-primary-foreground">
               {t("contact")}
             </h2>
             <ul className="list-none space-y-5 p-0">
               <li className="flex gap-3">
-                <MapPin className="mt-0.5 size-5 shrink-0 text-surface/75" strokeWidth={1.5} />
+                <MapPin className="mt-0.5 size-5 shrink-0 text-primary-foreground/75" strokeWidth={1.5} />
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-surface">
+                  <p className="text-xs font-bold uppercase tracking-wide text-primary-foreground">
                     {t("addressLabel")}
                   </p>
-                  <p className="mt-0.5 text-sm font-normal text-surface/80">
+                  <p className="mt-0.5 text-sm font-normal text-primary-foreground/80">
                     {store.address || t("addressLine")}
                   </p>
                 </div>
               </li>
               <li className="flex gap-3">
-                <Mail className="mt-0.5 size-5 shrink-0 text-surface/75" strokeWidth={1.5} />
+                <Mail className="mt-0.5 size-5 shrink-0 text-primary-foreground/75" strokeWidth={1.5} />
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-surface">
+                  <p className="text-xs font-bold uppercase tracking-wide text-primary-foreground">
                     {t("emailLabel")}
                   </p>
                   <a
-                    className="mt-0.5 block text-sm text-surface/80 underline-offset-2 hover:text-accent hover:underline"
+                    className="mt-0.5 block text-sm text-primary-foreground/80 underline-offset-2 hover:text-accent hover:underline"
                     href={`mailto:${store.support_email || t("emailLine")}`}
                   >
                     {store.support_email || t("emailLine")}
@@ -135,13 +135,13 @@ export async function Footer() {
                 </div>
               </li>
               <li className="flex gap-3">
-                <Phone className="mt-0.5 size-5 shrink-0 text-surface/75" strokeWidth={1.5} />
+                <Phone className="mt-0.5 size-5 shrink-0 text-primary-foreground/75" strokeWidth={1.5} />
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-surface">
+                  <p className="text-xs font-bold uppercase tracking-wide text-primary-foreground">
                     {t("phoneLabel")}
                   </p>
                   <a
-                    className="mt-0.5 block text-sm text-surface/80 underline-offset-2 hover:text-accent hover:underline"
+                    className="mt-0.5 block text-sm text-primary-foreground/80 underline-offset-2 hover:text-accent hover:underline"
                     href={`tel:${store.phone.replace(/\s/g, "")}`}
                   >
                     {store.phone}
@@ -152,22 +152,22 @@ export async function Footer() {
           </div>
 
           <div>
-            <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-surface">
+            <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-primary-foreground">
               {t("customer")}
             </h2>
             <ul className="list-none space-y-2.5 p-0">
               <li>
-                <Link href="/account" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/account" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("customerAccount")}
                 </Link>
               </li>
               <li>
-                <Link href="/wishlist" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/wishlist" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("customerWishlist")}
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/blog" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("customerBlog")}
                 </Link>
               </li>
@@ -175,36 +175,36 @@ export async function Footer() {
           </div>
 
           <div>
-            <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-surface">
+            <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-primary-foreground">
               <Link href="/information" className="underline-offset-4 hover:text-accent hover:underline">
                 {t("information")}
               </Link>
             </h2>
             <ul className="list-none space-y-2.5 p-0">
               <li>
-                <Link href="/about-us" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/about-us" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("infoAbout")}
                 </Link>
               </li>
               <li>
-                <Link href="/contact-us" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/contact-us" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("infoContact")}
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/privacy-policy" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("infoPrivacy")}
                 </Link>
               </li>
               <li>
-                <Link href="/return-refund" className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline">
+                <Link href="/return-refund" className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline">
                   {t("infoReturns")}
                 </Link>
               </li>
               <li>
                 <Link
                   href="/cancellation-policy"
-                  className="text-sm text-surface/85 underline-offset-2 hover:text-accent hover:underline"
+                  className="text-sm text-primary-foreground/85 underline-offset-2 hover:text-accent hover:underline"
                 >
                   {t("infoCancellation")}
                 </Link>
@@ -214,7 +214,7 @@ export async function Footer() {
 
           {socials.length > 0 ? (
             <div>
-              <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-surface">
+              <h2 className="mb-5 text-sm font-bold uppercase tracking-wide text-primary-foreground">
                 {t("socialLinks")}
               </h2>
               <div className="flex flex-wrap gap-3">
@@ -235,7 +235,7 @@ export async function Footer() {
           ) : null}
         </div>
 
-        <p className="mt-12 text-center text-sm text-surface/60">
+        <p className="mt-12 text-center text-sm text-primary-foreground/60">
           © {year}, {store.store_name || common("brand")}
         </p>
       </PageContainer>

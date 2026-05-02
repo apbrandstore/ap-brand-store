@@ -27,9 +27,9 @@ export function CartPageClient() {
   const { items, hydrated, subtotal, removeItem, increment, decrement } = useCart();
 
   return (
-    <div className="bg-surface">
+    <div className="bg-card">
       <div className="flex items-baseline justify-between gap-4 border-b border-black/10 pb-6">
-        <h1 className="text-3xl font-thin tracking-tight text-text md:text-4xl">{t("title")}</h1>
+        <h1 className="text-3xl font-thin tracking-tight text-foreground md:text-4xl">{t("title")}</h1>
         <Link
           href="/#products"
           className="text-sm font-medium text-neutral-500 underline decoration-neutral-300 underline-offset-4 hover:text-neutral-800"
@@ -39,9 +39,9 @@ export function CartPageClient() {
       </div>
 
       {!hydrated ? (
-        <p className="py-10 text-sm text-text/70">{states("loading")}</p>
+        <p className="py-10 text-sm text-foreground/70">{states("loading")}</p>
       ) : items.length === 0 ? (
-        <p className="py-10 text-sm text-text/70">{t("empty")}</p>
+        <p className="py-10 text-sm text-foreground/70">{t("empty")}</p>
       ) : (
         <>
           {/* Desktop table-like layout */}
@@ -65,7 +65,7 @@ export function CartPageClient() {
                     className="grid grid-cols-[minmax(0,1fr)_12rem_10rem] gap-6 py-8"
                   >
                     <div className="flex min-w-0 items-start gap-4">
-                      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card-surface">
+                      <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card">
                         <Image
                           src={imageSrc}
                           alt={item.name}
@@ -78,11 +78,11 @@ export function CartPageClient() {
 
                       <div className="min-w-0">
                         {href ? (
-                          <Link href={href} className="block text-sm font-semibold text-text hover:underline">
+                          <Link href={href} className="block text-sm font-semibold text-foreground hover:underline">
                             {item.name}
                           </Link>
                         ) : (
-                          <p className="text-sm font-semibold text-text">{item.name}</p>
+                          <p className="text-sm font-semibold text-foreground">{item.name}</p>
                         )}
                         <p className="mt-1 text-sm text-neutral-600">{formatMoney(item.price, locale)}</p>
 
@@ -129,7 +129,7 @@ export function CartPageClient() {
                       </Button>
                     </div>
 
-                    <p className="text-right text-sm font-semibold text-text">{formatMoney(total, locale)}</p>
+                    <p className="text-right text-sm font-semibold text-foreground">{formatMoney(total, locale)}</p>
                   </div>
                 );
               })}
@@ -151,7 +151,7 @@ export function CartPageClient() {
                     className="py-6"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card-surface">
+                      <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card">
                         <Image
                           src={imageSrc}
                           alt={item.name}
@@ -166,11 +166,11 @@ export function CartPageClient() {
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             {href ? (
-                              <Link href={href} className="block text-sm font-semibold text-text hover:underline">
+                              <Link href={href} className="block text-sm font-semibold text-foreground hover:underline">
                                 {item.name}
                               </Link>
                             ) : (
-                              <p className="text-sm font-semibold text-text">{item.name}</p>
+                              <p className="text-sm font-semibold text-foreground">{item.name}</p>
                             )}
                             <p className="mt-1 text-sm text-neutral-600">{formatMoney(item.price, locale)}</p>
 
@@ -183,7 +183,7 @@ export function CartPageClient() {
                             ) : null}
                           </div>
 
-                          <p className="shrink-0 text-sm font-semibold text-text">{formatMoney(total, locale)}</p>
+                          <p className="shrink-0 text-sm font-semibold text-foreground">{formatMoney(total, locale)}</p>
                         </div>
 
                         <div className="mt-4 flex items-center justify-between gap-3">
@@ -230,7 +230,7 @@ export function CartPageClient() {
             <div className="flex flex-col items-end gap-2">
               <div className="flex items-baseline gap-4">
                 <p className="text-sm font-medium tracking-wide text-neutral-500">Estimated total</p>
-                <p className="text-sm font-semibold text-text">{formatMoney(subtotal, locale)}</p>
+                <p className="text-sm font-semibold text-foreground">{formatMoney(subtotal, locale)}</p>
               </div>
               <p className="text-xs text-neutral-500">Taxes, discounts and shipping calculated at checkout.</p>
 

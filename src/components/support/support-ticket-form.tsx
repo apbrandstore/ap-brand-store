@@ -61,7 +61,7 @@ export function SupportTicketForm() {
   }
 
   const inputClass =
-    "w-full rounded-md border border-neutral-200 bg-white px-3 py-2.5 text-sm text-text outline-none placeholder:text-neutral-400 focus:border-neutral-400";
+    "w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary/40";
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
@@ -96,7 +96,7 @@ export function SupportTicketForm() {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-md bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+        className="rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
       >
         {loading ? t("submitting") : t("submit")}
       </button>

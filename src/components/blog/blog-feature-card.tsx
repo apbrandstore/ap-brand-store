@@ -49,7 +49,7 @@ export function BlogFeatureCard({ post, priority = false, className }: BlogFeatu
         >
           {post.category}
         </span>
-        <h2 className={cn("text-lg font-semibold leading-snug sm:text-xl", hasImage ? "text-white" : "text-text")}>
+        <h2 className={cn("text-lg font-semibold leading-snug sm:text-xl", hasImage ? "text-white" : "text-foreground")}>
           {post.title}
         </h2>
       </div>

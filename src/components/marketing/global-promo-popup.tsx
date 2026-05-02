@@ -110,7 +110,7 @@ export function GlobalPromoPopup({ popup }: { popup: PaperbaseStorePopup | null 
                 href={buttonLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 cursor-pointer items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
+                className="inline-flex h-10 cursor-pointer items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 {buttonText}
               </a>

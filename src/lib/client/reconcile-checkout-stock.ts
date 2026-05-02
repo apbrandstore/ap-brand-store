@@ -26,7 +26,7 @@ function productRequestId(item: CartItem): string {
 async function fetchProductDetail(item: CartItem): Promise<ProductDetail | null> {
   const id = productRequestId(item);
   try {
-    const response = await fetch(`/api/products/${encodeURIComponent(id)}`);
+    const response = await fetch(`/api/v1/products/${encodeURIComponent(id)}`);
     if (!response.ok) {
       return null;
     }

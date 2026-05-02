@@ -29,14 +29,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const hasProducts = products.results.length > 0;
 
   return (
-    <div className="bg-surface pt-4 pb-8 md:pt-6 md:pb-10">
+    <div className="bg-card pt-4 pb-8 md:pt-6 md:pb-10">
       <PageContainer>
         <header className="mx-auto max-w-4xl px-1 text-center">
-          <h1 className="text-pretty text-2xl font-light tracking-tight text-text md:text-3xl lg:text-4xl">
+          <h1 className="text-pretty text-2xl font-light tracking-tight text-foreground md:text-3xl lg:text-4xl">
             {categoryDisplayName(category.name)}
           </h1>
           {description ? (
-            <p className="mx-auto mt-3 max-w-3xl text-pretty text-base font-normal leading-snug text-text/85 md:mt-4 md:text-lg md:leading-relaxed">
+            <p className="mx-auto mt-3 max-w-3xl text-pretty text-base font-normal leading-snug text-foreground/85 md:mt-4 md:text-lg md:leading-relaxed">
               {description}
             </p>
           ) : null}
@@ -57,7 +57,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ))}
           </div>
         ) : (
-          <p className="card mx-auto mt-5 max-w-lg text-center text-sm text-text/80 md:mt-6">
+          <p className="card mx-auto mt-5 max-w-lg text-center text-sm text-foreground/80 md:mt-6">
             {tCategories("noProducts")}
           </p>
         )}

@@ -1,17 +1,12 @@
 import { PaperbaseApiError } from "@/lib/api/paperbase-errors";
 
-function apiBase(): string {
-  return process.env.NEXT_PUBLIC_API_URL ?? "";
-}
-
 /**
- * Same-origin (or configured base) fetch to internal App Router `/api/*` routes.
- * Do not call Paperbase directly from client components.
+ * Same-origin fetch to the storefront BFF under `/api/v1/*`, matching the Paperbase HTTP API path prefix.
+ * Do not call the Django host directly from client components.
  */
 export async function apiFetch(path: string, init?: RequestInit): Promise<Response> {
-  const base = apiBase();
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  const url = `${base}/api${normalizedPath}`;
+  const url = `/api/v1${normalizedPath}`;
 
   const headers = new Headers(init?.headers);
   const body = init?.body;

@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         fork:
-          - client1-username/repo-name
-          - client2-username/repo-name
-          - client3-username/repo-name
+          - apbrandstore/ap-brand-store
+          - saidurahmaan/sarar-global
+          - mdshakil05382/sajwear
     steps:
       - name: Sync fork
         run: |

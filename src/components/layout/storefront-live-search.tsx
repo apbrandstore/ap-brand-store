@@ -83,7 +83,7 @@ export function StorefrontLiveSearch({
   const [data, setData] = useState<LiveSearchPayload | null>(null);
 
   const fetchPayload = useCallback(async (signal: AbortSignal) => {
-    const res = await fetch(`/api/storefront/search?q=${encodeURIComponent(debounced)}`, { signal });
+    const res = await fetch(`/api/v1/storefront/search?q=${encodeURIComponent(debounced)}`, { signal });
     if (!res.ok) {
       throw new Error("search failed");
     }
@@ -216,7 +216,7 @@ export function StorefrontLiveSearch({
           aria-controls={listboxId}
           aria-autocomplete="list"
           className={cn(
-            "min-h-9 min-w-0 flex-1 border-none bg-transparent py-2 text-sm text-text outline-none placeholder:text-text/45",
+            "min-h-9 min-w-0 flex-1 border-none bg-transparent py-2 text-sm text-foreground outline-none placeholder:text-foreground/45",
             mode === "desktop" && "min-h-0 py-1 text-[12px] placeholder:text-black/35",
             mode === "mobile" && "min-h-11 py-2 pe-11 placeholder:text-neutral-400",
           )}
@@ -225,11 +225,11 @@ export function StorefrontLiveSearch({
           type="submit"
           aria-label={submitAriaLabel}
           className={cn(
-            "inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-white transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+            "inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
             mode === "desktop" &&
               "size-7 rounded-sm bg-transparent text-black/55 hover:bg-transparent hover:text-black/70 focus-visible:outline-primary",
             mode === "mobile" &&
-              "absolute end-2 top-1/2 z-[1] -translate-y-1/2 bg-transparent text-text hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              "absolute end-2 top-1/2 z-[1] -translate-y-1/2 bg-transparent text-foreground hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
           )}
         >
           {(mode === "desktop" || mode === "mobile") && trimmed.length > 0 ? (
@@ -295,7 +295,7 @@ export function StorefrontLiveSearch({
                     href={`/categories/${cat.slug}`}
                     role="option"
                     aria-selected={false}
-                    className="rounded-sm border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-text hover:bg-neutral-100"
+                    className="rounded-sm border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-foreground hover:bg-neutral-100"
                     onClick={() => {
                       setPanelOpen(false);
                       onAfterNavigate?.();
@@ -320,7 +320,7 @@ export function StorefrontLiveSearch({
                     type="button"
                     role="option"
                     aria-selected={false}
-                    className="rounded-sm border border-violet-200/80 bg-violet-50/90 px-3 py-1 text-xs font-medium text-text hover:bg-violet-100"
+                    className="rounded-sm border border-violet-200/80 bg-violet-50/90 px-3 py-1 text-xs font-medium text-foreground hover:bg-violet-100"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => {
                       setQuery(label);
@@ -362,7 +362,7 @@ export function StorefrontLiveSearch({
                   ) : null}
                 </div>
                 <div className="min-w-0 flex-1 text-start">
-                  <p className="truncate text-sm font-medium text-text">{p.name}</p>
+                  <p className="truncate text-sm font-medium text-foreground">{p.name}</p>
                   <p className="mt-0.5 text-xs text-neutral-500">
                     {p.brand ? `${p.brand} · ` : null}
                     {formatMoney(p.price, locale)}

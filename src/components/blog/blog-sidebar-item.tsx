@@ -42,7 +42,7 @@ export function BlogSidebarItem({ post, locale }: BlogSidebarItemWithLocaleProps
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-[11px] tabular-nums text-neutral-500">{formatDate(post.publishedAt, locale)}</p>
-        <p className="mt-0.5 line-clamp-2 text-sm font-semibold leading-snug text-text group-hover:text-primary">
+        <p className="mt-0.5 line-clamp-2 text-sm font-semibold leading-snug text-foreground group-hover:text-primary">
           {post.title}
         </p>
       </div>

@@ -178,7 +178,7 @@ export function BannerImageSlider({
                 aria-label={`Go to banner image ${dotIdx + 1}`}
                 onClick={() => goTo(dotIdx)}
                 className={`h-1.5 rounded-full transition ${
-                  dotIdx === index ? "w-5 bg-white" : "w-2.5 bg-white/55"
+                  dotIdx === index ? "w-5 bg-primary-foreground" : "w-2.5 bg-primary-foreground/55"
                 }`}
               />
             ))}

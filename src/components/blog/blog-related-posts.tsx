@@ -16,7 +16,7 @@ export function BlogRelatedPosts({ posts, heading }: BlogRelatedPostsProps) {
 
   return (
     <section className="mt-16 border-t border-neutral-200 pt-12" aria-labelledby="blog-related-heading">
-      <h2 id="blog-related-heading" className="text-lg font-semibold tracking-tight text-text md:text-xl">
+      <h2 id="blog-related-heading" className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
         {heading}
       </h2>
       <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -39,7 +39,7 @@ export function BlogRelatedPosts({ posts, heading }: BlogRelatedPostsProps) {
                 </div>
               ) : null}
               <div className="p-4">
-                <p className="line-clamp-2 text-sm font-semibold leading-snug text-text group-hover:text-primary">
+                <p className="line-clamp-2 text-sm font-semibold leading-snug text-foreground group-hover:text-primary">
                   {post.title}
                 </p>
               </div>

@@ -54,7 +54,7 @@ export function DesktopSearchOverlay({
         aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => setOpen(true)}
-        className="hidden size-10 items-center justify-center text-white transition-transform duration-150 hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/40 md:inline-flex"
+        className="hidden size-10 items-center justify-center text-primary-foreground transition-transform duration-150 hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/40 md:inline-flex"
       >
         <Search className="size-5" strokeWidth={1.9} aria-hidden />
       </button>
@@ -72,7 +72,7 @@ export function DesktopSearchOverlay({
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label={closeLabel}
-                  className="flex size-11 items-center justify-center rounded-full text-text transition hover:bg-black/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="flex size-11 items-center justify-center rounded-full text-foreground transition hover:bg-black/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   <X className="size-6" strokeWidth={2} aria-hidden />
                 </button>

@@ -33,7 +33,7 @@ export default async function CheckoutPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-surface">
+    <div className="min-h-screen overflow-x-clip bg-card">
       <PageContainer>
         <CheckoutShippingView />
       </PageContainer>

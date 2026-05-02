@@ -81,9 +81,9 @@ const CheckoutSummaryItem = memo(function CheckoutSummaryItem({
   const imageSrc = resolveStorefrontImageUrl(item.image_url);
 
   return (
-    <li className="rounded-lg border border-black/10 bg-card-surface p-4">
+    <li className="rounded-lg border border-black/10 bg-card p-4">
       <div className="flex gap-2 sm:gap-3">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-surface">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-card">
           <Image
             src={imageSrc}
             alt={item.name}
@@ -482,7 +482,7 @@ export function CheckoutShippingView() {
         <p className="mb-6 text-neutral-700">{t("empty")}</p>
         <Link
           href="/#products"
-          className="inline-flex rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-surface hover:bg-primary/90"
+          className="inline-flex rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
         >
           {t("continueShopping")}
         </Link>
@@ -491,9 +491,9 @@ export function CheckoutShippingView() {
   }
 
   const inputClass =
-    "w-full rounded-lg border border-black/10 bg-surface px-3 py-2.5 text-sm text-text outline-none placeholder:text-neutral-400 focus:border-primary/40 focus:ring-2 focus:ring-primary/10";
+    "w-full rounded-lg border border-black/10 bg-card px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-neutral-400 focus:border-primary/40 focus:ring-2 focus:ring-primary/10";
 
-  const shellCard = "rounded-lg border border-black/10 bg-card-surface shadow-sm";
+  const shellCard = "rounded-lg border border-black/10 bg-card shadow-sm";
 
   const orderTotalRows = (
     <>
@@ -697,7 +697,7 @@ export function CheckoutShippingView() {
                         "flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors",
                         selected
                           ? "border-neutral-200 bg-primary/10"
-                          : "border-neutral-200 bg-surface hover:border-neutral-300",
+                          : "border-neutral-200 bg-card hover:border-neutral-300",
                       )}
                     >
                       <input
@@ -732,7 +732,7 @@ export function CheckoutShippingView() {
             <button
               type="submit"
               disabled={loading}
-              className="flex h-12 w-full shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-surface transition-colors hover:bg-primary/90 disabled:opacity-50"
+              className="flex h-12 w-full shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
             >
               {t("continueToPayment")}
             </button>

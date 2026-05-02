@@ -24,8 +24,8 @@ export function CartTrigger({ variant }: CartTriggerProps) {
       aria-label={t("cart")}
       className={
         variant === "mobile"
-          ? "h-10 w-10 shrink-0 cursor-pointer border-0 bg-transparent p-0 text-white transition-transform duration-150 hover:scale-[1.06] hover:bg-transparent active:bg-transparent md:hidden [&_svg]:text-white"
-          : "cursor-pointer border-0 bg-transparent p-2 text-white transition-transform duration-150 hover:scale-[1.06] hover:bg-transparent active:bg-transparent [&_svg]:text-white"
+          ? "h-10 w-10 shrink-0 cursor-pointer border-0 bg-transparent p-0 text-primary-foreground transition-transform duration-150 hover:scale-[1.06] hover:bg-transparent active:bg-transparent md:hidden [&_svg]:text-primary-foreground"
+          : "cursor-pointer border-0 bg-transparent p-2 text-primary-foreground transition-transform duration-150 hover:scale-[1.06] hover:bg-transparent active:bg-transparent [&_svg]:text-primary-foreground"
       }
     >
       <Link href="/cart">
@@ -62,7 +62,7 @@ export function MobileScrollToTopButton() {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label={tCommon("scrollToTop")}
-      className="fixed z-40 flex size-12 items-center justify-center rounded-full border border-white/15 bg-header text-white shadow-lg transition-all duration-300 hover:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 md:hidden"
+      className="fixed z-40 flex size-12 items-center justify-center rounded-full border border-primary-foreground/15 bg-primary text-primary-foreground shadow-lg transition-all duration-300 hover:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/80 md:hidden"
       style={{
         bottom: "calc(max(1rem, env(safe-area-inset-bottom, 0px)) + 3.75rem + 0.625rem)",
         right: "calc(max(1rem, env(safe-area-inset-right, 0px)) + 0.25rem)",
@@ -85,7 +85,7 @@ export function MobileFloatingCartButton() {
     <Link
       href="/cart"
       aria-label={t("cart")}
-      className="fixed z-40 flex size-14 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-header text-white shadow-lg transition-transform duration-150 hover:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 md:hidden [&_svg]:text-white"
+      className="fixed z-40 flex size-14 cursor-pointer items-center justify-center rounded-full border border-primary-foreground/15 bg-primary text-primary-foreground shadow-lg transition-transform duration-150 hover:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/80 md:hidden [&_svg]:text-primary-foreground"
       style={{
         bottom: "max(1rem, env(safe-area-inset-bottom, 0px))",
         right: "max(1rem, env(safe-area-inset-right, 0px))",

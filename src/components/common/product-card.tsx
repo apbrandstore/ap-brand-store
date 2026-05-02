@@ -25,7 +25,7 @@ export async function ProductCard({ product, locale: localeProp, priority, aosDe
       suppressHydrationWarning
       data-aos="fade-up"
       data-aos-delay={String(aosDelay)}
-      className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-surface text-center antialiased"
+      className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-card text-center antialiased"
     >
       <div className="relative shrink-0 overflow-hidden">
         <ProductCardGallery urls={imageUrls} alt={product.name} href={href} priority={priority} />
@@ -39,12 +39,12 @@ export async function ProductCard({ product, locale: localeProp, priority, aosDe
           href={href}
           className="min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/20 focus-visible:ring-offset-2"
         >
-          <h3 className="line-clamp-2 text-[18px] font-light uppercase leading-tight tracking-wide text-text [font-size:clamp(10px,1.6vw,19px)]">
+          <h3 className="line-clamp-2 text-[18px] font-light uppercase leading-tight tracking-wide text-foreground [font-size:clamp(10px,1.6vw,19px)]">
             {product.name}
           </h3>
         </Link>
 
-        <div className="mt-2 text-[18px] font-normal leading-snug text-neutral-500 [font-size:clamp(11px,1.7vw,18px)]">
+        <div className="mt-2 text-[18px] font-normal leading-snug text-muted-foreground [font-size:clamp(11px,1.7vw,18px)]">
           {formatMoney(product.price, locale)}
         </div>
       </div>

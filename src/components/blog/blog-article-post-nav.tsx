@@ -31,7 +31,7 @@ export function BlogArticlePostNav({ prev, next, prevLabel, nextLabel }: BlogArt
           )}
         >
           <ChevronLeft className="size-4 shrink-0 text-neutral-500" strokeWidth={2.25} aria-hidden />
-          <span className="text-xs font-medium text-text">{prevLabel}</span>
+          <span className="text-xs font-medium text-foreground">{prevLabel}</span>
         </Link>
       ) : null}
       {next ? (

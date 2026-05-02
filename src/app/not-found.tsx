@@ -14,14 +14,14 @@ export default async function RootNotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-16 text-center">
       <p className="font-sans text-7xl font-extrabold tabular-nums tracking-tighter text-primary">404</p>
-      <h1 className="mt-6 text-2xl font-semibold tracking-tight text-text">{t("notFoundMetaTitle")}</h1>
+      <h1 className="mt-6 text-2xl font-semibold tracking-tight text-foreground">{t("notFoundMetaTitle")}</h1>
       <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-600">
         {t("notFoundMetaDescription")}
       </p>
       <div className="mt-8 flex justify-center">
         <Link
           href="/"
-          className="inline-flex h-12 min-w-[10rem] items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white hover:bg-primary/90"
+          className="inline-flex h-12 min-w-[10rem] items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
         >
           {t("goHome")}
         </Link>

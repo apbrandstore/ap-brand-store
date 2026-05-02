@@ -9,7 +9,7 @@ type PlaceholderPageShellProps = {
 
 export function PlaceholderPageShell({ title, message, backLabel }: PlaceholderPageShellProps) {
   return (
-    <div className="min-h-[50vh] bg-surface py-16 md:py-24">
+    <div className="min-h-[50vh] bg-card py-16 md:py-24">
       <PageContainer>
         <div className="mx-auto max-w-lg rounded-lg border border-neutral-200 bg-white px-8 py-12 text-center shadow-sm">
           <h1 className="text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">{title}</h1>

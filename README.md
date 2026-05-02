@@ -19,14 +19,10 @@ Create a `.env.local` (not committed) with:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `PAPERBASE_BACKEND_ORIGIN` | Yes* | Backend origin without trailing slash, e.g. `https://api.paperbase.me` or `http://127.0.0.1:8000`. |
-| `PAPERBASE_API_URL` | Yes* | Alternative to `PAPERBASE_BACKEND_ORIGIN`: full API base URL; the app strips `/api/v1` if present and derives the origin. |
+| `PAPERBASE_API_URL` | Yes | Full API base URL, e.g. `http://localhost:8000/api/v1` or `https://api.paperbase.me/api/v1`. |
 | `PAPERBASE_PUBLISHABLE_KEY` | Yes | Storefront publishable key (must start with `ak_pk_`). |
-| `NEXT_PUBLIC_PAPERBASE_BACKEND_ORIGIN` | No | Same origin as the backend for browser-facing behavior (images, tracker shim). Set for local dev so it matches `PAPERBASE_BACKEND_ORIGIN`. |
-| `NEXT_PUBLIC_IMAGE_REMOTE_HOSTS` | No | Comma-separated extra hostnames allowed for `next/image` remote patterns. |
-| `NEXT_PUBLIC_API_URL` | No | Base URL for client `apiFetch` calls to this app’s `/api/*` routes; empty means same origin. |
 
-\* One of `PAPERBASE_BACKEND_ORIGIN` or `PAPERBASE_API_URL` is required.
+Copy [`.env.example`](.env.example) to `.env.local` and fill in your key. In local development, `tracker.js` calls are proxied through `/api/tracker` (no extra env vars). Client `apiFetch` targets same-origin `/api/v1/*`, matching the Paperbase API path prefix.
 
 ## Getting started
 

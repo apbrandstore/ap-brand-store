@@ -78,7 +78,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
   const tags = resolvePostTags(post);
 
   return (
-    <article className="bg-surface pb-12 pt-8 md:pb-16 md:pt-10">
+    <article className="bg-card pb-12 pt-8 md:pb-16 md:pt-10">
       <PageContainer>
         <nav aria-label={t("backToBlog")} className="mb-6 flex min-w-0 max-w-full items-center">
           <Link
@@ -94,7 +94,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
           <div className="min-w-0">
             <header>
               <p className="text-sm text-neutral-500">{metaLine}</p>
-              <h1 className="mt-3 text-pretty text-2xl font-semibold tracking-tight text-text md:text-3xl lg:text-[2rem] lg:leading-tight">
+              <h1 className="mt-3 text-pretty text-2xl font-semibold tracking-tight text-foreground md:text-3xl lg:text-[2rem] lg:leading-tight">
                 {post.title}
               </h1>
               <p className="mt-4 text-pretty text-base leading-relaxed text-neutral-600 md:text-lg">{post.excerpt}</p>

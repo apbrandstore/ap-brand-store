@@ -39,7 +39,7 @@ export async function Navbar() {
       <DesktopNavbarScrollVisibility targetId="storefront-header" />
       <header
         id="storefront-header"
-        className="relative sticky top-0 z-40 w-full min-w-0 bg-header text-white pt-[env(safe-area-inset-top,0px)] ps-[env(safe-area-inset-left,0px)] pe-[env(safe-area-inset-right,0px)]"
+        className="relative sticky top-0 z-40 w-full min-w-0 bg-primary text-primary-foreground pt-[env(safe-area-inset-top,0px)] ps-[env(safe-area-inset-left,0px)] pe-[env(safe-area-inset-right,0px)]"
       >
       {topNotice ? (
         <div className="bg-accent text-primary">
@@ -61,10 +61,10 @@ export async function Navbar() {
             <div className="flex min-w-0 items-center justify-center">
               <Link
                 href="/"
-                className="inline-flex min-w-0 items-center justify-center rounded-md text-white"
+                className="inline-flex min-w-0 items-center justify-center rounded-md text-primary-foreground"
                 aria-label={store.store_name}
               >
-                <span className="block max-w-full truncate whitespace-nowrap text-base font-medium uppercase tracking-[0.06em] text-white leading-tight">
+                <span className="block max-w-full truncate whitespace-nowrap text-base font-medium uppercase tracking-[0.06em] text-primary-foreground leading-tight">
                   {store.store_name}
                 </span>
               </Link>
@@ -94,7 +94,7 @@ export async function Navbar() {
               className="inline-flex items-center justify-center leading-tight"
               aria-label={store.store_name}
             >
-              <span className="block max-w-full truncate whitespace-nowrap text-xl font-medium uppercase tracking-[0.08em] leading-tight text-white">
+              <span className="block max-w-full truncate whitespace-nowrap text-xl font-medium uppercase tracking-[0.08em] leading-tight text-primary-foreground">
                 {store.store_name}
               </span>
             </Link>
@@ -106,9 +106,9 @@ export async function Navbar() {
           </div>
         </div>
       </PageContainer>
-      <div className="h-px w-full bg-black/15 md:hidden" />
+      <div className="h-px w-full bg-foreground/15 md:hidden" />
 
-      <div className="hidden h-px w-full bg-white/15 md:block" />
+      <div className="hidden h-px w-full bg-primary-foreground/15 md:block" />
 
       <div className="hidden md:block">
         <DesktopCategoryMegaNav

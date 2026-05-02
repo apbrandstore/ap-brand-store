@@ -14,10 +14,10 @@ function isStoreLocale(value: string): value is StoreLocale {
 }
 
 function resolveBackendBaseUrl(): string | null {
-  const origin =
-    process.env.PAPERBASE_BACKEND_ORIGIN ??
-    (process.env.PAPERBASE_API_URL?.replace(/\/api\/v1\/?$/, "").replace(/\/+$/, "") ?? "");
-  return origin ? `${origin.replace(/\/+$/, "")}/api/v1` : null;
+  const raw = process.env.PAPERBASE_API_URL?.trim();
+  if (!raw) return null;
+  const origin = raw.replace(/\/api\/v1\/?$/, "").replace(/\/+$/, "");
+  return `${origin}/api/v1`;
 }
 
 async function resolveStoreLocale(): Promise<StoreLocale | null> {

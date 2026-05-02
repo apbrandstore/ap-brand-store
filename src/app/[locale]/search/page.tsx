@@ -54,10 +54,10 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
   const showSuggestions = Boolean(searchData?.suggestions.length);
 
   return (
-    <div className="bg-surface py-8 md:py-10">
+    <div className="bg-card py-8 md:py-10">
       <PageContainer>
         <header className="max-w-3xl">
-          <h1 className="text-2xl font-semibold tracking-tight text-text md:text-3xl">{t("title")}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">{t("title")}</h1>
           {queryReady ? (
             <p className="mt-2 text-sm text-neutral-600 md:text-base">
               {t("resultsFor", { q })}
@@ -76,7 +76,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
 
         {queryReady && showCategoryMatches ? (
           <section className="mt-8" aria-labelledby="search-categories-heading">
-            <h2 id="search-categories-heading" className="text-sm font-semibold text-text">
+            <h2 id="search-categories-heading" className="text-sm font-semibold text-foreground">
               {t("matchingCategories")}
             </h2>
             <ul className="mt-3 flex flex-wrap gap-2">
@@ -86,7 +86,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     href={`/categories/${cat.slug}`}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "sm" }),
-                      "rounded-sm border border-neutral-200 bg-white px-4 text-text shadow-sm hover:bg-neutral-50",
+                      "rounded-sm border border-neutral-200 bg-white px-4 text-foreground shadow-sm hover:bg-neutral-50",
                     )}
                   >
                     {cat.name}
@@ -99,7 +99,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
 
         {queryReady && showSuggestions ? (
           <section className="mt-8" aria-labelledby="search-suggestions-heading">
-            <h2 id="search-suggestions-heading" className="text-sm font-semibold text-text">
+            <h2 id="search-suggestions-heading" className="text-sm font-semibold text-foreground">
               {t("suggestions")}
             </h2>
             <ul className="mt-3 flex flex-wrap gap-2">
@@ -109,7 +109,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     href={buildSearchHref(label, 1)}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "sm" }),
-                      "rounded-sm border border-violet-200/80 bg-violet-50/80 px-4 text-text hover:bg-violet-100/80",
+                      "rounded-sm border border-violet-200/80 bg-violet-50/80 px-4 text-foreground hover:bg-violet-100/80",
                     )}
                   >
                     {label}
@@ -134,7 +134,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
         ) : null}
 
         {queryReady && !hasProductHits ? (
-          <p className="card mx-auto mt-10 max-w-lg text-center text-sm text-text/80">{t("noProducts")}</p>
+          <p className="card mx-auto mt-10 max-w-lg text-center text-sm text-foreground/80">{t("noProducts")}</p>
         ) : null}
 
         {showPagination ? (

@@ -60,7 +60,7 @@ export function BlogListing({
       <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start lg:gap-12">
         <div className="min-w-0">
           <div className="mb-6 border-b border-neutral-200 pb-2">
-            <h2 className="text-base font-semibold tracking-tight text-text md:text-lg">{sectionTitle}</h2>
+            <h2 className="text-base font-semibold tracking-tight text-foreground md:text-lg">{sectionTitle}</h2>
           </div>
 
           {filtered.length === 0 ? (

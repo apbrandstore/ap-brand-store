@@ -26,7 +26,7 @@ export function BlogArticleBlocks({ blocks }: BlogArticleBlocksProps) {
           return (
             <div key={i} className="space-y-4">
               {content.split(/\n{2,}/).map((paragraph) => (
-                <p key={paragraph} className="text-base leading-relaxed text-text/90 md:text-[17px]">
+                <p key={paragraph} className="text-base leading-relaxed text-foreground/90 md:text-[17px]">
                   {paragraph}
                 </p>
               ))}

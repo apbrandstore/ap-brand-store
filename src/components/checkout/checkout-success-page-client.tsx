@@ -43,7 +43,7 @@ export function CheckoutSuccessPageClient({ orderId }: Props) {
 
   if (model === undefined) {
     return (
-      <div className="bg-surface pb-12 pt-6 md:pb-16 md:pt-8">
+      <div className="bg-card pb-12 pt-6 md:pb-16 md:pt-8">
         <div className="mx-auto max-w-xl px-4 md:px-6">
           <div className="mx-auto h-64 max-w-xs animate-pulse rounded-lg bg-neutral-100" />
           <div className="mx-auto mt-8 h-8 max-w-sm animate-pulse rounded-md bg-neutral-100" />
@@ -53,7 +53,7 @@ export function CheckoutSuccessPageClient({ orderId }: Props) {
   }
 
   return (
-    <div className="bg-surface pb-12 pt-6 md:pb-16 md:pt-8">
+    <div className="bg-card pb-12 pt-6 md:pb-16 md:pt-8">
       <div className="mx-auto max-w-xl px-4 pb-10 pt-2 md:px-6">
         <CheckoutOrderSuccess
           order={model.order}

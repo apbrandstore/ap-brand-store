@@ -2,7 +2,6 @@ const PLACEHOLDER = "/placeholders/hero.svg";
 
 /**
  * Resolves cart / product image URLs for the browser.
- * Paperbase often returns host-relative paths (e.g. `/media/...`) which must be loaded from the API origin, not the Next.js host.
  */
 export function resolveStorefrontImageUrl(url: string | null | undefined): string {
   const raw = url?.trim();
@@ -19,10 +18,7 @@ export function resolveStorefrontImageUrl(url: string | null | undefined): strin
     if (raw.startsWith("/placeholders/")) {
       return raw;
     }
-    const base = process.env.NEXT_PUBLIC_PAPERBASE_BACKEND_ORIGIN?.replace(/\/+$/, "");
-    if (base) {
-      return `${base}${raw}`;
-    }
+    // Paperbase returns absolute `http(s)://` media URLs in practice; host-relative paths are unsupported here.
     return PLACEHOLDER;
   }
   return raw;

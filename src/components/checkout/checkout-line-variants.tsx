@@ -67,8 +67,8 @@ function VariantSync({
                   className={cn(
                     "inline-flex min-h-9 cursor-pointer items-center rounded-md px-3.5 py-2 text-xs font-semibold sm:text-sm",
                     selected
-                      ? "bg-primary text-surface shadow-sm"
-                      : "border border-neutral-200 bg-surface text-text hover:border-primary/30",
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "border border-neutral-200 bg-card text-foreground hover:border-primary/30",
                   )}
                 >
                   {value.value}
@@ -108,7 +108,7 @@ function StaticVariantBadges({ item }: { item: CartItem }) {
           {pair.label ? (
             <p className="text-xs font-bold uppercase tracking-normal text-neutral-500">{pair.label}</p>
           ) : null}
-          <span className="mt-1 inline-flex rounded bg-primary px-2.5 py-1 text-xs font-medium text-surface">
+          <span className="mt-1 inline-flex rounded bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground">
             {pair.value}
           </span>
         </div>

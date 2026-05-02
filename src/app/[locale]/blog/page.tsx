@@ -46,7 +46,7 @@ export default async function BlogPage({ params }: PageProps) {
   const latestPosts = posts.filter((post) => !featuredSlugs.has(post.slug)).slice(0, 4);
 
   return (
-    <div className="bg-surface pb-12 pt-8 md:pb-16 md:pt-10">
+    <div className="bg-card pb-12 pt-8 md:pb-16 md:pt-10">
       <PageContainer>
         <BlogHero badge={t("badge")} title={t("heroTitle")} intro={t("heroIntro")} />
         <BlogListing

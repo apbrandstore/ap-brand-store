@@ -3,9 +3,12 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-function parseRemoteOrigin(origin: string) {
+/** Derive image remotePattern host from `PAPERBASE_API_URL` (strip `/api/v1` path). */
+function parseRemoteOrigin(apiUrl: string) {
   try {
-    const parsed = new URL(origin);
+    const trimmed = apiUrl.trim().replace(/\/+$/, "");
+    const originOnly = trimmed.replace(/\/api\/v1\/?$/, "");
+    const parsed = new URL(originOnly || trimmed);
     return {
       protocol: parsed.protocol.replace(":", "") as "http" | "https",
       hostname: parsed.hostname,
@@ -43,20 +46,9 @@ function buildRemotePatterns() {
     },
   ];
 
-  const backendPattern = parseRemoteOrigin(process.env.NEXT_PUBLIC_PAPERBASE_BACKEND_ORIGIN ?? "");
+  const apiUrl = process.env.PAPERBASE_API_URL ?? "";
+  const backendPattern = parseRemoteOrigin(apiUrl);
   if (backendPattern) patterns.push(backendPattern);
-
-  const extraHosts = (process.env.NEXT_PUBLIC_IMAGE_REMOTE_HOSTS ?? "")
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean);
-  for (const host of extraHosts) {
-    patterns.push({
-      protocol: "https",
-      hostname: host,
-      pathname: "/**",
-    });
-  }
 
   return patterns;
 }

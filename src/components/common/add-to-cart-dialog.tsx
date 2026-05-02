@@ -58,7 +58,7 @@ export function AddToCartDialogHost() {
     >
       <div
         className={cn(
-          "relative w-full max-w-[520px] overflow-hidden rounded-lg bg-primary text-surface shadow-2xl",
+          "relative w-full max-w-[520px] overflow-hidden rounded-lg bg-primary text-primary-foreground shadow-2xl",
           "sm:rounded-lg",
         )}
         onClick={(e) => e.stopPropagation()}

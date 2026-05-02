@@ -9,7 +9,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         flash: "flash-sale",
-        neutral: "bg-background text-text",
+        neutral: "bg-background text-foreground",
       },
     },
     defaultVariants: {

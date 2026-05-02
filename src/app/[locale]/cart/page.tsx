@@ -32,7 +32,7 @@ export default async function CartPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen bg-surface py-10 md:py-14">
+    <div className="min-h-screen bg-card py-10 md:py-14">
       <PageContainer>
         <CartPageClient />
       </PageContainer>
